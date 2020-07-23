@@ -17,6 +17,14 @@
  *
  * @see https://developer.wordpress.org/block-editor/tutorials/block-tutorial/applying-styles-with-stylesheets/
  */
+
+if( ! class_exists('EB_Font_Loader') ) {
+	require_once __DIR__ . '/includes/font-loader.php';
+}
+if( ! class_exists('EB_Post_Meta') ) {
+	require_once __DIR__ . '/includes/post-meta.php';
+}
+
 function create_block_progress_bar_block_init() {
 	$dir = dirname( __FILE__ );
 
@@ -35,14 +43,6 @@ function create_block_progress_bar_block_init() {
 		$script_asset['version']
 	);
 
-	$editor_css = 'build/index.css';
-	wp_register_style(
-		'create-block-progress-bar-block-editor',
-		plugins_url( $editor_css, __FILE__ ),
-		array(),
-		filemtime( "$dir/$editor_css" )
-	);
-
 	$style_css = 'build/style-index.css';
 	wp_register_style(
 		'create-block-progress-bar-block',
@@ -51,10 +51,12 @@ function create_block_progress_bar_block_init() {
 		filemtime( "$dir/$style_css" )
 	);
 
-	register_block_type( 'create-block/progress-bar', array(
-		'editor_script' => 'create-block-progress-bar-block-editor',
-		'editor_style'  => 'create-block-progress-bar-block-editor',
-		'style'         => 'create-block-progress-bar-block',
-	) );
+	if( ! WP_Block_Type_Registry::get_instance()->is_registered( 'essential-blocks/progress-bar' ) ) {
+    register_block_type( 'block/progress-bar', array(
+      'editor_script' => 'create-block-progress-bar-block-editor',
+      'editor_style'  => 'create-block-progress-bar-block-editor',
+      'style'         => 'create-block-progress-bar-block',
+    ) );
+  }
 }
 add_action( 'init', 'create_block_progress_bar_block_init' );

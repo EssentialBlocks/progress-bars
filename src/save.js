@@ -1,26 +1,124 @@
 /**
- * Retrieves the translation of text.
- *
- * @see https://developer.wordpress.org/block-editor/packages/packages-i18n/
+ * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { RichText } from "@wordpress/block-editor";
 
 /**
- * The save function defines the way in which the different attributes should
- * be combined into the final markup, which is then serialized by the block
- * editor into `post_content`.
- *
- * @see https://developer.wordpress.org/block-editor/developers/block-api/block-edit-save/#save
- *
- * @return {WPElement} Element to render.
+ * Internal dependencies
  */
-export default function save() {
+import {
+	DEFAULT_PROGRESS,
+	DEFAULT_HEIGHT,
+	DEFAULT_BACKGROUND,
+	DEFAULT_PROGRESS_COLOR,
+	DEFAULT_TOOLTIP_COLOR,
+	DEFAULT_TOOLTIP_TEXT_COLOR,
+} from "./constants";
+
+const save = ({ attributes }) => {
+	const {
+		progress,
+		height,
+		displayTitle,
+		title,
+		displayPercentage,
+		colorType,
+		progressBackground,
+		progressColor,
+		progressGradient,
+		titleFontSize,
+		titleColor,
+		percentageType,
+		percentageColor,
+		tooltipBackground,
+		heightUnit,
+		titleFontFamily,
+		titleFontSizeUnit,
+		titleFontWeight,
+		titleTextTransform,
+		titleTextDecoration,
+		titleLineHeight,
+		titleLineHeightUnit,
+		titleLetterSpacing,
+		titleLetterSpacingUnit,
+	} = attributes;
+
+	const wrapperStyles = {
+		paddingTop:
+			displayPercentage && percentageType === "tooltip" ? DEFAULT_HEIGHT : 0,
+	};
+
+	const containerStyle = {
+		backgroundColor: progressBackground || DEFAULT_BACKGROUND,
+		height: `${height || DEFAULT_HEIGHT}${heightUnit}`,
+	};
+
+	const titleStyles = {
+		visibility: displayTitle ? "visible" : "hidden",
+		fontSize: `${titleFontSize}px`,
+		fontFamily: titleFontFamily,
+		fontWeight: titleFontWeight,
+		textDecoration: titleTextDecoration,
+		textTransform: titleTextTransform,
+		letterSpacing: titleLetterSpacing
+			? `${titleLetterSpacing}${titleLetterSpacingUnit}`
+			: undefined,
+		lineHeight: titleLineHeight
+			? `${titleLineHeight}${titleLineHeightUnit}`
+			: undefined,
+		color: titleColor,
+	};
+
+	const progressStyle = {
+		backgroundColor:
+			colorType === "fill" ? progressColor : DEFAULT_PROGRESS_COLOR,
+		width: `${progress || DEFAULT_PROGRESS}%`,
+		backgroundImage: colorType === "gradient" ? progressGradient : "none",
+		fontSize: `${titleFontSize}px`,
+	};
+
+	const tooltipStyles = {
+		display:
+			displayPercentage && percentageType == "tooltip" ? "block" : "none",
+		backgroundColor: tooltipBackground || DEFAULT_TOOLTIP_COLOR,
+		color: percentageColor || DEFAULT_TOOLTIP_TEXT_COLOR,
+	};
+
+	const tooltipArrowStyles = {
+		borderTop: `5px solid ${tooltipBackground || DEFAULT_TOOLTIP_COLOR}`,
+	};
+
+	const innerProgressStyle = {
+		display: displayPercentage && percentageType == "inline" ? "block" : "none",
+		paddingRight: 8,
+		fontSize: titleFontSize,
+		color: titleColor,
+	};
+
 	return (
-		<p>
-			{ __(
-				'Progress Bar – hello from the saved content!',
-				'create-block'
-			) }
-		</p>
+		<div className="eb-progressbar-wrapper" style={wrapperStyles}>
+			<div className="eb-progressbar-container" style={containerStyle}>
+				<div className="eb-progressbar-progress" style={progressStyle}>
+					<div className="eb-progressbar-tooltip" style={tooltipStyles}>
+						{`${progress || DEFAULT_PROGRESS}%`}
+						<span
+							className="eb-progressbar-tooltip-arrow"
+							style={tooltipArrowStyles}
+						/>
+					</div>
+					<RichText.Content
+						tagName="div"
+						className="eb-progressbar-title"
+						style={titleStyles}
+						value={title}
+					/>
+					<div style={innerProgressStyle}>{`${
+						progress || DEFAULT_PROGRESS
+					}%`}</div>
+				</div>
+			</div>
+		</div>
 	);
-}
+};
+
+export default save;

@@ -1,14 +1,9 @@
 {
-	"name": "create-block/progress-bar",
+	"name": "block/progress-bar",
 	"title": "Progress Bar",
 	"category": "widgets",
-	"icon": "smiley",
-	"description": "Example block written with ESNext standard and JSX support – build step required.",
-	"textdomain": "create-block",
-	"supports": {
-		"html": false
-	},
+	"description": "",
+	"textdomain": "progress-bar",
 	"editorScript": "file:./build/index.js",
-	"editorStyle": "file:./build/index.css",
 	"style": "file:./build/style-index.css"
 }
