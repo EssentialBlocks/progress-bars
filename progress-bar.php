@@ -6,7 +6,7 @@
  * Author:          The WordPress Contributors
  * License:         GPL-2.0-or-later
  * License URI:     https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:     progress-bar
+ * Text Domain:     progress-bars
  *
  * @package         block
  */
@@ -51,7 +51,7 @@ function create_block_progress_bar_block_init() {
 		filemtime( "$dir/$style_css" )
 	);
 
-	if( ! WP_Block_Type_Registry::get_instance()->is_registered( 'essential-blocks/progress-bar' ) ) {
+	if( ! WP_Block_Type_Registry::get_instance()->is_registered( 'essential-blocks/progress-bars' ) ) {
     register_block_type( 'block/progress-bar', array(
       'editor_script' => 'create-block-progress-bar-block-editor',
       'editor_style'  => 'create-block-progress-bar-block-editor',

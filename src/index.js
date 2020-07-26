@@ -8,7 +8,7 @@ import save from "./save";
 import attributes from "./attributes";
 import icon from "./icon";
 
-registerBlockType("block/progress-bar", {
+registerBlockType("block/progress-bars", {
 	title: __("Progress Bar", "block"),
 	description: __("", "block"),
 	category: "widgets",
