@@ -10,7 +10,10 @@ import icon from "./icon";
 
 registerBlockType("block/progress-bars", {
 	title: __("Progress Bar", "block"),
-	description: __("", "block"),
+	description: __(
+		"Make your website interactive with stunning progress bar",
+		"block"
+	),
 	category: "widgets",
 	icon,
 	attributes,
