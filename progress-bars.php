@@ -10,7 +10,7 @@
  * License URI:     https://www.gnu.org/licenses/gpl-3.0.html
  * Text Domain:     progress-bars
  *
- * @package         block
+ * @package         progress-bars
  */
 
 /**
@@ -20,12 +20,8 @@
  * @see https://developer.wordpress.org/block-editor/tutorials/block-tutorial/applying-styles-with-stylesheets/
  */
 
-if( ! class_exists('EB_Font_Loader') ) {
-	require_once __DIR__ . '/includes/font-loader.php';
-}
-if( ! class_exists('EB_Post_Meta') ) {
-	require_once __DIR__ . '/includes/post-meta.php';
-}
+require_once __DIR__ . '/includes/font-loader.php';
+require_once __DIR__ . '/includes/post-meta.php';
 
 function create_block_progress_bar_block_init() {
 	$dir = dirname( __FILE__ );
@@ -33,7 +29,7 @@ function create_block_progress_bar_block_init() {
 	$script_asset_path = "$dir/build/index.asset.php";
 	if ( ! file_exists( $script_asset_path ) ) {
 		throw new Error(
-			'You need to run `npm start` or `npm run build` for the "create-block/progress-bar" block first.'
+			'You need to run `npm start` or `npm run build` for the "block/progress-bars" block first.'
 		);
 	}
 	$index_js     = 'build/index.js';
@@ -53,12 +49,10 @@ function create_block_progress_bar_block_init() {
 		filemtime( "$dir/$style_css" )
 	);
 
-	if( ! WP_Block_Type_Registry::get_instance()->is_registered( 'essential-blocks/progress-bars' ) ) {
-    register_block_type( 'block/progress-bar', array(
-      'editor_script' => 'create-block-progress-bar-block-editor',
-      'editor_style'  => 'create-block-progress-bar-block-editor',
-      'style'         => 'create-block-progress-bar-block',
-    ) );
-  }
+  register_block_type( 'block/progress-bar', array(
+    'editor_script' => 'create-block-progress-bar-block-editor',
+    'editor_style'  => 'create-block-progress-bar-block-editor',
+    'style'         => 'create-block-progress-bar-block',
+  ) );
 }
 add_action( 'init', 'create_block_progress_bar_block_init' );
