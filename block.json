@@ -2,7 +2,7 @@
 	"name": "block/progress-bars",
 	"title": "Progress Bar",
 	"category": "widgets",
-	"description": "Make your website interactive with stunning progress bar",
+	"description": "Make your website interactive with stunning progress bars",
 	"textdomain": "progress-bars",
 	"editorScript": "file:./build/index.js",
 	"style": "file:./build/style-index.css"
