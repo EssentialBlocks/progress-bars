@@ -49,7 +49,7 @@ function create_block_progress_bar_block_init() {
 		filemtime( "$dir/$style_css" )
 	);
 
-  register_block_type( 'block/progress-bar', array(
+  register_block_type( 'block/progress-bars', array(
     'editor_script' => 'create-block-progress-bar-block-editor',
     'editor_style'  => 'create-block-progress-bar-block-editor',
     'style'         => 'create-block-progress-bar-block',
