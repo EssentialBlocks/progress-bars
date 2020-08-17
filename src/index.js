@@ -7,6 +7,7 @@ import Edit from "./edit";
 import save from "./save";
 import attributes from "./attributes";
 import icon from "./icon";
+import example from "./example";
 
 registerBlockType("block/progress-bars", {
 	title: __("Progress Bar", "block"),
@@ -19,4 +20,5 @@ registerBlockType("block/progress-bars", {
 	attributes,
 	edit: Edit,
 	save,
+	example,
 });
