@@ -3,7 +3,7 @@
  * Plugin Name:     Progress Bars
  * Plugin URI: 		https://essential-blocks.com
  * Description:     Make your website interactive with stunning progress bar
- * Version:         1.0.0
+ * Version:         1.0.1
  * Author:          WPDeveloper
  * Author URI: 		https://wpdeveloper.net
  * License:         GPL-3.0-or-later
@@ -29,7 +29,7 @@ function create_block_progress_bar_block_init() {
 	$script_asset_path = "$dir/build/index.asset.php";
 	if ( ! file_exists( $script_asset_path ) ) {
 		throw new Error(
-			'You need to run `npm start` or `npm run build` for the "block/progress-bars" block first.'
+			'You need to run `npm start` or `npm run build` for the "progress-bars/progress-bar-block" block first.'
 		);
 	}
 	$index_js     = 'build/index.js';
@@ -50,7 +50,7 @@ function create_block_progress_bar_block_init() {
 	);
 
 	if( ! WP_Block_Type_Registry::get_instance()->is_registered( 'essential-blocks/progress-bar' ) ) {
-    register_block_type( 'block/progress-bars', array(
+    register_block_type( 'progress-bars/progress-bar-block', array(
       'editor_script' => 'create-block-progress-bar-block-editor',
       'editor_style'  => 'create-block-progress-bar-block-editor',
       'style'         => 'create-block-progress-bar-block',

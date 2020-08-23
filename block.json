@@ -1,8 +1,8 @@
 {
-	"name": "block/progress-bars",
+	"name": "progress-bars/progress-bar-block",
 	"title": "Progress Bars",
 	"category": "widgets",
-	"keywords": ["progress", "bars", "essential"],
+	"keywords": ["progress", "bars", "skill"],
 	"description": "Make your website interactive with stunning progress bars",
 	"textdomain": "progress-bars",
 	"editorScript": "file:./build/index.js",

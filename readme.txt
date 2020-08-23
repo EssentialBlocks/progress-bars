@@ -3,11 +3,11 @@ Contributors: wpdevteam, re_enter_rupok, Asif2BD, alam789
 Tags: gutenberg, block, blocks, editor, progress, progress bar, skill bar, responsive progress bar, animated skillbar, animated progress bar, skill-bars, percentage bar, chart bar, graph bar, gutenberg blocks
 Requires at least: 5.0
 Tested up to: 5.5
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-Make your website interactive with stunning progress bar
+Make your website interactive with stunning progress bar block.
 
 == Description ==
 
@@ -37,7 +37,7 @@ This Block is brought to you by [WPDeveloper](https://wpdeveloper.net), the team
 
 🤝 Join our [Facebook Community](https://www.facebook.com/groups/wpdeveloper.net/) & get connected with expert web creators like yourself.
 
-🧡 LOVED Toggle Content? Rate us on [WordPress Repository](https://wordpress.org/support/plugin/progress-bars/reviews/#new-post)
+🧡 LOVED Progress Bar Block? Rate us on [WordPress Repository](https://wordpress.org/support/plugin/progress-bars/reviews/#new-post)
 
 🔥 GET FREEBIES FOR YOUR WORDPRESS SITE
 
@@ -84,6 +84,10 @@ Yes, it will work with any standard WordPress theme.
 
 
 == Changelog ==
+
+= 1.0.1 - 23-08-2020 =
+
+* Few minor bugfixes
 
 = 1.0.0 - 29-07-2020 =
 
