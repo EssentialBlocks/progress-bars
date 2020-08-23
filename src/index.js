@@ -10,7 +10,7 @@ import icon from "./icon";
 import example from "./example";
 
 registerBlockType("block/progress-bars", {
-	title: __("Progress Bar", "block"),
+	title: __("Progress Bars", "block"),
 	description: __(
 		"Make your website interactive with stunning progress bar",
 		"block"
