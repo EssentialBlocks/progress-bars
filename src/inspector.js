@@ -304,11 +304,9 @@ const Inspector = ({ attributes, setAttributes }) => {
 				{colorType === "gradient" && (
 					<PanelBody title={__("Gradient Color")} initialOpen={false}>
 						<GradientColorController
-							colorOne="#00F260"
-							colorTwo="#0575E6"
-							angle={45}
-							onChange={(newValue) =>
-								setAttributes({ progressGradient: newValue })
+							gradientColor={progressGradient}
+							onChange={(progressGradient) =>
+								setAttributes({ progressGradient })
 							}
 						/>
 					</PanelBody>

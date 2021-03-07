@@ -2180,12 +2180,10 @@ var Inspector = function Inspector(_ref) {
     title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])("Gradient Color"),
     initialOpen: false
   }, /*#__PURE__*/React.createElement(_util_gradient_color_controller__WEBPACK_IMPORTED_MODULE_4__["default"], {
-    colorOne: "#00F260",
-    colorTwo: "#0575E6",
-    angle: 45,
-    onChange: function onChange(newValue) {
+    gradientColor: progressGradient,
+    onChange: function onChange(progressGradient) {
       return setAttributes({
-        progressGradient: newValue
+        progressGradient: progressGradient
       });
     }
   }))));
@@ -2452,6 +2450,78 @@ var FOCUS_COLOR = "#007cba";
 
 /***/ }),
 
+/***/ "./util/gradient-color-controller/helper.js":
+/*!**************************************************!*\
+  !*** ./util/gradient-color-controller/helper.js ***!
+  \**************************************************/
+/*! exports provided: parseGradientColor */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "parseGradientColor", function() { return parseGradientColor; });
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+// Parses the gradient color string
+var parseGradientColor = function parseGradientColor(gradientColor) {
+  var angle = 45,
+      colorOnePosition = 0,
+      colorTwoPosition = 100,
+      radialShape = "ellipse",
+      radialX = 50,
+      radialY = 50;
+
+  var _gradientColor$match = gradientColor.match(/\#[a-f\d]{6}|rgba?\([\d\,\.]{3,16}\)/gi),
+      _gradientColor$match2 = _slicedToArray(_gradientColor$match, 2),
+      colorOne = _gradientColor$match2[0],
+      colorTwo = _gradientColor$match2[1];
+
+  var _gradientColor$match3 = gradientColor.match(/\w{6}(?=-)/i),
+      _gradientColor$match4 = _slicedToArray(_gradientColor$match3, 1),
+      gradientType = _gradientColor$match4[0];
+
+  if (gradientType == "linear") {
+    angle = gradientColor.match(/\d{1,3}(?=deg)/i)[0];
+
+    var _ref = gradientColor.match(/\d{1,3}(?=\%)/gi) || [0, 100];
+
+    var _ref2 = _slicedToArray(_ref, 2);
+
+    colorOnePosition = _ref2[0];
+    colorTwoPosition = _ref2[1];
+  } else {
+    radialShape = gradientColor.match(/\w+(?= at)/i)[0];
+    radialX = gradientColor.match(/(?<=at )\d{1,3}/i)[0];
+    radialY = gradientColor.match(/(?<=% )\d{1,3}/i)[0];
+    colorOnePosition = gradientColor.match(/\d{1,3}(?=% ,)/gi)[0];
+    colorTwoPosition = gradientColor.match(/\d{1,3}(?=%\))/gi)[0];
+  }
+
+  return {
+    gradientType: gradientType,
+    angle: parseInt(angle),
+    colorOne: colorOne,
+    colorTwo: colorTwo,
+    colorOnePosition: parseInt(colorOnePosition),
+    colorTwoPosition: parseInt(colorTwoPosition),
+    radialShape: radialShape,
+    radialX: parseInt(radialX),
+    radialY: parseInt(radialY)
+  };
+};
+
+/***/ }),
+
 /***/ "./util/gradient-color-controller/index.js":
 /*!*************************************************!*\
   !*** ./util/gradient-color-controller/index.js ***!
@@ -2468,6 +2538,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _color_control__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../color-control */ "./util/color-control/index.js");
 /* harmony import */ var _toggle_button__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../toggle-button */ "./util/toggle-button/index.js");
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./constants */ "./util/gradient-color-controller/constants.js");
+/* harmony import */ var _helper__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./helper */ "./util/gradient-color-controller/helper.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -2497,10 +2568,9 @@ var _wp$components = wp.components,
 
 
 
+
 var GradientColorControl = function GradientColorControl(_ref) {
-  var firstColor = _ref.colorOne,
-      secondColor = _ref.colorTwo,
-      gradientAngle = _ref.angle,
+  var gradientColor = _ref.gradientColor,
       onChange = _ref.onChange;
 
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])("linear"),
@@ -2508,7 +2578,7 @@ var GradientColorControl = function GradientColorControl(_ref) {
       gradientType = _useState2[0],
       setGradientType = _useState2[1];
 
-  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(firstColor || "transparent"),
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])("transparent"),
       _useState4 = _slicedToArray(_useState3, 2),
       colorOne = _useState4[0],
       setColorOne = _useState4[1];
@@ -2518,7 +2588,7 @@ var GradientColorControl = function GradientColorControl(_ref) {
       colorOnePosition = _useState6[0],
       setColorOnePosition = _useState6[1];
 
-  var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(secondColor || "transparent"),
+  var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])("transparent"),
       _useState8 = _slicedToArray(_useState7, 2),
       colorTwo = _useState8[0],
       setColorTwo = _useState8[1];
@@ -2528,7 +2598,7 @@ var GradientColorControl = function GradientColorControl(_ref) {
       colorTwoPosition = _useState10[0],
       setColorTwoPosition = _useState10[1];
 
-  var _useState11 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(gradientAngle || 0),
+  var _useState11 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(0),
       _useState12 = _slicedToArray(_useState11, 2),
       angle = _useState12[0],
       setAngle = _useState12[1];
@@ -2548,6 +2618,28 @@ var GradientColorControl = function GradientColorControl(_ref) {
       radialY = _useState18[0],
       setRadialY = _useState18[1];
 
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    var _parseGradientColor = Object(_helper__WEBPACK_IMPORTED_MODULE_5__["parseGradientColor"])(gradientColor),
+        gradientType = _parseGradientColor.gradientType,
+        angle = _parseGradientColor.angle,
+        colorOne = _parseGradientColor.colorOne,
+        colorTwo = _parseGradientColor.colorTwo,
+        colorOnePosition = _parseGradientColor.colorOnePosition,
+        colorTwoPosition = _parseGradientColor.colorTwoPosition,
+        radialShape = _parseGradientColor.radialShape,
+        radialX = _parseGradientColor.radialX,
+        radialY = _parseGradientColor.radialY;
+
+    setGradientType(gradientType);
+    setAngle(angle);
+    setColorOne(colorOne);
+    setColorTwo(colorTwo);
+    setColorOnePosition(colorOnePosition);
+    setColorTwoPosition(colorTwoPosition);
+    setRadialShape(radialShape);
+    setRadialX(radialX);
+    setRadialY(radialY);
+  }, []);
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     onChange(gradientType === "linear" ? getLinearGradient() : getRadialGradient());
   }, [gradientType, colorOne, colorOnePosition, colorTwo, colorTwoPosition, angle, radialShape, radialX, radialY]);
@@ -2570,6 +2662,7 @@ var GradientColorControl = function GradientColorControl(_ref) {
     label: __("Gradient Type"),
     className: "eb-gradient-toggle-label"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_toggle_button__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    defaultSelected: gradientType === "ellipse" ? _constants__WEBPACK_IMPORTED_MODULE_4__["GRADIENT_TYPE"][0] : _constants__WEBPACK_IMPORTED_MODULE_4__["GRADIENT_TYPE"][1],
     options: _constants__WEBPACK_IMPORTED_MODULE_4__["GRADIENT_TYPE"],
     onChange: function onChange(gradientType) {
       return setGradientType(gradientType);
@@ -2579,6 +2672,7 @@ var GradientColorControl = function GradientColorControl(_ref) {
     label: __("Radial Type"),
     className: "eb-gradient-toggle-label"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_toggle_button__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    defaultSelected: radialShape === "ellipse" ? _constants__WEBPACK_IMPORTED_MODULE_4__["RADIAL_TYPES"][0] : _constants__WEBPACK_IMPORTED_MODULE_4__["RADIAL_TYPES"][1],
     options: _constants__WEBPACK_IMPORTED_MODULE_4__["RADIAL_TYPES"],
     onChange: function onChange(radialShape) {
       return setRadialShape(radialShape);
@@ -2640,10 +2734,8 @@ var GradientColorControl = function GradientColorControl(_ref) {
 };
 
 GradientColorControl.propTypes = {
-  onChange: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.func.isRequired,
-  colorOne: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
-  colorTwo: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
-  angle: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.number
+  gradientColor: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
+  onChange: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.func.isRequired
 };
 /* harmony default export */ __webpack_exports__["default"] = (GradientColorControl);
 
@@ -2680,9 +2772,10 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 var ToggleButton = function ToggleButton(_ref) {
   var options = _ref.options,
       focusColor = _ref.focusColor,
-      onChange = _ref.onChange;
+      onChange = _ref.onChange,
+      defaultSelected = _ref.defaultSelected;
 
-  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(options[0]),
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(defaultSelected || options[0]),
       _useState2 = _slicedToArray(_useState, 2),
       selected = _useState2[0],
       setSelected = _useState2[1];
