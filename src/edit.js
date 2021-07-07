@@ -1,13 +1,14 @@
 /**
  * WordPress dependencies
  */
-import { __ } from "@wordpress/i18n";
-import { RichText } from "@wordpress/editor";
-import { Component } from "@wordpress/element";
+const { __ } = wp.i18n;
+const { RichText } = wp.editor;
+const { Component } = wp.element;
 
 /**
  * Internal depenencies
  */
+import "./editor.scss";
 import Inspector from "./inspector";
 import {
 	DEFAULT_PROGRESS,

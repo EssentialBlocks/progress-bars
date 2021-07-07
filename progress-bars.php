@@ -22,6 +22,7 @@
 
 require_once __DIR__ . '/includes/font-loader.php';
 require_once __DIR__ . '/includes/post-meta.php';
+require_once __DIR__ . '/lib/style-handler/style-handler.php';
 
 function create_block_progress_bar_block_init() {
 	$dir = dirname( __FILE__ );
@@ -33,12 +34,25 @@ function create_block_progress_bar_block_init() {
 		);
 	}
 	$index_js     = 'build/index.js';
-	$script_asset = require( $script_asset_path );
 	wp_register_script(
 		'create-block-progress-bar-block-editor',
 		plugins_url( $index_js, __FILE__ ),
-		$script_asset['dependencies'],
-		$script_asset['version']
+		array(
+			'wp-blocks',
+			'wp-i18n',
+			'wp-element',
+			'wp-block-editor',
+			'wp-editor',
+		),
+		filemtime("$dir/$index_js")
+	);
+
+	$editor_css = 'build/index.css';
+	wp_register_style(
+		'create-block-progress-bar-block-editor',
+		plugins_url($editor_css, __FILE__),
+		array(),
+		filemtime("$dir/$editor_css")
 	);
 
 	$style_css = 'build/style-index.css';

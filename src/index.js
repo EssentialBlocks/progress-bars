@@ -1,5 +1,5 @@
-import { registerBlockType } from "@wordpress/blocks";
-import { __ } from "@wordpress/i18n";
+const { registerBlockType }= wp.blocks;
+const { __ }= wp.i18n;
 
 import "./style.scss";
 
@@ -9,7 +9,7 @@ import attributes from "./attributes";
 import icon from "./icon";
 import example from "./example";
 
-registerBlockType("block/progress-bars", {
+registerBlockType("progress-bars/progress-bar-block", {
 	title: __("Progress Bars", "block"),
 	description: __(
 		"Make your website interactive with stunning progress bar",

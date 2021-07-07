@@ -1,317 +1,222 @@
 /**
  * WordPress dependencies
  */
-import { __ } from "@wordpress/i18n";
-import { InspectorControls } from "@wordpress/block-editor";
-import {
+const { __ } = wp.i18n;
+const { useEffect } = wp.element;
+const { InspectorControls } = wp.blockEditor;
+const { select } = wp.data;
+const {
 	PanelBody,
 	ToggleControl,
-	RangeControl,
 	SelectControl,
-	BaseControl,
-	Dropdown,
+	TextControl,
+	RangeControl,
 	Button,
-} from "@wordpress/components";
+	BaseControl,
+	TabPanel,
+} = wp.components;
 
-/**
- *
- * Internal dependencies
- */
-import {
-	DEFAULT_PROGRESS,
-	DEFAULT_HEIGHT,
-	FONT_WEIGHTS,
-	TEXT_TRANSFORM,
-	TEXT_DECORATION,
-} from "./constants";
-import GradientColorController from "../util/gradient-color-controller";
-import UnitControl from "../util/unit-control";
-import FontPicker from "../util/typography-control/FontPicker";
+import objAttributes from "./attributes";
+import faIcons from "../util/faIcons";
 import ColorControl from "../util/color-control";
+import ResponsiveRangeController from "../util/responsive-range-control";
+import ResponsiveDimensionsControl from "../util/dimensions-control-v2";
+import TypographyDropdown from "../util/typography-control-v2";
+import BackgroundControl from "../util/background-control";
+import BorderShadowControl from "../util/border-shadow-control";
+import {
+	mimmikCssForResBtns,
+	mimmikCssOnPreviewBtnClickWhileBlockSelected,
+} from "../util/helpers";
+
+import {
+	typoPrefix_title,
+	typoPrefix_counter,
+} from "./constants/typographyConstants";
 
 const Inspector = ({ attributes, setAttributes }) => {
 	const {
+		resOption,
+		layout,
+		title,
+		titleTag,
 		progress,
-		height,
-		displayTitle,
-		displayPercentage,
-		colorType,
-		progressBackground,
-		progressColor,
-		progressGradient,
-		titleFontSize,
-		titleColor,
-		percentageType,
-		percentageColor,
-		tooltipBackground,
-		heightUnit,
-		titleFontFamily,
-		titleFontSizeUnit,
-		titleFontWeight,
-		titleTextTransform,
-		titleTextDecoration,
-		titleLineHeight,
-		titleLineHeightUnit,
-		titleLetterSpacing,
-		titleLetterSpacingUnit,
+		displayProgress,
+        animationDuration,
+        titleColor,
+        progressColor,
+		// new attributes
 	} = attributes;
 
-	const TITLE_SIZE_MAX = titleFontSizeUnit === "em" ? 10 : 100;
-	const TITLE_SIZE_STEP = titleFontSizeUnit === "em" ? 0.1 : 1;
+	// this useEffect is for setting the resOption attribute to desktop/tab/mobile depending on the added 'eb-res-option-' class only the first time once
+	useEffect(() => {
+		setAttributes({
+			resOption: select("core/edit-post").__experimentalGetPreviewDeviceType(),
+		});
+	}, []);
 
-	const TITLE_LINE_HEIGHT_MAX = titleLineHeightUnit === "em" ? 10 : 100;
-	const TITLE_LINE_HEIGHT_STEP = titleLineHeightUnit === "em" ? 0.1 : 1;
+	// this useEffect is for mimmiking css for all the eb blocks on resOption changing
+	useEffect(() => {
+		mimmikCssForResBtns({
+			domObj: document,
+			resOption,
+		});
+	}, [resOption]);
 
-	const TITLE_SPACING_MAX = titleLetterSpacingUnit === "em" ? 10 : 100;
-	const TITLE_SPACING_STEP = titleLetterSpacingUnit === "em" ? 0.1 : 1;
+	// this useEffect is to mimmik css for responsive preview in the editor page when clicking the buttons in the 'Preview button of wordpress' located beside the 'update' button while any block is selected and it's inspector panel is mounted in the DOM
+	useEffect(() => {
+		const cleanUp = mimmikCssOnPreviewBtnClickWhileBlockSelected({
+			domObj: document,
+			select,
+			setAttributes,
+		});
+		return () => {
+			cleanUp();
+		};
+	}, []);
+
+	const resRequiredProps = {
+		setAttributes,
+		resOption,
+		attributes,
+		objAttributes,
+	};
 
 	return (
 		<InspectorControls key="controls">
-			<PanelBody>
-				<RangeControl
-					label={__("Progress")}
-					value={progress || DEFAULT_PROGRESS}
-					allowReset
-					onChange={(newValue) => setAttributes({ progress: newValue })}
-					min={0}
-					max={100}
-				/>
-
-				<UnitControl
-					selectedUnit={heightUnit}
-					unitTypes={[
-						{ label: "px", value: "px" },
-						{ label: "em", value: "em" },
+			<div className="eb-panel-control">
+				<TabPanel
+					className="eb-parent-tab-panel"
+					activeClass="active-tab"
+					tabs={[
+						{
+							name: "general",
+							title: "General",
+							className: "eb-tab general",
+						},
+						{
+							name: "styles",
+							title: "Styles",
+							className: "eb-tab styles",
+						},
 					]}
-					onClick={(heightUnit) => setAttributes({ heightUnit })}
-				/>
-
-				<RangeControl
-					label={__("Height")}
-					value={height || DEFAULT_HEIGHT}
-					allowReset
-					onChange={(newValue) => setAttributes({ height: newValue })}
-					min={0}
-					max={100}
-				/>
-
-				<ToggleControl
-					label={__("Display Title")}
-					checked={displayTitle}
-					onChange={() => setAttributes({ displayTitle: !displayTitle })}
-				/>
-
-				<ToggleControl
-					label={__("Display Percentage")}
-					checked={displayPercentage}
-					onChange={() =>
-						setAttributes({ displayPercentage: !displayPercentage })
-					}
-				/>
-
-				{displayPercentage && (
-					<ToggleControl
-						label={__("Inline percentage")}
-						checked={percentageType === "inline"}
-						onChange={() =>
-							percentageType === "inline"
-								? setAttributes({ percentageType: "tooltip" })
-								: setAttributes({ percentageType: "inline" })
-						}
-					/>
-				)}
-
-				<ToggleControl
-					label={__("Gradient Color")}
-					checked={colorType === "gradient"}
-					onChange={() =>
-						colorType === "fill"
-							? setAttributes({ colorType: "gradient" })
-							: setAttributes({ colorType: "fill" })
-					}
-				/>
-
-				{displayTitle && (
-					<BaseControl
-						label={__("Title Typography")}
-						className="eb-typography-base"
-					>
-						<Dropdown
-							className="eb-typography-dropdown"
-							contentClassName="my-popover-content-classname"
-							position="bottom right"
-							renderToggle={({ isOpen, onToggle }) => (
-								<Button
-									isSmall
-									onClick={onToggle}
-									aria-expanded={isOpen}
-									icon="edit"
-								></Button>
+				>
+					{(tab) => (
+						<div className={"eb-tab-controls" + tab.name}>
+							{tab.name === "general" && (
+								<>
+									<PanelBody title={__("Layout")}>
+										<SelectControl
+											label={__("Layout", "progress-bars")}
+											value={layout}
+											options={[
+												{ label: "Line", value: "line" },
+												{ label: "Circle", value: "circle" },
+												{ label: "Half Circle", value: "half-circle" },
+											]}
+											onChange={(newLayout) =>
+												setAttributes({ layout: newLayout })
+											}
+										/>
+										<hr />
+										<TextControl
+											label={__("Title", "progress-bars")}
+											value={title}
+											onChange={(newTitle) =>
+												setAttributes({ title: newTitle })
+											}
+										/>
+										<SelectControl
+											label={__("Title HTML Tag", "progress-bars")}
+											value={titleTag}
+											options={[
+												{ label: "H1", value: "h1" },
+												{ label: "H2", value: "h2" },
+												{ label: "H3", value: "h3" },
+												{ label: "H4", value: "h4" },
+												{ label: "H5", value: "h5" },
+												{ label: "H6", value: "h6" },
+												{ label: "div", value: "div" },
+												{ label: "span", value: "span" },
+												{ label: "p", value: "p" },
+											]}
+											onChange={(newTitleTag) =>
+												setAttributes({ titleTag: newTitleTag })
+											}
+										/>
+										<hr />
+										<RangeControl
+											label={__("Counter Value", "progress-bar")}
+											value={progress}
+											onChange={(newProgress) =>
+												setAttributes({
+													progress: newProgress,
+												})
+											}
+											step={1}
+											min={0}
+											max={100}
+										/>
+										<ToggleControl
+											label={__("Show Counter?", "progress-bar")}
+											checked={displayProgress}
+											onChange={() => {
+												setAttributes({
+													displayProgress: !displayProgress,
+												});
+											}}
+										/>
+										<hr />
+										<RangeControl
+											label={__("Animation Duration", "progress-bar")}
+											value={animationDuration}
+											onChange={(newAnimationDuration) =>
+												setAttributes({
+													animationDuration: newAnimationDuration,
+												})
+											}
+											step={100}
+											min={1000}
+											max={10000}
+										/>
+									</PanelBody>
+								</>
 							)}
-							renderContent={() => (
-								<div style={{ padding: "1rem" }}>
-									<FontPicker
-										label={__("Font Family")}
-										value={titleFontFamily}
-										onChange={(titleFontFamily) =>
-											setAttributes({ titleFontFamily })
-										}
-									/>
-
-									<UnitControl
-										selectedUnit={titleFontSizeUnit}
-										unitTypes={[
-											{ label: "px", value: "px" },
-											{ label: "%", value: "%" },
-											{ label: "em", value: "em" },
-										]}
-										onClick={(titleFontSizeUnit) =>
-											setAttributes({ titleFontSizeUnit })
-										}
-									/>
-
-									<RangeControl
-										label={__("Font Size")}
-										value={titleFontSize}
-										onChange={(titleFontSize) =>
-											setAttributes({ titleFontSize })
-										}
-										step={TITLE_SIZE_STEP}
-										min={0}
-										max={TITLE_SIZE_MAX}
-									/>
-
-									<SelectControl
-										label={__("Font Weight")}
-										value={titleFontWeight}
-										options={FONT_WEIGHTS}
-										onChange={(titleFontWeight) =>
-											setAttributes({ titleFontWeight })
-										}
-									/>
-
-									<SelectControl
-										label={__("Text Transform")}
-										value={titleTextTransform}
-										options={TEXT_TRANSFORM}
-										onChange={(titleTextTransform) =>
-											setAttributes({ titleTextTransform })
-										}
-									/>
-
-									<SelectControl
-										label={__("Text Decoration")}
-										value={titleTextDecoration}
-										options={TEXT_DECORATION}
-										onChange={(titleTextDecoration) =>
-											setAttributes({ titleTextDecoration })
-										}
-									/>
-
-									<UnitControl
-										selectedUnit={titleLetterSpacingUnit}
-										unitTypes={[
-											{ label: "px", value: "px" },
-											{ label: "em", value: "em" },
-										]}
-										onClick={(titleLetterSpacingUnit) =>
-											setAttributes({ titleLetterSpacingUnit })
-										}
-									/>
-
-									<RangeControl
-										label={__("Letter Spacing")}
-										value={titleLetterSpacing}
-										onChange={(titleLetterSpacing) =>
-											setAttributes({ titleLetterSpacing })
-										}
-										min={0}
-										max={TITLE_SPACING_MAX}
-										step={TITLE_SPACING_STEP}
-									/>
-
-									<UnitControl
-										selectedUnit={titleLineHeightUnit}
-										unitTypes={[
-											{ label: "px", value: "px" },
-											{ label: "em", value: "em" },
-										]}
-										onClick={(titleLineHeightUnit) =>
-											setAttributes({ titleLineHeightUnit })
-										}
-									/>
-
-									<RangeControl
-										label={__("Line Height")}
-										value={titleLineHeight}
-										onChange={(titleLineHeight) =>
-											setAttributes({ titleLineHeight })
-										}
-										min={0}
-										max={TITLE_LINE_HEIGHT_MAX}
-										step={TITLE_LINE_HEIGHT_STEP}
-									/>
-								</div>
+							{tab.name === "styles" && (
+								<>
+									<PanelBody title={__("Typography", "progress-bar")}>
+										<TypographyDropdown
+											baseLabel={__("Title")}
+											typographyPrefixConstant={typoPrefix_title}
+											resRequiredProps={resRequiredProps}
+										/>
+                                        <ColorControl
+											label={__("Title Color")}
+											color={titleColor}
+											onChange={(titleColor) =>
+												setAttributes({ titleColor })
+											}
+										/>
+                                        <hr />
+										<TypographyDropdown
+											baseLabel={__("Counter")}
+											typographyPrefixConstant={typoPrefix_counter}
+											resRequiredProps={resRequiredProps}
+										/>
+                                        <ColorControl
+											label={__("Counter Color")}
+											color={progressColor}
+											onChange={(progressColor) =>
+												setAttributes({ progressColor })
+											}
+										/>
+									</PanelBody>
+								</>
 							)}
-						/>
-					</BaseControl>
-				)}
-			</PanelBody>
-
-			<PanelBody title={__("Colors")} initialOpen={false}>
-				{displayTitle && (
-					<ColorControl
-						label={__("Title Color")}
-						color={titleColor}
-						onChange={(titleColor) => setAttributes({ titleColor })}
-					/>
-				)}
-
-				{displayPercentage && percentageType === "tooltip" && (
-					<ColorControl
-						label={__("Tooltip Background")}
-						color={tooltipBackground}
-						onChange={(tooltipBackground) =>
-							setAttributes({ tooltipBackground })
-						}
-					/>
-				)}
-
-				{displayPercentage && percentageType === "tooltip" && (
-					<ColorControl
-						label={__("Percentage Color")}
-						color={percentageColor}
-						onChange={(percentageColor) => setAttributes({ percentageColor })}
-					/>
-				)}
-
-				<ColorControl
-					label={__("Background Color")}
-					color={progressBackground}
-					onChange={(progressBackground) =>
-						setAttributes({ progressBackground })
-					}
-				/>
-
-				{colorType == "fill" && (
-					<ColorControl
-						label={__("Progressbar Color")}
-						color={progressColor}
-						onChange={(progressColor) => setAttributes({ progressColor })}
-					/>
-				)}
-
-				{colorType === "gradient" && (
-					<PanelBody title={__("Gradient Color")} initialOpen={false}>
-						<GradientColorController
-							gradientColor={progressGradient}
-							onChange={(progressGradient) =>
-								setAttributes({ progressGradient })
-							}
-						/>
-					</PanelBody>
-				)}
-			</PanelBody>
+						</div>
+					)}
+				</TabPanel>
+			</div>
 		</InspectorControls>
 	);
 };

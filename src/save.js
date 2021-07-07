@@ -1,7 +1,7 @@
 /**
  * WordPress dependencies
  */
-import { RichText } from "@wordpress/block-editor";
+const { RichText } = wp.blockEditor;
 
 /**
  * Internal dependencies
