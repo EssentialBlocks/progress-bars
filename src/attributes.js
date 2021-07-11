@@ -21,7 +21,11 @@ const attributes = {
 	// new attributes
 	layout: {
 		type: "string",
-		default: "line"
+		default: "line",
+	},
+	wrapperAlign: {
+		type: "string",
+		default: "center",
 	},
 	title: {
 		type: "string",
@@ -48,16 +52,14 @@ const attributes = {
 	progressColor: {
 		type: "string",
 	},
+	showInline: {
+		type: "boolean",
+		default: false,
+	},
 	// typography attributes
 	...generateTypographyAttributes(Object.values(typoPrefixs)),
 	// end new attributes
 
-
-
-
-
-
-	
 	height: {
 		type: "number",
 	},

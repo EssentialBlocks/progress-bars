@@ -38,13 +38,15 @@ const Inspector = ({ attributes, setAttributes }) => {
 	const {
 		resOption,
 		layout,
+		wrapperAlign,
 		title,
 		titleTag,
 		progress,
 		displayProgress,
-        animationDuration,
-        titleColor,
-        progressColor,
+		animationDuration,
+		titleColor,
+		progressColor,
+		showInline,
 		// new attributes
 	} = attributes;
 
@@ -118,6 +120,17 @@ const Inspector = ({ attributes, setAttributes }) => {
 												setAttributes({ layout: newLayout })
 											}
 										/>
+										{layout === "line" && (
+											<ToggleControl
+												label={__("Show Inline", "progress-bar")}
+												checked={showInline}
+												onChange={() => {
+													setAttributes({
+														showInline: !showInline,
+													});
+												}}
+											/>
+										)}
 										<hr />
 										<TextControl
 											label={__("Title", "progress-bars")}
@@ -190,20 +203,18 @@ const Inspector = ({ attributes, setAttributes }) => {
 											typographyPrefixConstant={typoPrefix_title}
 											resRequiredProps={resRequiredProps}
 										/>
-                                        <ColorControl
+										<ColorControl
 											label={__("Title Color")}
 											color={titleColor}
-											onChange={(titleColor) =>
-												setAttributes({ titleColor })
-											}
+											onChange={(titleColor) => setAttributes({ titleColor })}
 										/>
-                                        <hr />
+										<hr />
 										<TypographyDropdown
 											baseLabel={__("Counter")}
 											typographyPrefixConstant={typoPrefix_counter}
 											resRequiredProps={resRequiredProps}
 										/>
-                                        <ColorControl
+										<ColorControl
 											label={__("Counter Color")}
 											color={progressColor}
 											onChange={(progressColor) =>

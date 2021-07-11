@@ -1,4 +1,4 @@
-(window["webpackJsonp"] = window["webpackJsonp"] || []).push([["style-index"],{
+(window["webpackJsonp_progress_bars"] = window["webpackJsonp_progress_bars"] || []).push([["style-index"],{
 
 /***/ "./src/style.scss":
 /*!************************!*\
@@ -154,7 +154,7 @@
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "";
 /******/
-/******/ 	var jsonpArray = window["webpackJsonp"] = window["webpackJsonp"] || [];
+/******/ 	var jsonpArray = window["webpackJsonp_progress_bars"] = window["webpackJsonp_progress_bars"] || [];
 /******/ 	var oldJsonpFunction = jsonpArray.push.bind(jsonpArray);
 /******/ 	jsonpArray.push = webpackJsonpCallback;
 /******/ 	jsonpArray = jsonpArray.slice();
@@ -181,7 +181,7 @@
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _constants_typographyConstants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./constants/typographyConstants */ "./src/constants/typographyConstants.js");
 /* harmony import */ var _util_helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../util/helpers */ "./util/helpers/index.js");
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
@@ -213,6 +213,10 @@ var attributes = _objectSpread(_objectSpread({
     type: "string",
     "default": "line"
   },
+  wrapperAlign: {
+    type: "string",
+    "default": "center"
+  },
   title: {
     type: "string",
     "default": __("Progress Bar", "progress-bar")
@@ -237,6 +241,10 @@ var attributes = _objectSpread(_objectSpread({
   },
   progressColor: {
     type: "string"
+  },
+  showInline: {
+    type: "boolean",
+    "default": false
   }
 }, Object(_util_helpers__WEBPACK_IMPORTED_MODULE_1__["generateTypographyAttributes"])(Object.values(_constants_typographyConstants__WEBPACK_IMPORTED_MODULE_0__))), {}, {
   // end new attributes
@@ -429,34 +437,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_editor_scss__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _inspector__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./inspector */ "./src/inspector.js");
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./constants */ "./src/constants/index.js");
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
+/* harmony import */ var _util_helpers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../util/helpers */ "./util/helpers/index.js");
 /**
  * WordPress dependencies
  */
 var __ = wp.i18n.__;
 var RichText = wp.editor.RichText;
-var Component = wp.element.Component;
+var useEffect = wp.element.useEffect;
+var _wp$blockEditor = wp.blockEditor,
+    BlockControls = _wp$blockEditor.BlockControls,
+    AlignmentToolbar = _wp$blockEditor.AlignmentToolbar,
+    useBlockProps = _wp$blockEditor.useBlockProps;
+var select = wp.data.select;
 /**
  * Internal depenencies
  */
@@ -465,121 +457,132 @@ var Component = wp.element.Component;
 
 
 
-var Edit = /*#__PURE__*/function (_Component) {
-  _inherits(Edit, _Component);
+function Edit(props) {
+  var isSelected = props.isSelected,
+      attributes = props.attributes,
+      setAttributes = props.setAttributes,
+      clientId = props.clientId;
+  var blockId = attributes.blockId,
+      blockMeta = attributes.blockMeta,
+      resOption = attributes.resOption,
+      layout = attributes.layout,
+      wrapperAlign = attributes.wrapperAlign,
+      progress = attributes.progress,
+      height = attributes.height,
+      displayTitle = attributes.displayTitle,
+      title = attributes.title,
+      displayPercentage = attributes.displayPercentage,
+      colorType = attributes.colorType,
+      progressBackground = attributes.progressBackground,
+      progressColor = attributes.progressColor,
+      progressGradient = attributes.progressGradient,
+      titleFontSize = attributes.titleFontSize,
+      titleColor = attributes.titleColor,
+      percentageType = attributes.percentageType,
+      percentageColor = attributes.percentageColor,
+      tooltipBackground = attributes.tooltipBackground,
+      heightUnit = attributes.heightUnit,
+      titleFontFamily = attributes.titleFontFamily,
+      titleFontSizeUnit = attributes.titleFontSizeUnit,
+      titleFontWeight = attributes.titleFontWeight,
+      titleTextTransform = attributes.titleTextTransform,
+      titleTextDecoration = attributes.titleTextDecoration,
+      titleLineHeight = attributes.titleLineHeight,
+      titleLineHeightUnit = attributes.titleLineHeightUnit,
+      titleLetterSpacing = attributes.titleLetterSpacing,
+      titleLetterSpacingUnit = attributes.titleLetterSpacingUnit; // all css styles for large screen width (desktop/laptop) in strings ⬇
 
-  var _super = _createSuper(Edit);
+  var desktopAllStyles = Object(_util_helpers__WEBPACK_IMPORTED_MODULE_3__["softMinifyCssStrings"])("\n\t "); // all css styles for Tab in strings ⬇
 
-  function Edit() {
-    _classCallCheck(this, Edit);
+  var tabAllStyles = Object(_util_helpers__WEBPACK_IMPORTED_MODULE_3__["softMinifyCssStrings"])("\n\t "); // all css styles for Mobile in strings ⬇
 
-    return _super.apply(this, arguments);
-  }
+  var mobileAllStyles = Object(_util_helpers__WEBPACK_IMPORTED_MODULE_3__["softMinifyCssStrings"])("\n\t "); // Set All Style in "blockMeta" Attribute
 
-  _createClass(Edit, [{
-    key: "render",
-    value: function render() {
-      var _this$props = this.props,
-          attributes = _this$props.attributes,
-          setAttributes = _this$props.setAttributes,
-          isSelected = _this$props.isSelected;
-      var progress = attributes.progress,
-          height = attributes.height,
-          displayTitle = attributes.displayTitle,
-          title = attributes.title,
-          displayPercentage = attributes.displayPercentage,
-          colorType = attributes.colorType,
-          progressBackground = attributes.progressBackground,
-          progressColor = attributes.progressColor,
-          progressGradient = attributes.progressGradient,
-          titleFontSize = attributes.titleFontSize,
-          titleColor = attributes.titleColor,
-          percentageType = attributes.percentageType,
-          percentageColor = attributes.percentageColor,
-          tooltipBackground = attributes.tooltipBackground,
-          heightUnit = attributes.heightUnit,
-          titleFontFamily = attributes.titleFontFamily,
-          titleFontSizeUnit = attributes.titleFontSizeUnit,
-          titleFontWeight = attributes.titleFontWeight,
-          titleTextTransform = attributes.titleTextTransform,
-          titleTextDecoration = attributes.titleTextDecoration,
-          titleLineHeight = attributes.titleLineHeight,
-          titleLineHeightUnit = attributes.titleLineHeightUnit,
-          titleLetterSpacing = attributes.titleLetterSpacing,
-          titleLetterSpacingUnit = attributes.titleLetterSpacingUnit;
-      var wrapperStyles = {
-        paddingTop: displayPercentage && percentageType === "tooltip" ? _constants__WEBPACK_IMPORTED_MODULE_2__["DEFAULT_HEIGHT"] : 0
-      };
-      var containerStyle = {
-        backgroundColor: progressBackground || _constants__WEBPACK_IMPORTED_MODULE_2__["DEFAULT_BACKGROUND"],
-        height: "".concat(height || _constants__WEBPACK_IMPORTED_MODULE_2__["DEFAULT_HEIGHT"]).concat(heightUnit)
-      };
-      var titleStyles = {
-        visibility: displayTitle ? "visible" : "hidden",
-        fontSize: "".concat(titleFontSize).concat(titleFontSizeUnit),
-        fontFamily: titleFontFamily,
-        fontWeight: titleFontWeight,
-        textDecoration: titleTextDecoration,
-        textTransform: titleTextTransform,
-        letterSpacing: titleLetterSpacing ? "".concat(titleLetterSpacing).concat(titleLetterSpacingUnit) : undefined,
-        lineHeight: titleLineHeight ? "".concat(titleLineHeight).concat(titleLineHeightUnit) : undefined,
-        color: titleColor
-      };
-      var progressStyle = {
-        backgroundColor: colorType === "fill" ? progressColor : _constants__WEBPACK_IMPORTED_MODULE_2__["DEFAULT_PROGRESS_COLOR"],
-        width: "".concat(progress || _constants__WEBPACK_IMPORTED_MODULE_2__["DEFAULT_PROGRESS"], "%"),
-        backgroundImage: colorType === "gradient" ? progressGradient : "none"
-      };
-      var tooltipStyles = {
-        display: displayPercentage && percentageType == "tooltip" ? "block" : "none",
-        backgroundColor: tooltipBackground || _constants__WEBPACK_IMPORTED_MODULE_2__["DEFAULT_TOOLTIP_COLOR"],
-        color: percentageColor || _constants__WEBPACK_IMPORTED_MODULE_2__["DEFAULT_TOOLTIP_TEXT_COLOR"]
-      };
-      var tooltipArrowStyles = {
-        borderTop: "5px solid ".concat(tooltipBackground || _constants__WEBPACK_IMPORTED_MODULE_2__["DEFAULT_TOOLTIP_COLOR"])
-      };
-      var innerProgressStyle = {
-        display: displayPercentage && percentageType === "inline" ? "block" : "none",
-        paddingRight: 8,
-        fontSize: "".concat(titleFontSize, "px"),
-        color: titleColor
-      };
-      return [isSelected && /*#__PURE__*/React.createElement(_inspector__WEBPACK_IMPORTED_MODULE_1__["default"], this.props), /*#__PURE__*/React.createElement("div", {
-        className: "eb-progressbar-wrapper",
-        style: wrapperStyles
-      }, /*#__PURE__*/React.createElement("div", {
-        className: "eb-progressbar-container",
-        style: containerStyle
-      }, /*#__PURE__*/React.createElement("div", {
-        className: "eb-progressbar-progress",
-        style: progressStyle
-      }, /*#__PURE__*/React.createElement("div", {
-        className: "eb-progressbar-tooltip",
-        style: tooltipStyles
-      }, "".concat(progress || _constants__WEBPACK_IMPORTED_MODULE_2__["DEFAULT_PROGRESS"], "%"), /*#__PURE__*/React.createElement("span", {
-        className: "eb-progressbar-tooltip-arrow",
-        style: tooltipArrowStyles
-      })), /*#__PURE__*/React.createElement(RichText, {
-        className: "eb-progressbar-title",
-        style: titleStyles,
-        value: title,
-        placeholder: __("Enter text"),
-        keepPlaceholderOnFocus: true,
-        onChange: function onChange(title) {
-          return setAttributes({
-            title: title
-          });
-        }
-      }), /*#__PURE__*/React.createElement("div", {
-        style: innerProgressStyle
-      }, "".concat(progress || _constants__WEBPACK_IMPORTED_MODULE_2__["DEFAULT_PROGRESS"], "%")))))];
+  useEffect(function () {
+    var styleObject = {
+      desktop: desktopAllStyles,
+      tab: tabAllStyles,
+      mobile: mobileAllStyles
+    };
+
+    if (JSON.stringify(blockMeta) != JSON.stringify(styleObject)) {
+      setAttributes({
+        blockMeta: styleObject
+      });
     }
-  }]);
+  }, [attributes]); // this useEffect is for setting the resOption attribute to desktop/tab/mobile depending on the added 'eb-res-option-' class
 
-  return Edit;
-}(Component);
+  useEffect(function () {
+    setAttributes({
+      resOption: select("core/edit-post").__experimentalGetPreviewDeviceType()
+    });
+  }, []); // this useEffect is for creating an unique id for each block's unique className by a random unique number
 
+  useEffect(function () {
+    var BLOCK_PREFIX = "eb-flipbox";
+    Object(_util_helpers__WEBPACK_IMPORTED_MODULE_3__["duplicateBlockIdFix"])({
+      BLOCK_PREFIX: BLOCK_PREFIX,
+      blockId: blockId,
+      setAttributes: setAttributes,
+      select: select,
+      clientId: clientId
+    });
+  }, []); // this useEffect is for mimmiking css when responsive options clicked from wordpress's 'preview' button
 
+  useEffect(function () {
+    Object(_util_helpers__WEBPACK_IMPORTED_MODULE_3__["mimmikCssForPreviewBtnClick"])({
+      domObj: document,
+      select: select
+    });
+  }, []);
+  var blockProps = useBlockProps({
+    className: "eb-guten-block-main-parent-wrapper"
+  });
+  return [isSelected && /*#__PURE__*/React.createElement(_inspector__WEBPACK_IMPORTED_MODULE_1__["default"], props), /*#__PURE__*/React.createElement(BlockControls, null, /*#__PURE__*/React.createElement(AlignmentToolbar, {
+    value: wrapperAlign,
+    onChange: function onChange(wrapperAlign) {
+      return setAttributes({
+        wrapperAlign: wrapperAlign
+      });
+    }
+  })), /*#__PURE__*/React.createElement("div", blockProps, /*#__PURE__*/React.createElement("style", null, "\n\t\t\t\t ".concat(desktopAllStyles, "\n \n\t\t\t\t /* mimmikcssStart */\n \n\t\t\t\t ").concat(resOption === "Tablet" ? tabAllStyles : " ", "\n\t\t\t\t ").concat(resOption === "Mobile" ? tabAllStyles + mobileAllStyles : " ", "\n \n\t\t\t\t /* mimmikcssEnd */\n \n\t\t\t\t @media all and (max-width: 1024px) {\t\n \n\t\t\t\t\t /* tabcssStart */\t\t\t\n\t\t\t\t\t ").concat(Object(_util_helpers__WEBPACK_IMPORTED_MODULE_3__["softMinifyCssStrings"])(tabAllStyles), "\n\t\t\t\t\t /* tabcssEnd */\t\t\t\n\t\t\t\t \n\t\t\t\t }\n\t\t\t\t \n\t\t\t\t @media all and (max-width: 767px) {\n\t\t\t\t\t \n\t\t\t\t\t /* mobcssStart */\t\t\t\n\t\t\t\t\t ").concat(Object(_util_helpers__WEBPACK_IMPORTED_MODULE_3__["softMinifyCssStrings"])(mobileAllStyles), "\n\t\t\t\t\t /* mobcssEnd */\t\t\t\n\t\t\t\t \n\t\t\t\t }\n\t\t\t\t ")), /*#__PURE__*/React.createElement("div", {
+    className: "eb-progressbar-wrapper ".concat(blockId)
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "eb-progressbar-".concat(layout, "-container eb-progressbar-box ").concat(wrapperAlign)
+  }, layout === "line" && title && /*#__PURE__*/React.createElement("div", {
+    "class": "eb-progressbar-title"
+  }, title), /*#__PURE__*/React.createElement("div", {
+    className: "eb-progressbar eb-progressbar-".concat(layout)
+  }, layout === "circle" && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    "class": "eb-progressbar-circle-pie"
+  }, /*#__PURE__*/React.createElement("div", {
+    "class": "eb-progressbar-circle-half-left eb-progressbar-circle-half"
+  }), /*#__PURE__*/React.createElement("div", {
+    "class": "eb-progressbar-circle-half-right eb-progressbar-circle-half"
+  })), /*#__PURE__*/React.createElement("div", {
+    "class": "eb-progressbar-circle-inner"
+  })), layout === "circle" && /*#__PURE__*/React.createElement("div", {
+    "class": "eb-progressbar-circle-inner-content"
+  }), layout === "circle" && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    "class": "eb-progressbar-circle-inner-content"
+  }, title && /*#__PURE__*/React.createElement("div", {
+    "class": "eb-progressbar-title"
+  }, title), /*#__PURE__*/React.createElement("span", {
+    "class": "eb-progressbar-count-wrap"
+  }, /*#__PURE__*/React.createElement("span", {
+    "class": "eb-progressbar-count"
+  }, "50"), /*#__PURE__*/React.createElement("span", {
+    "class": "postfix"
+  }, "%")))), layout === "line" && /*#__PURE__*/React.createElement("span", {
+    "class": "eb-progressbar-count-wrap"
+  }, /*#__PURE__*/React.createElement("span", {
+    "class": "eb-progressbar-count"
+  }, "50"), /*#__PURE__*/React.createElement("span", {
+    "class": "postfix"
+  }, "%")), layout === "line" && /*#__PURE__*/React.createElement("span", {
+    "class": "eb-progressbar-line-fill"
+  })))))];
+}
 
 /***/ }),
 
@@ -855,13 +858,15 @@ var Inspector = function Inspector(_ref) {
       setAttributes = _ref.setAttributes;
   var resOption = attributes.resOption,
       layout = attributes.layout,
+      wrapperAlign = attributes.wrapperAlign,
       title = attributes.title,
       titleTag = attributes.titleTag,
       progress = attributes.progress,
       displayProgress = attributes.displayProgress,
       animationDuration = attributes.animationDuration,
       titleColor = attributes.titleColor,
-      progressColor = attributes.progressColor; // this useEffect is for setting the resOption attribute to desktop/tab/mobile depending on the added 'eb-res-option-' class only the first time once
+      progressColor = attributes.progressColor,
+      showInline = attributes.showInline; // this useEffect is for setting the resOption attribute to desktop/tab/mobile depending on the added 'eb-res-option-' class only the first time once
 
   useEffect(function () {
     setAttributes({
@@ -929,6 +934,14 @@ var Inspector = function Inspector(_ref) {
       onChange: function onChange(newLayout) {
         return setAttributes({
           layout: newLayout
+        });
+      }
+    }), layout === "line" && /*#__PURE__*/React.createElement(ToggleControl, {
+      label: __("Show Inline", "progress-bar"),
+      checked: showInline,
+      onChange: function onChange() {
+        setAttributes({
+          showInline: !showInline
         });
       }
     }), /*#__PURE__*/React.createElement("hr", null), /*#__PURE__*/React.createElement(TextControl, {
@@ -4619,7 +4632,7 @@ function BorderShadowControl(_ref) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
@@ -4633,7 +4646,7 @@ function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o =
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
-function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
@@ -4735,7 +4748,7 @@ var ColorControl = function ColorControl(_ref) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return DimensionsControl; });
 /* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../helpers */ "./util/helpers/index.js");
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
@@ -4749,7 +4762,7 @@ function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o =
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
-function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
@@ -5090,7 +5103,7 @@ function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o =
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
-function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
@@ -5158,7 +5171,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _toggle_button__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../toggle-button */ "./util/toggle-button/index.js");
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./constants */ "./util/gradient-color-controller/constants.js");
 /* harmony import */ var _helper__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./helper */ "./util/gradient-color-controller/helper.js");
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
@@ -5172,7 +5185,7 @@ function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o =
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
-function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
@@ -5441,7 +5454,7 @@ var GradientColorControl = function GradientColorControl(_ref) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "generateBackgroundAttributes", function() { return generateBackgroundAttributes; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "generateBackgroundControlStyles", function() { return generateBackgroundControlStyles; });
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
@@ -6073,7 +6086,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "generateBorderShadowAttributes", function() { return generateBorderShadowAttributes; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "generateBorderShadowStyles", function() { return generateBorderShadowStyles; });
 /* harmony import */ var _dimensionHelpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./dimensionHelpers */ "./util/helpers/dimensionHelpers.js");
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
@@ -6407,7 +6420,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "generateDimensionsAttributes", function() { return generateDimensionsAttributes; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "generateDimensionsControlStyles", function() { return generateDimensionsControlStyles; });
 /* harmony import */ var _hasVal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./hasVal */ "./util/helpers/hasVal.js");
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
@@ -6614,7 +6627,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mimmikCssForPreviewBtnClick", function() { return mimmikCssForPreviewBtnClick; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mimmikCssOnPreviewBtnClickWhileBlockSelected", function() { return mimmikCssOnPreviewBtnClickWhileBlockSelected; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "duplicateBlockIdFix", function() { return duplicateBlockIdFix; });
-function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 
@@ -6988,7 +7001,7 @@ var isCssExists = function isCssExists(cssString) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "generateResponsiveRangeAttributes", function() { return generateResponsiveRangeAttributes; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "generateResponsiveRangeStyles", function() { return generateResponsiveRangeStyles; });
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
@@ -7069,7 +7082,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "generateTypographyAttributes", function() { return generateTypographyAttributes; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "generateTypographyStyles", function() { return generateTypographyStyles; });
 /* harmony import */ var _hasVal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./hasVal */ "./util/helpers/hasVal.js");
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
@@ -7199,7 +7212,7 @@ function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o =
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
-function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
@@ -7536,7 +7549,7 @@ function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o =
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
-function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
@@ -7601,6 +7614,8 @@ var ToggleButton = function ToggleButton(_ref) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./constants */ "./util/typography-control-v2/constants.js");
+var _excluded = ["label", "value", "help", "instanceId", "onChange", "className"];
+
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
 function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
@@ -7626,7 +7641,7 @@ function FontFamilyPicker(_ref) {
       instanceId = _ref.instanceId,
       onChange = _ref.onChange,
       className = _ref.className,
-      props = _objectWithoutProperties(_ref, ["label", "value", "help", "instanceId", "onChange", "className"]);
+      props = _objectWithoutProperties(_ref, _excluded);
 
   var id = "inspector-eb-font-family-".concat(instanceId);
   var fonts = [{
@@ -8379,13 +8394,13 @@ function WithResButtons(_ref) {
 /***/ }),
 
 /***/ "react":
-/*!*********************************!*\
-  !*** external {"this":"React"} ***!
-  \*********************************/
+/*!************************!*\
+  !*** external "React" ***!
+  \************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-(function() { module.exports = this["React"]; }());
+(function() { module.exports = window["React"]; }());
 
 /***/ })
 
