@@ -19,6 +19,8 @@ import {
 	DEFAULT_PROGRESS_COLOR,
 	DEFAULT_TOOLTIP_COLOR,
 	DEFAULT_TOOLTIP_TEXT_COLOR,
+	CONTAINER_CLASS,
+	WRAPPER_CLASS,
 } from "./constants";
 
 import {
@@ -124,6 +126,16 @@ export default function Edit(props) {
 		className: `eb-guten-block-main-parent-wrapper`,
 	});
 
+	const containerStyle = {
+		backgroundColor: progressBackground || DEFAULT_BACKGROUND,
+		height: `${height || DEFAULT_HEIGHT}${heightUnit}`,
+	};
+
+	const lineFill = {
+		transitionDuration: "1500ms",
+		width: "75%",
+	};
+
 	return [
 		isSelected && <Inspector {...props} />,
 		<BlockControls>
@@ -163,28 +175,21 @@ export default function Edit(props) {
 			</style>
 			<div className={`eb-progressbar-wrapper ${blockId}`}>
 				<div
-					className={`eb-progressbar-${layout}-container eb-progressbar-box ${wrapperAlign}`}
+					className={`eb-progressbar-${CONTAINER_CLASS[layout]}-container ${wrapperAlign}`}
 				>
-					{layout === "line" && title && (
+					{(layout === "line" || layout === "line_rainbow") && title && (
 						<div class="eb-progressbar-title">{title}</div>
 					)}
 
-					<div className={`eb-progressbar eb-progressbar-${layout}`}>
-						{layout === "circle" && (
+					<div className={`eb-progressbar ${WRAPPER_CLASS[layout]}`}>
+						{(layout === "circle" || layout === "circle_fill") && (
 							<>
 								<div class="eb-progressbar-circle-pie">
 									<div class="eb-progressbar-circle-half-left eb-progressbar-circle-half"></div>
 									<div class="eb-progressbar-circle-half-right eb-progressbar-circle-half"></div>
 								</div>
 								<div class="eb-progressbar-circle-inner"></div>
-							</>
-						)}
-						{layout === "circle" && (
-							<div class="eb-progressbar-circle-inner-content"></div>
-						)}
-
-						{layout === "circle" && (
-							<>
+								<div class="eb-progressbar-circle-inner-content"></div>
 								<div class="eb-progressbar-circle-inner-content">
 									{title && <div class="eb-progressbar-title">{title}</div>}
 									<span class="eb-progressbar-count-wrap">
@@ -195,67 +200,17 @@ export default function Edit(props) {
 							</>
 						)}
 
-						{layout === "line" && (
-							<span class="eb-progressbar-count-wrap">
-								<span class="eb-progressbar-count">50</span>
-								<span class="postfix">%</span>
-							</span>
-						)}
-
-						{layout === "line" && (
-							<span class="eb-progressbar-line-fill"></span>
+						{(layout === "line" || layout === "line_rainbow") && (
+							<>
+								<span class="eb-progressbar-count-wrap">
+									<span class="eb-progressbar-count">50</span>
+									<span class="postfix">%</span>
+								</span>
+								<span class="eb-progressbar-line-fill" style={lineFill}></span>
+							</>
 						)}
 					</div>
 				</div>
-
-				{/* <div class="eb-progressbar-circle-container center">
-					<div
-						class="eb-progressbar eb-progressbar-circle"
-						data-layout="circle"
-						data-count="50"
-						data-duration="1500"
-					>
-						<div class="eb-progressbar-circle-pie">
-							<div class="eb-progressbar-circle-half-left eb-progressbar-circle-half"></div>
-							<div class="eb-progressbar-circle-half-right eb-progressbar-circle-half"></div>
-						</div>
-						<div class="eb-progressbar-circle-inner"></div>
-						<div class="eb-progressbar-circle-inner-content">
-							<div class="eb-progressbar-title">Progress Bar</div>
-							<span class="eb-progressbar-count-wrap">
-								<span class="eb-progressbar-count">50</span>
-								<span class="postfix">%</span>
-							</span>
-						</div>
-					</div>
-				</div> */}
-
-				{/* <div class="eb-progressbar-circle-container center">
-					<div
-						class="eb-progressbar eb-progressbar-half-circle"
-						data-layout="half_circle"
-						data-count="50"
-						data-duration="1500"
-					>
-						<div class="eb-progressbar-circle">
-							<div class="eb-progressbar-circle-pie">
-								<div class="eb-progressbar-circle-half"></div>
-							</div>
-							<div class="eb-progressbar-circle-inner"></div>
-						</div>
-						<div class="eb-progressbar-circle-inner-content">
-							<div class="eb-progressbar-title">Progress Bar</div>
-							<span class="eb-progressbar-count-wrap">
-								<span class="eb-progressbar-count">50</span>
-								<span class="postfix">%</span>
-							</span>
-						</div>
-					</div>
-					<div class="eb-progressbar-half-circle-after">
-						<span class="eb-progressbar-prefix-label">Prefix</span>
-						<span class="eb-progressbar-postfix-label">Postfix</span>
-					</div>
-				</div> */}
 			</div>
 		</div>,
 	];

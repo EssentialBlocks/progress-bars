@@ -29,6 +29,7 @@ import {
 	mimmikCssOnPreviewBtnClickWhileBlockSelected,
 } from "../util/helpers";
 
+import { LAYOUT } from "./constants";
 import {
 	typoPrefix_title,
 	typoPrefix_counter,
@@ -111,11 +112,7 @@ const Inspector = ({ attributes, setAttributes }) => {
 										<SelectControl
 											label={__("Layout", "progress-bars")}
 											value={layout}
-											options={[
-												{ label: "Line", value: "line" },
-												{ label: "Circle", value: "circle" },
-												{ label: "Half Circle", value: "half-circle" },
-											]}
+											options={LAYOUT}
 											onChange={(newLayout) =>
 												setAttributes({ layout: newLayout })
 											}

@@ -323,7 +323,7 @@ var attributes = _objectSpread(_objectSpread({
 /*!********************************!*\
   !*** ./src/constants/index.js ***!
   \********************************/
-/*! exports provided: DEFAULT_PROGRESS, DEFAULT_HEIGHT, DEFAULT_BACKGROUND, DEFAULT_TOOLTIP_COLOR, DEFAULT_PROGRESS_COLOR, DEFAULT_TOOLTIP_TEXT_COLOR, FONT_SIZES, TEXT_TRANSFORM, FONT_WEIGHTS, TEXT_DECORATION */
+/*! exports provided: DEFAULT_PROGRESS, DEFAULT_HEIGHT, DEFAULT_BACKGROUND, DEFAULT_TOOLTIP_COLOR, DEFAULT_PROGRESS_COLOR, DEFAULT_TOOLTIP_TEXT_COLOR, FONT_SIZES, TEXT_TRANSFORM, FONT_WEIGHTS, TEXT_DECORATION, LAYOUT, CONTAINER_CLASS, WRAPPER_CLASS */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -338,6 +338,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TEXT_TRANSFORM", function() { return TEXT_TRANSFORM; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FONT_WEIGHTS", function() { return FONT_WEIGHTS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TEXT_DECORATION", function() { return TEXT_DECORATION; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LAYOUT", function() { return LAYOUT; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CONTAINER_CLASS", function() { return CONTAINER_CLASS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "WRAPPER_CLASS", function() { return WRAPPER_CLASS; });
 var __ = wp.i18n.__;
 var DEFAULT_PROGRESS = 50;
 var DEFAULT_HEIGHT = "30";
@@ -404,6 +407,31 @@ var TEXT_DECORATION = [{
   label: __("Underline Oveline"),
   value: "underline overline"
 }];
+var LAYOUT = [{
+  label: __("Line"),
+  value: "line"
+}, {
+  label: __("Line Rainbow"),
+  value: "line_rainbow"
+}, {
+  label: __("Circle"),
+  value: "circle"
+}, {
+  label: __("Circle Fill"),
+  value: "circle_fill"
+}];
+var CONTAINER_CLASS = {
+  line: "line",
+  line_rainbow: "line",
+  circle: "circle",
+  circle_fill: "circle"
+};
+var WRAPPER_CLASS = {
+  line: "eb-progressbar-line",
+  line_rainbow: "eb-progressbar-line eb-progressbar-line-rainbow",
+  circle: "eb-progressbar-circle",
+  circle_fill: "eb-progressbar-circle eb-progressbar-circle-fill"
+};
 
 /***/ }),
 
@@ -538,6 +566,14 @@ function Edit(props) {
   var blockProps = useBlockProps({
     className: "eb-guten-block-main-parent-wrapper"
   });
+  var containerStyle = {
+    backgroundColor: progressBackground || _constants__WEBPACK_IMPORTED_MODULE_2__["DEFAULT_BACKGROUND"],
+    height: "".concat(height || _constants__WEBPACK_IMPORTED_MODULE_2__["DEFAULT_HEIGHT"]).concat(heightUnit)
+  };
+  var lineFill = {
+    transitionDuration: "1500ms",
+    width: "75%"
+  };
   return [isSelected && /*#__PURE__*/React.createElement(_inspector__WEBPACK_IMPORTED_MODULE_1__["default"], props), /*#__PURE__*/React.createElement(BlockControls, null, /*#__PURE__*/React.createElement(AlignmentToolbar, {
     value: wrapperAlign,
     onChange: function onChange(wrapperAlign) {
@@ -548,12 +584,12 @@ function Edit(props) {
   })), /*#__PURE__*/React.createElement("div", blockProps, /*#__PURE__*/React.createElement("style", null, "\n\t\t\t\t ".concat(desktopAllStyles, "\n \n\t\t\t\t /* mimmikcssStart */\n \n\t\t\t\t ").concat(resOption === "Tablet" ? tabAllStyles : " ", "\n\t\t\t\t ").concat(resOption === "Mobile" ? tabAllStyles + mobileAllStyles : " ", "\n \n\t\t\t\t /* mimmikcssEnd */\n \n\t\t\t\t @media all and (max-width: 1024px) {\t\n \n\t\t\t\t\t /* tabcssStart */\t\t\t\n\t\t\t\t\t ").concat(Object(_util_helpers__WEBPACK_IMPORTED_MODULE_3__["softMinifyCssStrings"])(tabAllStyles), "\n\t\t\t\t\t /* tabcssEnd */\t\t\t\n\t\t\t\t \n\t\t\t\t }\n\t\t\t\t \n\t\t\t\t @media all and (max-width: 767px) {\n\t\t\t\t\t \n\t\t\t\t\t /* mobcssStart */\t\t\t\n\t\t\t\t\t ").concat(Object(_util_helpers__WEBPACK_IMPORTED_MODULE_3__["softMinifyCssStrings"])(mobileAllStyles), "\n\t\t\t\t\t /* mobcssEnd */\t\t\t\n\t\t\t\t \n\t\t\t\t }\n\t\t\t\t ")), /*#__PURE__*/React.createElement("div", {
     className: "eb-progressbar-wrapper ".concat(blockId)
   }, /*#__PURE__*/React.createElement("div", {
-    className: "eb-progressbar-".concat(layout, "-container eb-progressbar-box ").concat(wrapperAlign)
-  }, layout === "line" && title && /*#__PURE__*/React.createElement("div", {
+    className: "eb-progressbar-".concat(_constants__WEBPACK_IMPORTED_MODULE_2__["CONTAINER_CLASS"][layout], "-container ").concat(wrapperAlign)
+  }, (layout === "line" || layout === "line_rainbow") && title && /*#__PURE__*/React.createElement("div", {
     "class": "eb-progressbar-title"
   }, title), /*#__PURE__*/React.createElement("div", {
-    className: "eb-progressbar eb-progressbar-".concat(layout)
-  }, layout === "circle" && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    className: "eb-progressbar ".concat(_constants__WEBPACK_IMPORTED_MODULE_2__["WRAPPER_CLASS"][layout])
+  }, (layout === "circle" || layout === "circle_fill") && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     "class": "eb-progressbar-circle-pie"
   }, /*#__PURE__*/React.createElement("div", {
     "class": "eb-progressbar-circle-half-left eb-progressbar-circle-half"
@@ -561,9 +597,9 @@ function Edit(props) {
     "class": "eb-progressbar-circle-half-right eb-progressbar-circle-half"
   })), /*#__PURE__*/React.createElement("div", {
     "class": "eb-progressbar-circle-inner"
-  })), layout === "circle" && /*#__PURE__*/React.createElement("div", {
+  }), /*#__PURE__*/React.createElement("div", {
     "class": "eb-progressbar-circle-inner-content"
-  }), layout === "circle" && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+  }), /*#__PURE__*/React.createElement("div", {
     "class": "eb-progressbar-circle-inner-content"
   }, title && /*#__PURE__*/React.createElement("div", {
     "class": "eb-progressbar-title"
@@ -573,15 +609,16 @@ function Edit(props) {
     "class": "eb-progressbar-count"
   }, "50"), /*#__PURE__*/React.createElement("span", {
     "class": "postfix"
-  }, "%")))), layout === "line" && /*#__PURE__*/React.createElement("span", {
+  }, "%")))), (layout === "line" || layout === "line_rainbow") && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("span", {
     "class": "eb-progressbar-count-wrap"
   }, /*#__PURE__*/React.createElement("span", {
     "class": "eb-progressbar-count"
   }, "50"), /*#__PURE__*/React.createElement("span", {
     "class": "postfix"
-  }, "%")), layout === "line" && /*#__PURE__*/React.createElement("span", {
-    "class": "eb-progressbar-line-fill"
-  })))))];
+  }, "%")), /*#__PURE__*/React.createElement("span", {
+    "class": "eb-progressbar-line-fill",
+    style: lineFill
+  }))))))];
 }
 
 /***/ }),
@@ -825,7 +862,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _util_background_control__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../util/background-control */ "./util/background-control/index.js");
 /* harmony import */ var _util_border_shadow_control__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../util/border-shadow-control */ "./util/border-shadow-control/index.js");
 /* harmony import */ var _util_helpers__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../util/helpers */ "./util/helpers/index.js");
-/* harmony import */ var _constants_typographyConstants__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./constants/typographyConstants */ "./src/constants/typographyConstants.js");
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./constants */ "./src/constants/index.js");
+/* harmony import */ var _constants_typographyConstants__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./constants/typographyConstants */ "./src/constants/typographyConstants.js");
 /**
  * WordPress dependencies
  */
@@ -842,6 +880,7 @@ var _wp$components = wp.components,
     Button = _wp$components.Button,
     BaseControl = _wp$components.BaseControl,
     TabPanel = _wp$components.TabPanel;
+
 
 
 
@@ -921,16 +960,7 @@ var Inspector = function Inspector(_ref) {
     }, /*#__PURE__*/React.createElement(SelectControl, {
       label: __("Layout", "progress-bars"),
       value: layout,
-      options: [{
-        label: "Line",
-        value: "line"
-      }, {
-        label: "Circle",
-        value: "circle"
-      }, {
-        label: "Half Circle",
-        value: "half-circle"
-      }],
+      options: _constants__WEBPACK_IMPORTED_MODULE_9__["LAYOUT"],
       onChange: function onChange(newLayout) {
         return setAttributes({
           layout: newLayout
@@ -1022,7 +1052,7 @@ var Inspector = function Inspector(_ref) {
       title: __("Typography", "progress-bar")
     }, /*#__PURE__*/React.createElement(_util_typography_control_v2__WEBPACK_IMPORTED_MODULE_5__["default"], {
       baseLabel: __("Title"),
-      typographyPrefixConstant: _constants_typographyConstants__WEBPACK_IMPORTED_MODULE_9__["typoPrefix_title"],
+      typographyPrefixConstant: _constants_typographyConstants__WEBPACK_IMPORTED_MODULE_10__["typoPrefix_title"],
       resRequiredProps: resRequiredProps
     }), /*#__PURE__*/React.createElement(_util_color_control__WEBPACK_IMPORTED_MODULE_2__["default"], {
       label: __("Title Color"),
@@ -1034,7 +1064,7 @@ var Inspector = function Inspector(_ref) {
       }
     }), /*#__PURE__*/React.createElement("hr", null), /*#__PURE__*/React.createElement(_util_typography_control_v2__WEBPACK_IMPORTED_MODULE_5__["default"], {
       baseLabel: __("Counter"),
-      typographyPrefixConstant: _constants_typographyConstants__WEBPACK_IMPORTED_MODULE_9__["typoPrefix_counter"],
+      typographyPrefixConstant: _constants_typographyConstants__WEBPACK_IMPORTED_MODULE_10__["typoPrefix_counter"],
       resRequiredProps: resRequiredProps
     }), /*#__PURE__*/React.createElement(_util_color_control__WEBPACK_IMPORTED_MODULE_2__["default"], {
       label: __("Counter Color"),

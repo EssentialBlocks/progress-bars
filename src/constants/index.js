@@ -35,3 +35,24 @@ export const TEXT_DECORATION = [
 	{ label: __("Underline"), value: "underline" },
 	{ label: __("Underline Oveline"), value: "underline overline" },
 ];
+
+export const LAYOUT = [
+	{ label: __("Line"), value: "line" },
+	{ label: __("Line Rainbow"), value: "line_rainbow" },
+	{ label: __("Circle"), value: "circle" },
+	{ label: __("Circle Fill"), value: "circle_fill" },
+];
+
+export const CONTAINER_CLASS = {
+	line: "line",
+	line_rainbow: "line",
+	circle: "circle",
+	circle_fill: "circle",
+};
+
+export const WRAPPER_CLASS = {
+	line: "eb-progressbar-line",
+	line_rainbow: "eb-progressbar-line eb-progressbar-line-rainbow",
+	circle: "eb-progressbar-circle",
+	circle_fill: "eb-progressbar-circle eb-progressbar-circle-fill",
+};
