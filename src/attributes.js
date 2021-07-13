@@ -1,6 +1,15 @@
 const { __ } = wp.i18n;
 import * as typoPrefixs from "./constants/typographyConstants";
-import { generateTypographyAttributes } from "../util/helpers";
+import {
+	PROGRESSBAR_HEIGHT,
+	PROGRESSBAR_WIDTH,
+	FILL_BACKGROUND,
+} from "./constants";
+import {
+	generateTypographyAttributes,
+	generateResponsiveRangeAttributes,
+	generateBackgroundAttributes,
+} from "../util/helpers";
 const attributes = {
 	resOption: {
 		type: "string",
@@ -22,6 +31,9 @@ const attributes = {
 	layout: {
 		type: "string",
 		default: "line",
+		source: "attribute",
+		selector: ".eb-progressbar",
+		attribute: "data-layout",
 	},
 	wrapperAlign: {
 		type: "string",
@@ -37,29 +49,70 @@ const attributes = {
 	},
 	progress: {
 		type: "number",
+		default: 50,
+		source: "attribute",
+		selector: ".eb-progressbar",
+		attribute: "data-count",
 	},
 	displayProgress: {
 		type: "boolean",
-		default: false,
+		default: true,
 	},
 	animationDuration: {
 		type: "number",
 		default: 1500,
+		source: "attribute",
+		selector: ".eb-progressbar",
+		attribute: "data-duration",
 	},
 	titleColor: {
 		type: "string",
 	},
 	progressColor: {
 		type: "string",
+		default: "#000000",
+	},
+	isProgressGradient: {
+		type: "boolean",
+		default: false,
+	},
+	progressGradient: {
+		type: "string",
+		default: "linear-gradient(45deg,#00F260,#0575E6)",
 	},
 	showInline: {
 		type: "boolean",
 		default: false,
 	},
+	backgroundColor: {
+		type: "string",
+		default: "#eaeaea",
+	},
+	showStripe: {
+		type: "boolean",
+		default: false,
+	},
+	stripeAnimation: {
+		type: "string",
+		default: "none",
+	},
 	// typography attributes
 	...generateTypographyAttributes(Object.values(typoPrefixs)),
+	// range controller
+	...generateResponsiveRangeAttributes(PROGRESSBAR_WIDTH, {
+		defaultRange: 310,
+	}),
+	...generateResponsiveRangeAttributes(PROGRESSBAR_HEIGHT, {
+		defaultRange: 12,
+		noUnits: true,
+	}),
+	// background control
+	...generateBackgroundAttributes(FILL_BACKGROUND, {
+		defaultFillColor: "#000000",
+		noOverlay: true,
+		noMainBgi: true,
+	}),
 	// end new attributes
-
 	height: {
 		type: "number",
 	},
@@ -95,10 +148,6 @@ const attributes = {
 	},
 	percentageColor: {
 		type: "string",
-	},
-	progressGradient: {
-		type: "string",
-		default: "linear-gradient(45deg,#00F260,#0575E6)",
 	},
 	heightUnit: {
 		type: "string",

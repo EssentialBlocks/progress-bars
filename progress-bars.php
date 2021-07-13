@@ -63,11 +63,27 @@ function create_block_progress_bar_block_init() {
 		filemtime( "$dir/$style_css" )
 	);
 
+	$progress_bar_js = 'assets/js/progress-bars.js';
+	wp_register_script( 
+		'eb-progress-bar', 
+		plugins_url($progress_bar_js, __FILE__ ),
+		array()
+	);
+
+	// $style_js = 'build/style-script.js';
+	// wp_register_script( 
+	// 	'create-block-progress-bar-block', 
+	// 	plugins_url($style_js, __FILE__), 
+	// 	array('eb-progress-bar'), 
+	// 	filemtime("$dir/$style_js")
+	// );
+
 	if( ! WP_Block_Type_Registry::get_instance()->is_registered( 'essential-blocks/progress-bar' ) ) {
     register_block_type( 'progress-bars/progress-bar-block', array(
       'editor_script' => 'create-block-progress-bar-block-editor',
       'editor_style'  => 'create-block-progress-bar-block-editor',
       'style'         => 'create-block-progress-bar-block',
+      'script'         => 'eb-progress-bar',
     ) );
   }
 }

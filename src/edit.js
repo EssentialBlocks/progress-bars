@@ -46,8 +46,11 @@ export default function Edit(props) {
 		resOption,
 		layout,
 		wrapperAlign,
+		titleTag,
 		progress,
+		displayProgress,
 		height,
+		animationDuration,
 		displayTitle,
 		title,
 		displayPercentage,
@@ -71,6 +74,10 @@ export default function Edit(props) {
 		titleLetterSpacing,
 		titleLetterSpacingUnit,
 	} = attributes;
+
+	const desktopStyles = `
+		
+	`;
 
 	// all css styles for large screen width (desktop/laptop) in strings ⬇
 	const desktopAllStyles = softMinifyCssStrings(`
@@ -178,10 +185,17 @@ export default function Edit(props) {
 					className={`eb-progressbar-${CONTAINER_CLASS[layout]}-container ${wrapperAlign}`}
 				>
 					{(layout === "line" || layout === "line_rainbow") && title && (
-						<div class="eb-progressbar-title">{title}</div>
+						<attributes.titleTag class="eb-progressbar-title">
+							{title}
+						</attributes.titleTag>
 					)}
 
-					<div className={`eb-progressbar ${WRAPPER_CLASS[layout]}`}>
+					<div
+						className={`eb-progressbar ${WRAPPER_CLASS[layout]}`}
+						data-layout={layout}
+						data-count={progress}
+						data-duration={animationDuration}
+					>
 						{(layout === "circle" || layout === "circle_fill") && (
 							<>
 								<div class="eb-progressbar-circle-pie">
@@ -189,27 +203,81 @@ export default function Edit(props) {
 									<div class="eb-progressbar-circle-half-right eb-progressbar-circle-half"></div>
 								</div>
 								<div class="eb-progressbar-circle-inner"></div>
-								<div class="eb-progressbar-circle-inner-content"></div>
 								<div class="eb-progressbar-circle-inner-content">
-									{title && <div class="eb-progressbar-title">{title}</div>}
-									<span class="eb-progressbar-count-wrap">
-										<span class="eb-progressbar-count">50</span>
-										<span class="postfix">%</span>
-									</span>
+									{title && (
+										<attributes.titleTag class="eb-progressbar-title">
+											{title}
+										</attributes.titleTag>
+									)}
+									{displayProgress && (
+										<span class="eb-progressbar-count-wrap">
+											<span class="eb-progressbar-count">{progress}</span>
+											<span class="postfix">%</span>
+										</span>
+									)}
+								</div>
+							</>
+						)}
+
+						{(layout === "half_circle" || layout === "half_circle_fill") && (
+							<>
+								<div class="eb-progressbar-circle">
+									<div class="eb-progressbar-circle-pie">
+										<div class="eb-progressbar-circle-half"></div>
+									</div>
+									<div class="eb-progressbar-circle-inner"></div>
+								</div>
+								<div class="eb-progressbar-circle-inner-content">
+									<attributes.titleTag class="eb-progressbar-title">
+										{title}
+									</attributes.titleTag>
+									{displayProgress && (
+										<span class="eb-progressbar-count-wrap">
+											<span class="eb-progressbar-count">{progress}</span>
+											<span class="postfix">%</span>
+										</span>
+									)}
 								</div>
 							</>
 						)}
 
 						{(layout === "line" || layout === "line_rainbow") && (
 							<>
-								<span class="eb-progressbar-count-wrap">
-									<span class="eb-progressbar-count">50</span>
-									<span class="postfix">%</span>
-								</span>
+								{displayProgress && (
+									<span class="eb-progressbar-count-wrap">
+										<span class="eb-progressbar-count">{progress}</span>
+										<span class="postfix">%</span>
+									</span>
+								)}
 								<span class="eb-progressbar-line-fill" style={lineFill}></span>
 							</>
 						)}
+
+						{layout === "box" && (
+							<>
+								<div class="eb-progressbar-box-inner-content">
+									<attributes.titleTag class="eb-progressbar-title">
+										{title}
+									</attributes.titleTag>
+									{displayProgress && (
+										<span class="eb-progressbar-count-wrap">
+											<span class="eb-progressbar-count">{progress}</span>
+											<span class="postfix">%</span>
+										</span>
+									)}
+								</div>
+								<div class="eb-progressbar-box-fill"></div>
+							</>
+						)}
 					</div>
+					{(layout === "half_circle" || layout === "half_circle_fill") && (
+						<>
+							<div class="eb-progressbar-half-circle-after">
+								<span class="eb-progressbar-prefix-label">Prefix</span>
+								<span class="eb-progressbar-postfix-label">Postfix</span>
+							</div>
+						</>
+					)}
 				</div>
 			</div>
 		</div>,

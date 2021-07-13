@@ -29,11 +29,18 @@ import {
 	mimmikCssOnPreviewBtnClickWhileBlockSelected,
 } from "../util/helpers";
 
-import { LAYOUT } from "./constants";
+import {
+	LAYOUT,
+	PX_PERCENTAGE,
+	PROGRESSBAR_WIDTH,
+	PROGRESSBAR_HEIGHT,
+	FILL_BACKGROUND,
+} from "./constants";
 import {
 	typoPrefix_title,
 	typoPrefix_counter,
 } from "./constants/typographyConstants";
+import GradientColorControl from "../util/gradient-color-controller";
 
 const Inspector = ({ attributes, setAttributes }) => {
 	const {
@@ -47,7 +54,12 @@ const Inspector = ({ attributes, setAttributes }) => {
 		animationDuration,
 		titleColor,
 		progressColor,
+		isProgressGradient,
+		progressGradient,
 		showInline,
+		backgroundColor,
+		showStripe,
+		stripeAnimation,
 		// new attributes
 	} = attributes;
 
@@ -194,6 +206,89 @@ const Inspector = ({ attributes, setAttributes }) => {
 							)}
 							{tab.name === "styles" && (
 								<>
+									<PanelBody title={__("Fill", "progress-bar")}>
+										<ResponsiveRangeController
+											baseLabel={__("Width", "pregress-bar")}
+											controlName={PROGRESSBAR_WIDTH}
+											resRequiredProps={resRequiredProps}
+											units={PX_PERCENTAGE}
+											min={100}
+											max={1000}
+											step={1}
+										/>
+										<ResponsiveRangeController
+											baseLabel={__("Height", "progress-bar")}
+											controlName={PROGRESSBAR_HEIGHT}
+											resRequiredProps={resRequiredProps}
+											min={0}
+											max={100}
+											step={1}
+											noUnits
+										/>
+										<ColorControl
+											label={__("Background Color", "progress-bar")}
+											color={backgroundColor}
+											onChange={(backgroundColor) =>
+												setAttributes({ backgroundColor })
+											}
+										/>
+										<BaseControl>
+											<h3 className="eb-control-title">
+												{__("Fill Color", "progress-bar")}
+											</h3>
+										</BaseControl>
+										<ToggleControl
+											label={__("Show Fill Gradient", "progress-bar")}
+											checked={isProgressGradient}
+											onChange={() => {
+												setAttributes({
+													isProgressGradient: !isProgressGradient,
+												});
+											}}
+										/>
+										{isProgressGradient || (
+											<ColorControl
+												label={__("Color", "progress-bar")}
+												color={progressColor}
+												onChange={(progressColor) =>
+													setAttributes({ progressColor })
+												}
+											/>
+										)}
+										{isProgressGradient && (
+											<GradientColorControl
+												label={__("Gradient Color", "progress-bar")}
+												color={progressGradient}
+												onChange={(progressGradient) =>
+													setAttributes({ progressGradient })
+												}
+											/>
+										)}
+										<hr />
+										<ToggleControl
+											label={__("Show Stripe", "progress-bar")}
+											checked={showStripe}
+											onChange={() => {
+												setAttributes({
+													showStripe: !showStripe,
+												});
+											}}
+										/>
+										{showStripe && (
+											<SelectControl
+												label={__("Stripe Animation", "progress-bars")}
+												value={stripeAnimation}
+												options={[
+													{ label: "Left To Right", value: "normal" },
+													{ label: "Right To Left", value: "reverse" },
+													{ label: "Disabled", value: "none" },
+												]}
+												onChange={(newTitleTag) =>
+													setAttributes({ titleTag: newTitleTag })
+												}
+											/>
+										)}
+									</PanelBody>
 									<PanelBody title={__("Typography", "progress-bar")}>
 										<TypographyDropdown
 											baseLabel={__("Title")}
