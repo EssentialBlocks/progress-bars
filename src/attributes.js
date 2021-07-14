@@ -99,9 +99,7 @@ const attributes = {
 	// typography attributes
 	...generateTypographyAttributes(Object.values(typoPrefixs)),
 	// range controller
-	...generateResponsiveRangeAttributes(PROGRESSBAR_WIDTH, {
-		defaultRange: 310,
-	}),
+	...generateResponsiveRangeAttributes(PROGRESSBAR_WIDTH),
 	...generateResponsiveRangeAttributes(PROGRESSBAR_HEIGHT, {
 		defaultRange: 12,
 		noUnits: true,

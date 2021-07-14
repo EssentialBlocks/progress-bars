@@ -21,6 +21,8 @@ import {
 	DEFAULT_TOOLTIP_TEXT_COLOR,
 	CONTAINER_CLASS,
 	WRAPPER_CLASS,
+	PROGRESSBAR_HEIGHT,
+	PROGRESSBAR_WIDTH,
 } from "./constants";
 
 import {
@@ -51,6 +53,7 @@ export default function Edit(props) {
 		displayProgress,
 		height,
 		animationDuration,
+		backgroundColor,
 		displayTitle,
 		title,
 		displayPercentage,
@@ -75,21 +78,52 @@ export default function Edit(props) {
 		titleLetterSpacingUnit,
 	} = attributes;
 
+	const {
+		rangeStylesDesktop: progressBarWidthDesktop,
+		rangeStylesTab: progressBarWidthTab,
+		rangeStylesMobile: progressBarWidthMobile,
+	} = generateResponsiveRangeStyles({
+		controlName: PROGRESSBAR_WIDTH,
+		property: "width",
+		attributes,
+	});
+
 	const desktopStyles = `
-		
+		.${blockId} .eb-progressbar-line {
+			background-color: ${backgroundColor};
+		}
+
+		.${blockId} .eb-progressbar-line-container {
+			${progressBarWidthDesktop}
+		}
+	`;
+
+	const tabStyles = `
+		.${blockId} .eb-progressbar-line-container {
+			${progressBarWidthTab}
+		}
+	`;
+
+	const mobileStyles = `
+		.${blockId} .eb-progressbar-line-container {
+			${progressBarWidthMobile}
+		}
 	`;
 
 	// all css styles for large screen width (desktop/laptop) in strings ⬇
 	const desktopAllStyles = softMinifyCssStrings(`
-	 `);
+		${isCssExists(desktopStyles) ? desktopStyles : " "}
+	`);
 
 	// all css styles for Tab in strings ⬇
 	const tabAllStyles = softMinifyCssStrings(`
-	 `);
+		${isCssExists(tabStyles) ? tabStyles : " "}
+	`);
 
 	// all css styles for Mobile in strings ⬇
 	const mobileAllStyles = softMinifyCssStrings(`
-	 `);
+		${isCssExists(mobileStyles) ? mobileStyles : " "}
+	`);
 	// Set All Style in "blockMeta" Attribute
 	useEffect(() => {
 		const styleObject = {
