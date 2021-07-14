@@ -64,18 +64,22 @@ function create_block_progress_bar_block_init() {
 	);
 
 	$progress_bar_js = 'assets/js/progress-bars.js';
-	wp_register_script( 
+	wp_enqueue_script( 
 		'eb-progress-bar', 
 		plugins_url($progress_bar_js, __FILE__ ),
-		array()
+		array(),
+		filemtime("$dir/$progress_bar_js"),
+		true
 	);
 
-	// $style_js = 'build/style-script.js';
-	// wp_register_script( 
-	// 	'create-block-progress-bar-block', 
-	// 	plugins_url($style_js, __FILE__), 
-	// 	array('eb-progress-bar'), 
-	// 	filemtime("$dir/$style_js")
+	// $frontend_js_path = include_once dirname(__FILE__)."/build/frontend.asset.php";
+	// $frontend_js = "build/frontend.js";
+	// wp_register_script(
+	// 	'create-block-progress-bar-block',
+	// 	plugins_url($frontend_js, __FILE__),
+	// 	array_merge( array("eb-progress-bar"), $frontend_js_path['dependencies'] ),
+	// 	$frontend_js_path['version'],
+	// 	true
 	// );
 
 	if( ! WP_Block_Type_Registry::get_instance()->is_registered( 'essential-blocks/progress-bar' ) ) {
@@ -83,7 +87,7 @@ function create_block_progress_bar_block_init() {
       'editor_script' => 'create-block-progress-bar-block-editor',
       'editor_style'  => 'create-block-progress-bar-block-editor',
       'style'         => 'create-block-progress-bar-block',
-      'script'         => 'eb-progress-bar',
+    //   'script'         => 'create-block-progress-bar-block',
     ) );
   }
 }

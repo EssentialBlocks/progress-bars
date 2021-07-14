@@ -111,7 +111,7 @@ export default function Edit(props) {
 
 	// this useEffect is for creating an unique id for each block's unique className by a random unique number
 	useEffect(() => {
-		const BLOCK_PREFIX = "eb-flipbox";
+		const BLOCK_PREFIX = "eb-price-table";
 		duplicateBlockIdFix({
 			BLOCK_PREFIX,
 			blockId,
@@ -191,7 +191,7 @@ export default function Edit(props) {
 					)}
 
 					<div
-						className={`eb-progressbar ${WRAPPER_CLASS[layout]}`}
+						className={`eb-progressbar eb-progressbar-line-animate ${WRAPPER_CLASS[layout]}`}
 						data-layout={layout}
 						data-count={progress}
 						data-duration={animationDuration}

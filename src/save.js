@@ -97,7 +97,10 @@ const save = ({ attributes }) => {
 
 	return (
 		<div className="eb-progressbar-wrapper" style={wrapperStyles}>
-			<div className="eb-progressbar-container" style={containerStyle}>
+			<div
+				className="eb-progessbar eb-progressbar-container"
+				style={containerStyle}
+			>
 				<div className="eb-progressbar-progress" style={progressStyle}>
 					<div className="eb-progressbar-tooltip" style={tooltipStyles}>
 						{`${progress || DEFAULT_PROGRESS}%`}
