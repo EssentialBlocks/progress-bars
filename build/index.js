@@ -1,4 +1,4 @@
-(window["webpackJsonp"] = window["webpackJsonp"] || []).push([["style-index"],{
+(window["webpackJsonp_progress_bars"] = window["webpackJsonp_progress_bars"] || []).push([["style-index"],{
 
 /***/ "./src/style.scss":
 /*!************************!*\
@@ -154,7 +154,7 @@
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "";
 /******/
-/******/ 	var jsonpArray = window["webpackJsonp"] = window["webpackJsonp"] || [];
+/******/ 	var jsonpArray = window["webpackJsonp_progress_bars"] = window["webpackJsonp_progress_bars"] || [];
 /******/ 	var oldJsonpFunction = jsonpArray.push.bind(jsonpArray);
 /******/ 	jsonpArray.push = webpackJsonpCallback;
 /******/ 	jsonpArray = jsonpArray.slice();
@@ -182,7 +182,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _constants_typographyConstants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./constants/typographyConstants */ "./src/constants/typographyConstants.js");
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./constants */ "./src/constants/index.js");
 /* harmony import */ var _util_helpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../util/helpers */ "./util/helpers/index.js");
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
@@ -251,6 +251,9 @@ var attributes = _objectSpread(_objectSpread(_objectSpread(_objectSpread(_object
   titleColor: {
     type: "string"
   },
+  counterColor: {
+    type: "string"
+  },
   progressColor: {
     type: "string",
     "default": "#000000"
@@ -260,8 +263,8 @@ var attributes = _objectSpread(_objectSpread(_objectSpread(_objectSpread(_object
     "default": false
   },
   progressGradient: {
-    type: "string",
-    "default": "linear-gradient(45deg,#00F260,#0575E6)"
+    type: "string" // default: "linear-gradient(45deg,#00F260,#0575E6)",
+
   },
   showInline: {
     type: "boolean",
@@ -359,7 +362,7 @@ var attributes = _objectSpread(_objectSpread(_objectSpread(_objectSpread(_object
 /*!********************************!*\
   !*** ./src/constants/index.js ***!
   \********************************/
-/*! exports provided: DEFAULT_PROGRESS, DEFAULT_HEIGHT, DEFAULT_BACKGROUND, DEFAULT_TOOLTIP_COLOR, DEFAULT_PROGRESS_COLOR, DEFAULT_TOOLTIP_TEXT_COLOR, FONT_SIZES, TEXT_TRANSFORM, FONT_WEIGHTS, TEXT_DECORATION, LAYOUT, CONTAINER_CLASS, WRAPPER_CLASS, PX_PERCENTAGE, PROGRESSBAR_WIDTH, PROGRESSBAR_HEIGHT, FILL_BACKGROUND */
+/*! exports provided: DEFAULT_PROGRESS, DEFAULT_HEIGHT, DEFAULT_BACKGROUND, DEFAULT_TOOLTIP_COLOR, DEFAULT_PROGRESS_COLOR, DEFAULT_TOOLTIP_TEXT_COLOR, LAYOUT, CONTAINER_CLASS, WRAPPER_CLASS, STRIPE_CLASS, PX_PERCENTAGE, PROGRESSBAR_WIDTH, PROGRESSBAR_HEIGHT, FILL_BACKGROUND */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -370,13 +373,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DEFAULT_TOOLTIP_COLOR", function() { return DEFAULT_TOOLTIP_COLOR; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DEFAULT_PROGRESS_COLOR", function() { return DEFAULT_PROGRESS_COLOR; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DEFAULT_TOOLTIP_TEXT_COLOR", function() { return DEFAULT_TOOLTIP_TEXT_COLOR; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FONT_SIZES", function() { return FONT_SIZES; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TEXT_TRANSFORM", function() { return TEXT_TRANSFORM; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FONT_WEIGHTS", function() { return FONT_WEIGHTS; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TEXT_DECORATION", function() { return TEXT_DECORATION; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LAYOUT", function() { return LAYOUT; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CONTAINER_CLASS", function() { return CONTAINER_CLASS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "WRAPPER_CLASS", function() { return WRAPPER_CLASS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "STRIPE_CLASS", function() { return STRIPE_CLASS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PX_PERCENTAGE", function() { return PX_PERCENTAGE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PROGRESSBAR_WIDTH", function() { return PROGRESSBAR_WIDTH; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PROGRESSBAR_HEIGHT", function() { return PROGRESSBAR_HEIGHT; });
@@ -388,65 +388,6 @@ var DEFAULT_BACKGROUND = "#edf1f7";
 var DEFAULT_TOOLTIP_COLOR = "#7967ff";
 var DEFAULT_PROGRESS_COLOR = "#7967ff";
 var DEFAULT_TOOLTIP_TEXT_COLOR = "#ffffff";
-var FONT_SIZES = [{
-  name: __("Small"),
-  size: 12,
-  slug: "s"
-}, {
-  name: __("Medium"),
-  size: 16,
-  slug: "m"
-}, {
-  name: __("Large"),
-  size: 24,
-  slug: "l"
-}, {
-  name: __("Extra Large"),
-  size: 36,
-  slug: "xl"
-}];
-var TEXT_TRANSFORM = [{
-  label: __("None"),
-  value: "none"
-}, {
-  label: __("Lowercase"),
-  value: "lowercase"
-}, {
-  label: __("Capitalize"),
-  value: "capitalize"
-}, {
-  label: __("Uppercase"),
-  value: "uppercase"
-}];
-var FONT_WEIGHTS = [{
-  label: __("Lighter"),
-  value: "lighter"
-}, {
-  label: __("Normal"),
-  value: "normal"
-}, {
-  label: __("Bold"),
-  value: "bold"
-}, {
-  label: __("Bolder"),
-  value: "bolder"
-}];
-var TEXT_DECORATION = [{
-  label: __("Initial"),
-  value: "initial"
-}, {
-  label: __("Overline"),
-  value: "overline"
-}, {
-  label: __("Line Through"),
-  value: "line-through"
-}, {
-  label: __("Underline"),
-  value: "underline"
-}, {
-  label: __("Underline Oveline"),
-  value: "underline overline"
-}];
 var LAYOUT = [{
   label: __("Line"),
   value: "line"
@@ -486,6 +427,11 @@ var WRAPPER_CLASS = {
   half_circle: "eb-progressbar-half-circle",
   half_circle_fill: "eb-progressbar-circle eb-progressbar-half-circle eb-progressbar-half-circle-fill",
   box: "eb-progressbar-box"
+};
+var STRIPE_CLASS = {
+  none: "eb-progressbar-line-stripe",
+  normal: "eb-progressbar-line-stripe eb-progressbar-line-animate",
+  reverse: "eb-progressbar-line-stripe eb-progressbar-line-animate-rtl"
 };
 var PX_PERCENTAGE = [{
   label: "px",
@@ -532,7 +478,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_editor_scss__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _inspector__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./inspector */ "./src/inspector.js");
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./constants */ "./src/constants/index.js");
-/* harmony import */ var _util_helpers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../util/helpers */ "./util/helpers/index.js");
+/* harmony import */ var _constants_typographyConstants__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./constants/typographyConstants */ "./src/constants/typographyConstants.js");
+/* harmony import */ var _util_helpers__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../util/helpers */ "./util/helpers/index.js");
 /**
  * WordPress dependencies
  */
@@ -547,6 +494,7 @@ var select = wp.data.select;
 /**
  * Internal depenencies
  */
+
 
 
 
@@ -574,41 +522,71 @@ function Edit(props) {
       colorType = attributes.colorType,
       progressBackground = attributes.progressBackground,
       progressColor = attributes.progressColor,
+      isProgressGradient = attributes.isProgressGradient,
       progressGradient = attributes.progressGradient,
-      titleFontSize = attributes.titleFontSize,
+      showStripe = attributes.showStripe,
+      stripeAnimation = attributes.stripeAnimation,
       titleColor = attributes.titleColor,
+      counterColor = attributes.counterColor,
+      showInline = attributes.showInline,
       percentageType = attributes.percentageType,
       percentageColor = attributes.percentageColor,
       tooltipBackground = attributes.tooltipBackground,
-      heightUnit = attributes.heightUnit,
-      titleFontFamily = attributes.titleFontFamily,
-      titleFontSizeUnit = attributes.titleFontSizeUnit,
-      titleFontWeight = attributes.titleFontWeight,
-      titleTextTransform = attributes.titleTextTransform,
-      titleTextDecoration = attributes.titleTextDecoration,
-      titleLineHeight = attributes.titleLineHeight,
-      titleLineHeightUnit = attributes.titleLineHeightUnit,
-      titleLetterSpacing = attributes.titleLetterSpacing,
-      titleLetterSpacingUnit = attributes.titleLetterSpacingUnit;
+      heightUnit = attributes.heightUnit; // progress bar width
 
-  var _generateResponsiveRa = Object(_util_helpers__WEBPACK_IMPORTED_MODULE_3__["generateResponsiveRangeStyles"])({
+  var _generateResponsiveRa = Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["generateResponsiveRangeStyles"])({
     controlName: _constants__WEBPACK_IMPORTED_MODULE_2__["PROGRESSBAR_WIDTH"],
     property: "width",
     attributes: attributes
   }),
       progressBarWidthDesktop = _generateResponsiveRa.rangeStylesDesktop,
       progressBarWidthTab = _generateResponsiveRa.rangeStylesTab,
-      progressBarWidthMobile = _generateResponsiveRa.rangeStylesMobile;
+      progressBarWidthMobile = _generateResponsiveRa.rangeStylesMobile; // progress bar height
 
-  var desktopStyles = "\n\t\t.".concat(blockId, " .eb-progressbar-line {\n\t\t\tbackground-color: ").concat(backgroundColor, ";\n\t\t}\n\n\t\t.").concat(blockId, " .eb-progressbar-line-container {\n\t\t\t").concat(progressBarWidthDesktop, "\n\t\t}\n\t");
-  var tabStyles = "\n\t\t.".concat(blockId, " .eb-progressbar-line-container {\n\t\t\t").concat(progressBarWidthTab, "\n\t\t}\n\t");
-  var mobileStyles = "\n\t\t.".concat(blockId, " .eb-progressbar-line-container {\n\t\t\t").concat(progressBarWidthMobile, "\n\t\t}\n\t"); // all css styles for large screen width (desktop/laptop) in strings ⬇
 
-  var desktopAllStyles = Object(_util_helpers__WEBPACK_IMPORTED_MODULE_3__["softMinifyCssStrings"])("\n\t\t".concat(Object(_util_helpers__WEBPACK_IMPORTED_MODULE_3__["isCssExists"])(desktopStyles) ? desktopStyles : " ", "\n\t")); // all css styles for Tab in strings ⬇
+  var _generateResponsiveRa2 = Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["generateResponsiveRangeStyles"])({
+    controlName: _constants__WEBPACK_IMPORTED_MODULE_2__["PROGRESSBAR_HEIGHT"],
+    property: "height",
+    attributes: attributes,
+    customUnit: "px"
+  }),
+      progressBarHeightDesktop = _generateResponsiveRa2.rangeStylesDesktop,
+      progressBarHeightTab = _generateResponsiveRa2.rangeStylesTab,
+      progressBarHeightMobile = _generateResponsiveRa2.rangeStylesMobile; // title typography
 
-  var tabAllStyles = Object(_util_helpers__WEBPACK_IMPORTED_MODULE_3__["softMinifyCssStrings"])("\n\t\t".concat(Object(_util_helpers__WEBPACK_IMPORTED_MODULE_3__["isCssExists"])(tabStyles) ? tabStyles : " ", "\n\t")); // all css styles for Mobile in strings ⬇
 
-  var mobileAllStyles = Object(_util_helpers__WEBPACK_IMPORTED_MODULE_3__["softMinifyCssStrings"])("\n\t\t".concat(Object(_util_helpers__WEBPACK_IMPORTED_MODULE_3__["isCssExists"])(mobileStyles) ? mobileStyles : " ", "\n\t")); // Set All Style in "blockMeta" Attribute
+  var _generateTypographySt = Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["generateTypographyStyles"])({
+    attributes: attributes,
+    prefixConstant: _constants_typographyConstants__WEBPACK_IMPORTED_MODULE_3__["typoPrefix_title"]
+  }),
+      titleTypoStylesDesktop = _generateTypographySt.typoStylesDesktop,
+      titleTypoStylesTab = _generateTypographySt.typoStylesTab,
+      titleTypoStylesMobile = _generateTypographySt.typoStylesMobile; // counter typography
+
+
+  var _generateTypographySt2 = Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["generateTypographyStyles"])({
+    attributes: attributes,
+    prefixConstant: _constants_typographyConstants__WEBPACK_IMPORTED_MODULE_3__["typoPrefix_counter"]
+  }),
+      counterTypoStylesDesktop = _generateTypographySt2.typoStylesDesktop,
+      counterTypoStylesTab = _generateTypographySt2.typoStylesTab,
+      counterTypoStylesMobile = _generateTypographySt2.typoStylesMobile;
+
+  var desktopStyles = "\n\t\t.".concat(blockId, " .eb-progressbar-line {\n\t\t\t").concat(progressBarHeightDesktop, "\n\t\t\tbackground-color: ").concat(backgroundColor || "transparent", ";\n\t\t}\n\n\t\t.").concat(blockId, " .eb-progressbar-circle-half {\n\t\t\tborder-color: ").concat(backgroundColor || "transparent", ";\n\t\t}\n\n\t\t.").concat(blockId, " .eb-progressbar-line-fill {\n\t\t\t").concat(progressBarHeightDesktop, "\n\t\t\t").concat(isProgressGradient ? "background: " + progressGradient : "background-color: " + progressColor, ";\n\t\t\ttransition-duration: ").concat(animationDuration, "ms;\n\t\t\twidth: ").concat(progress, "%;\n\t\t}\n\n\t\t.").concat(blockId, " .eb-progressbar-line-container {\n\t\t\t").concat(progressBarWidthDesktop, "\n\t\t}\n\n\t\t.").concat(blockId, " .eb-progressbar-title {\n\t\t\t").concat(titleTypoStylesDesktop, "\n\t\t\tcolor: ").concat(titleColor, ";\n\t\t}\n\n\t\t.").concat(blockId, " .eb-progressbar-count-wrap {\n\t\t\t").concat(counterTypoStylesDesktop, "\n\t\t\tcolor: ").concat(counterColor, ";\n\t\t}\n\t");
+  var tabStyles = "\n\t\t.".concat(blockId, " .eb-progressbar-line, .").concat(blockId, " .eb-progressbar-line-fill {\n\t\t\t").concat(progressBarHeightTab, "\n\t\t}\n\n\t\t.").concat(blockId, " .eb-progressbar-line-container {\n\t\t\t").concat(progressBarWidthTab, "\n\t\t}\n\n\t\t.").concat(blockId, " .eb-progressbar-title {\n\t\t\t").concat(titleTypoStylesTab, "\n\t\t}\n\n\t\t.").concat(blockId, " .eb-progressbar-title {\n\t\t\t").concat(titleTypoStylesTab, "\n\t\t}\n\n\t\t.").concat(blockId, " .eb-progressbar-count-wrap {\n\t\t\t").concat(counterTypoStylesTab, "\n\t\t}\n\t");
+  var mobileStyles = "\n\t\t.".concat(blockId, " .eb-progressbar-line, .").concat(blockId, " .eb-progressbar-line-fill {\n\t\t\t").concat(progressBarHeightMobile, "\n\t\t}\n\n\t\t.").concat(blockId, " .eb-progressbar-line-container {\n\t\t\t").concat(progressBarWidthMobile, "\n\t\t}\n\n\t\t.").concat(blockId, " .eb-progressbar-title {\n\t\t\t").concat(titleTypoStylesMobile, "\n\t\t}\n\n\t\t.").concat(blockId, " .eb-progressbar-title {\n\t\t\t").concat(titleTypoStylesMobile, "\n\t\t}\n\n\t\t.").concat(blockId, " .eb-progressbar-count-wrap {\n\t\t\t").concat(counterTypoStylesMobile, "\n\t\t}\n\t");
+  var inlineStyle = "";
+
+  if (showInline) {
+    inlineStyle = "\n\t\t\t.".concat(blockId, " .eb-progressbar-line-container {\n\t\t\t\tposition: relative;\n\t\t\t}\n\n\t\t\t.").concat(blockId, " .eb-progressbar-line-container .eb-progressbar-title {\n\t\t\t\tposition: absolute;\n\t\t\t\ttop: 50%;\n\t\t\t\tleft: 0;\n\t\t\t\ttransform: translateY(-50%);\n\t\t\t\tz-index: 9;\n\t\t\t}\n\n\t\t\t.").concat(blockId, " .eb-progressbar-line-container .eb-progressbar-line .eb-progressbar-count-wrap {\n\t\t\t\tbottom: 50% !important;\n\t\t\t\ttransform: translateY(50%) !important;\n\t\t\t}\n\t\t");
+  } // all css styles for large screen width (desktop/laptop) in strings ⬇
+
+
+  var desktopAllStyles = Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["softMinifyCssStrings"])("\n\t\t".concat(Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["isCssExists"])(desktopStyles) ? desktopStyles : " ", "\n\t\t").concat(Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["isCssExists"])(inlineStyle) ? inlineStyle : " ", "\n\t")); // all css styles for Tab in strings ⬇
+
+  var tabAllStyles = Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["softMinifyCssStrings"])("\n\t\t".concat(Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["isCssExists"])(tabStyles) ? tabStyles : " ", "\n\t")); // all css styles for Mobile in strings ⬇
+
+  var mobileAllStyles = Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["softMinifyCssStrings"])("\n\t\t".concat(Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["isCssExists"])(mobileStyles) ? mobileStyles : " ", "\n\t")); // Set All Style in "blockMeta" Attribute
 
   useEffect(function () {
     var styleObject = {
@@ -632,7 +610,7 @@ function Edit(props) {
 
   useEffect(function () {
     var BLOCK_PREFIX = "eb-price-table";
-    Object(_util_helpers__WEBPACK_IMPORTED_MODULE_3__["duplicateBlockIdFix"])({
+    Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["duplicateBlockIdFix"])({
       BLOCK_PREFIX: BLOCK_PREFIX,
       blockId: blockId,
       setAttributes: setAttributes,
@@ -642,7 +620,7 @@ function Edit(props) {
   }, []); // this useEffect is for mimmiking css when responsive options clicked from wordpress's 'preview' button
 
   useEffect(function () {
-    Object(_util_helpers__WEBPACK_IMPORTED_MODULE_3__["mimmikCssForPreviewBtnClick"])({
+    Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["mimmikCssForPreviewBtnClick"])({
       domObj: document,
       select: select
     });
@@ -650,14 +628,7 @@ function Edit(props) {
   var blockProps = useBlockProps({
     className: "eb-guten-block-main-parent-wrapper"
   });
-  var containerStyle = {
-    backgroundColor: progressBackground || _constants__WEBPACK_IMPORTED_MODULE_2__["DEFAULT_BACKGROUND"],
-    height: "".concat(height || _constants__WEBPACK_IMPORTED_MODULE_2__["DEFAULT_HEIGHT"]).concat(heightUnit)
-  };
-  var lineFill = {
-    transitionDuration: "1500ms",
-    width: "75%"
-  };
+  var stripeClass = showStripe ? " " + _constants__WEBPACK_IMPORTED_MODULE_2__["STRIPE_CLASS"][stripeAnimation] : "";
   return [isSelected && /*#__PURE__*/React.createElement(_inspector__WEBPACK_IMPORTED_MODULE_1__["default"], props), /*#__PURE__*/React.createElement(BlockControls, null, /*#__PURE__*/React.createElement(AlignmentToolbar, {
     value: wrapperAlign,
     onChange: function onChange(wrapperAlign) {
@@ -665,14 +636,14 @@ function Edit(props) {
         wrapperAlign: wrapperAlign
       });
     }
-  })), /*#__PURE__*/React.createElement("div", blockProps, /*#__PURE__*/React.createElement("style", null, "\n\t\t\t\t ".concat(desktopAllStyles, "\n \n\t\t\t\t /* mimmikcssStart */\n \n\t\t\t\t ").concat(resOption === "Tablet" ? tabAllStyles : " ", "\n\t\t\t\t ").concat(resOption === "Mobile" ? tabAllStyles + mobileAllStyles : " ", "\n \n\t\t\t\t /* mimmikcssEnd */\n \n\t\t\t\t @media all and (max-width: 1024px) {\t\n \n\t\t\t\t\t /* tabcssStart */\t\t\t\n\t\t\t\t\t ").concat(Object(_util_helpers__WEBPACK_IMPORTED_MODULE_3__["softMinifyCssStrings"])(tabAllStyles), "\n\t\t\t\t\t /* tabcssEnd */\t\t\t\n\t\t\t\t \n\t\t\t\t }\n\t\t\t\t \n\t\t\t\t @media all and (max-width: 767px) {\n\t\t\t\t\t \n\t\t\t\t\t /* mobcssStart */\t\t\t\n\t\t\t\t\t ").concat(Object(_util_helpers__WEBPACK_IMPORTED_MODULE_3__["softMinifyCssStrings"])(mobileAllStyles), "\n\t\t\t\t\t /* mobcssEnd */\t\t\t\n\t\t\t\t \n\t\t\t\t }\n\t\t\t\t ")), /*#__PURE__*/React.createElement("div", {
+  })), /*#__PURE__*/React.createElement("div", blockProps, /*#__PURE__*/React.createElement("style", null, "\n\t\t\t\t ".concat(desktopAllStyles, "\n \n\t\t\t\t /* mimmikcssStart */\n \n\t\t\t\t ").concat(resOption === "Tablet" ? tabAllStyles : " ", "\n\t\t\t\t ").concat(resOption === "Mobile" ? tabAllStyles + mobileAllStyles : " ", "\n \n\t\t\t\t /* mimmikcssEnd */\n \n\t\t\t\t @media all and (max-width: 1024px) {\t\n \n\t\t\t\t\t /* tabcssStart */\t\t\t\n\t\t\t\t\t ").concat(Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["softMinifyCssStrings"])(tabAllStyles), "\n\t\t\t\t\t /* tabcssEnd */\t\t\t\n\t\t\t\t \n\t\t\t\t }\n\t\t\t\t \n\t\t\t\t @media all and (max-width: 767px) {\n\t\t\t\t\t \n\t\t\t\t\t /* mobcssStart */\t\t\t\n\t\t\t\t\t ").concat(Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["softMinifyCssStrings"])(mobileAllStyles), "\n\t\t\t\t\t /* mobcssEnd */\t\t\t\n\t\t\t\t \n\t\t\t\t }\n\t\t\t\t ")), /*#__PURE__*/React.createElement("div", {
     className: "eb-progressbar-wrapper ".concat(blockId)
   }, /*#__PURE__*/React.createElement("div", {
     className: "eb-progressbar-".concat(_constants__WEBPACK_IMPORTED_MODULE_2__["CONTAINER_CLASS"][layout], "-container ").concat(wrapperAlign)
   }, (layout === "line" || layout === "line_rainbow") && title && /*#__PURE__*/React.createElement(attributes.titleTag, {
     "class": "eb-progressbar-title"
   }, title), /*#__PURE__*/React.createElement("div", {
-    className: "eb-progressbar eb-progressbar-line-animate ".concat(_constants__WEBPACK_IMPORTED_MODULE_2__["WRAPPER_CLASS"][layout]),
+    className: "eb-progressbar ".concat(_constants__WEBPACK_IMPORTED_MODULE_2__["WRAPPER_CLASS"][layout]).concat(stripeClass),
     "data-layout": layout,
     "data-count": progress,
     "data-duration": animationDuration
@@ -719,8 +690,7 @@ function Edit(props) {
   }, progress), /*#__PURE__*/React.createElement("span", {
     "class": "postfix"
   }, "%")), /*#__PURE__*/React.createElement("span", {
-    "class": "eb-progressbar-line-fill",
-    style: lineFill
+    "class": "eb-progressbar-line-fill"
   })), layout === "box" && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     "class": "eb-progressbar-box-inner-content"
   }, /*#__PURE__*/React.createElement(attributes.titleTag, {
@@ -1027,6 +997,7 @@ var Inspector = function Inspector(_ref) {
       displayProgress = attributes.displayProgress,
       animationDuration = attributes.animationDuration,
       titleColor = attributes.titleColor,
+      counterColor = attributes.counterColor,
       progressColor = attributes.progressColor,
       isProgressGradient = attributes.isProgressGradient,
       progressGradient = attributes.progressGradient,
@@ -1082,7 +1053,7 @@ var Inspector = function Inspector(_ref) {
     }]
   }, function (tab) {
     return /*#__PURE__*/React.createElement("div", {
-      className: "eb-tab-controls" + tab.name
+      className: "eb-tab-controls " + tab.name
     }, tab.name === "general" && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(PanelBody, {
       title: __("Layout")
     }, /*#__PURE__*/React.createElement(SelectControl, {
@@ -1202,7 +1173,7 @@ var Inspector = function Inspector(_ref) {
           backgroundColor: backgroundColor
         });
       }
-    }), /*#__PURE__*/React.createElement(BaseControl, null, /*#__PURE__*/React.createElement("h3", {
+    }), layout !== "line_rainbow" && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(BaseControl, null, /*#__PURE__*/React.createElement("h3", {
       className: "eb-control-title"
     }, __("Fill Color", "progress-bar"))), /*#__PURE__*/React.createElement(ToggleControl, {
       label: __("Show Fill Gradient", "progress-bar"),
@@ -1249,12 +1220,12 @@ var Inspector = function Inspector(_ref) {
         label: "Disabled",
         value: "none"
       }],
-      onChange: function onChange(newTitleTag) {
+      onChange: function onChange(stripeAnimation) {
         return setAttributes({
-          titleTag: newTitleTag
+          stripeAnimation: stripeAnimation
         });
       }
-    })), /*#__PURE__*/React.createElement(PanelBody, {
+    }))), /*#__PURE__*/React.createElement(PanelBody, {
       title: __("Typography", "progress-bar")
     }, /*#__PURE__*/React.createElement(_util_typography_control_v2__WEBPACK_IMPORTED_MODULE_5__["default"], {
       baseLabel: __("Title"),
@@ -1274,10 +1245,10 @@ var Inspector = function Inspector(_ref) {
       resRequiredProps: resRequiredProps
     }), /*#__PURE__*/React.createElement(_util_color_control__WEBPACK_IMPORTED_MODULE_2__["default"], {
       label: __("Counter Color"),
-      color: progressColor,
-      onChange: function onChange(progressColor) {
+      color: counterColor,
+      onChange: function onChange(counterColor) {
         return setAttributes({
-          progressColor: progressColor
+          counterColor: counterColor
         });
       }
     }))));
@@ -1301,100 +1272,112 @@ __webpack_require__.r(__webpack_exports__);
 /**
  * WordPress dependencies
  */
-var RichText = wp.blockEditor.RichText;
-/**
- * Internal dependencies
- */
-
+var useBlockProps = wp.blockEditor.useBlockProps;
 
 
 var save = function save(_ref) {
   var attributes = _ref.attributes;
-  var progress = attributes.progress,
+  var blockId = attributes.blockId,
+      layout = attributes.layout,
+      wrapperAlign = attributes.wrapperAlign,
+      titleTag = attributes.titleTag,
+      progress = attributes.progress,
+      displayProgress = attributes.displayProgress,
       height = attributes.height,
+      animationDuration = attributes.animationDuration,
+      backgroundColor = attributes.backgroundColor,
       displayTitle = attributes.displayTitle,
       title = attributes.title,
       displayPercentage = attributes.displayPercentage,
       colorType = attributes.colorType,
       progressBackground = attributes.progressBackground,
       progressColor = attributes.progressColor,
+      isProgressGradient = attributes.isProgressGradient,
       progressGradient = attributes.progressGradient,
-      titleFontSize = attributes.titleFontSize,
+      showStripe = attributes.showStripe,
+      stripeAnimation = attributes.stripeAnimation,
       titleColor = attributes.titleColor,
+      counterColor = attributes.counterColor,
+      showInline = attributes.showInline,
       percentageType = attributes.percentageType,
       percentageColor = attributes.percentageColor,
       tooltipBackground = attributes.tooltipBackground,
-      heightUnit = attributes.heightUnit,
-      titleFontFamily = attributes.titleFontFamily,
-      titleFontSizeUnit = attributes.titleFontSizeUnit,
-      titleFontWeight = attributes.titleFontWeight,
-      titleTextTransform = attributes.titleTextTransform,
-      titleTextDecoration = attributes.titleTextDecoration,
-      titleLineHeight = attributes.titleLineHeight,
-      titleLineHeightUnit = attributes.titleLineHeightUnit,
-      titleLetterSpacing = attributes.titleLetterSpacing,
-      titleLetterSpacingUnit = attributes.titleLetterSpacingUnit;
-  var wrapperStyles = {
-    paddingTop: displayPercentage && percentageType === "tooltip" ? _constants__WEBPACK_IMPORTED_MODULE_0__["DEFAULT_HEIGHT"] : 0
-  };
-  var containerStyle = {
-    backgroundColor: progressBackground || _constants__WEBPACK_IMPORTED_MODULE_0__["DEFAULT_BACKGROUND"],
-    height: "".concat(height || _constants__WEBPACK_IMPORTED_MODULE_0__["DEFAULT_HEIGHT"]).concat(heightUnit)
-  };
-  var titleStyles = {
-    visibility: displayTitle ? "visible" : "hidden",
-    fontSize: "".concat(titleFontSize, "px"),
-    fontFamily: titleFontFamily,
-    fontWeight: titleFontWeight,
-    textDecoration: titleTextDecoration,
-    textTransform: titleTextTransform,
-    letterSpacing: titleLetterSpacing ? "".concat(titleLetterSpacing).concat(titleLetterSpacingUnit) : undefined,
-    lineHeight: titleLineHeight ? "".concat(titleLineHeight).concat(titleLineHeightUnit) : undefined,
-    color: titleColor
-  };
-  var progressStyle = {
-    backgroundColor: colorType === "fill" ? progressColor : _constants__WEBPACK_IMPORTED_MODULE_0__["DEFAULT_PROGRESS_COLOR"],
-    width: "".concat(progress || _constants__WEBPACK_IMPORTED_MODULE_0__["DEFAULT_PROGRESS"], "%"),
-    backgroundImage: colorType === "gradient" ? progressGradient : "none",
-    fontSize: "".concat(titleFontSize, "px")
-  };
-  var tooltipStyles = {
-    display: displayPercentage && percentageType == "tooltip" ? "block" : "none",
-    backgroundColor: tooltipBackground || _constants__WEBPACK_IMPORTED_MODULE_0__["DEFAULT_TOOLTIP_COLOR"],
-    color: percentageColor || _constants__WEBPACK_IMPORTED_MODULE_0__["DEFAULT_TOOLTIP_TEXT_COLOR"]
-  };
-  var tooltipArrowStyles = {
-    borderTop: "5px solid ".concat(tooltipBackground || _constants__WEBPACK_IMPORTED_MODULE_0__["DEFAULT_TOOLTIP_COLOR"])
-  };
-  var innerProgressStyle = {
-    display: displayPercentage && percentageType == "inline" ? "block" : "none",
-    paddingRight: 8,
-    fontSize: titleFontSize,
-    color: titleColor
-  };
-  return /*#__PURE__*/React.createElement("div", {
-    className: "eb-progressbar-wrapper",
-    style: wrapperStyles
+      heightUnit = attributes.heightUnit;
+  var stripeClass = showStripe ? " " + _constants__WEBPACK_IMPORTED_MODULE_0__["STRIPE_CLASS"][stripeAnimation] : "";
+  return /*#__PURE__*/React.createElement("div", useBlockProps.save(), /*#__PURE__*/React.createElement("div", {
+    className: "eb-progressbar-wrapper ".concat(blockId)
   }, /*#__PURE__*/React.createElement("div", {
-    className: "eb-progessbar eb-progressbar-container",
-    style: containerStyle
+    className: "eb-progressbar-".concat(_constants__WEBPACK_IMPORTED_MODULE_0__["CONTAINER_CLASS"][layout], "-container ").concat(wrapperAlign)
+  }, (layout === "line" || layout === "line_rainbow") && title && /*#__PURE__*/React.createElement(attributes.titleTag, {
+    "class": "eb-progressbar-title"
+  }, title), /*#__PURE__*/React.createElement("div", {
+    className: "eb-progressbar ".concat(_constants__WEBPACK_IMPORTED_MODULE_0__["WRAPPER_CLASS"][layout]).concat(stripeClass),
+    "data-layout": layout,
+    "data-count": progress,
+    "data-duration": animationDuration
+  }, (layout === "circle" || layout === "circle_fill") && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    "class": "eb-progressbar-circle-pie"
   }, /*#__PURE__*/React.createElement("div", {
-    className: "eb-progressbar-progress",
-    style: progressStyle
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "eb-progressbar-tooltip",
-    style: tooltipStyles
-  }, "".concat(progress || _constants__WEBPACK_IMPORTED_MODULE_0__["DEFAULT_PROGRESS"], "%"), /*#__PURE__*/React.createElement("span", {
-    className: "eb-progressbar-tooltip-arrow",
-    style: tooltipArrowStyles
-  })), /*#__PURE__*/React.createElement(RichText.Content, {
-    tagName: "div",
-    className: "eb-progressbar-title",
-    style: titleStyles,
-    value: title
+    "class": "eb-progressbar-circle-half-left eb-progressbar-circle-half"
   }), /*#__PURE__*/React.createElement("div", {
-    style: innerProgressStyle
-  }, "".concat(progress || _constants__WEBPACK_IMPORTED_MODULE_0__["DEFAULT_PROGRESS"], "%")))));
+    "class": "eb-progressbar-circle-half-right eb-progressbar-circle-half"
+  })), /*#__PURE__*/React.createElement("div", {
+    "class": "eb-progressbar-circle-inner"
+  }), /*#__PURE__*/React.createElement("div", {
+    "class": "eb-progressbar-circle-inner-content"
+  }, title && /*#__PURE__*/React.createElement(attributes.titleTag, {
+    "class": "eb-progressbar-title"
+  }, title), displayProgress && /*#__PURE__*/React.createElement("span", {
+    "class": "eb-progressbar-count-wrap"
+  }, /*#__PURE__*/React.createElement("span", {
+    "class": "eb-progressbar-count"
+  }, progress), /*#__PURE__*/React.createElement("span", {
+    "class": "postfix"
+  }, "%")))), (layout === "half_circle" || layout === "half_circle_fill") && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    "class": "eb-progressbar-circle"
+  }, /*#__PURE__*/React.createElement("div", {
+    "class": "eb-progressbar-circle-pie"
+  }, /*#__PURE__*/React.createElement("div", {
+    "class": "eb-progressbar-circle-half"
+  })), /*#__PURE__*/React.createElement("div", {
+    "class": "eb-progressbar-circle-inner"
+  })), /*#__PURE__*/React.createElement("div", {
+    "class": "eb-progressbar-circle-inner-content"
+  }, /*#__PURE__*/React.createElement(attributes.titleTag, {
+    "class": "eb-progressbar-title"
+  }, title), displayProgress && /*#__PURE__*/React.createElement("span", {
+    "class": "eb-progressbar-count-wrap"
+  }, /*#__PURE__*/React.createElement("span", {
+    "class": "eb-progressbar-count"
+  }, progress), /*#__PURE__*/React.createElement("span", {
+    "class": "postfix"
+  }, "%")))), (layout === "line" || layout === "line_rainbow") && /*#__PURE__*/React.createElement(React.Fragment, null, displayProgress && /*#__PURE__*/React.createElement("span", {
+    "class": "eb-progressbar-count-wrap"
+  }, /*#__PURE__*/React.createElement("span", {
+    "class": "eb-progressbar-count"
+  }, progress), /*#__PURE__*/React.createElement("span", {
+    "class": "postfix"
+  }, "%")), /*#__PURE__*/React.createElement("span", {
+    "class": "eb-progressbar-line-fill"
+  })), layout === "box" && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    "class": "eb-progressbar-box-inner-content"
+  }, /*#__PURE__*/React.createElement(attributes.titleTag, {
+    "class": "eb-progressbar-title"
+  }, title), displayProgress && /*#__PURE__*/React.createElement("span", {
+    "class": "eb-progressbar-count-wrap"
+  }, /*#__PURE__*/React.createElement("span", {
+    "class": "eb-progressbar-count"
+  }, progress), /*#__PURE__*/React.createElement("span", {
+    "class": "postfix"
+  }, "%"))), /*#__PURE__*/React.createElement("div", {
+    "class": "eb-progressbar-box-fill"
+  }))), (layout === "half_circle" || layout === "half_circle_fill") && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    "class": "eb-progressbar-half-circle-after"
+  }, /*#__PURE__*/React.createElement("span", {
+    "class": "eb-progressbar-prefix-label"
+  }, "Prefix"), /*#__PURE__*/React.createElement("span", {
+    "class": "eb-progressbar-postfix-label"
+  }, "Postfix"))))));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (save);
@@ -4868,7 +4851,7 @@ function BorderShadowControl(_ref) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
@@ -4882,7 +4865,7 @@ function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o =
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
-function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
@@ -4984,7 +4967,7 @@ var ColorControl = function ColorControl(_ref) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return DimensionsControl; });
 /* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../helpers */ "./util/helpers/index.js");
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
@@ -4998,7 +4981,7 @@ function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o =
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
-function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
@@ -5339,7 +5322,7 @@ function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o =
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
-function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
@@ -5407,7 +5390,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _toggle_button__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../toggle-button */ "./util/toggle-button/index.js");
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./constants */ "./util/gradient-color-controller/constants.js");
 /* harmony import */ var _helper__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./helper */ "./util/gradient-color-controller/helper.js");
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
@@ -5421,7 +5404,7 @@ function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o =
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
-function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
@@ -5690,7 +5673,7 @@ var GradientColorControl = function GradientColorControl(_ref) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "generateBackgroundAttributes", function() { return generateBackgroundAttributes; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "generateBackgroundControlStyles", function() { return generateBackgroundControlStyles; });
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
@@ -6322,7 +6305,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "generateBorderShadowAttributes", function() { return generateBorderShadowAttributes; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "generateBorderShadowStyles", function() { return generateBorderShadowStyles; });
 /* harmony import */ var _dimensionHelpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./dimensionHelpers */ "./util/helpers/dimensionHelpers.js");
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
@@ -6656,7 +6639,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "generateDimensionsAttributes", function() { return generateDimensionsAttributes; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "generateDimensionsControlStyles", function() { return generateDimensionsControlStyles; });
 /* harmony import */ var _hasVal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./hasVal */ "./util/helpers/hasVal.js");
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
@@ -6863,7 +6846,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mimmikCssForPreviewBtnClick", function() { return mimmikCssForPreviewBtnClick; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mimmikCssOnPreviewBtnClickWhileBlockSelected", function() { return mimmikCssOnPreviewBtnClickWhileBlockSelected; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "duplicateBlockIdFix", function() { return duplicateBlockIdFix; });
-function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 
@@ -7237,7 +7220,7 @@ var isCssExists = function isCssExists(cssString) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "generateResponsiveRangeAttributes", function() { return generateResponsiveRangeAttributes; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "generateResponsiveRangeStyles", function() { return generateResponsiveRangeStyles; });
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
@@ -7318,7 +7301,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "generateTypographyAttributes", function() { return generateTypographyAttributes; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "generateTypographyStyles", function() { return generateTypographyStyles; });
 /* harmony import */ var _hasVal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./hasVal */ "./util/helpers/hasVal.js");
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
@@ -7448,7 +7431,7 @@ function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o =
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
-function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
@@ -7785,7 +7768,7 @@ function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o =
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
-function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
@@ -7850,6 +7833,8 @@ var ToggleButton = function ToggleButton(_ref) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./constants */ "./util/typography-control-v2/constants.js");
+var _excluded = ["label", "value", "help", "instanceId", "onChange", "className"];
+
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
 function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
@@ -7875,7 +7860,7 @@ function FontFamilyPicker(_ref) {
       instanceId = _ref.instanceId,
       onChange = _ref.onChange,
       className = _ref.className,
-      props = _objectWithoutProperties(_ref, ["label", "value", "help", "instanceId", "onChange", "className"]);
+      props = _objectWithoutProperties(_ref, _excluded);
 
   var id = "inspector-eb-font-family-".concat(instanceId);
   var fonts = [{
@@ -8628,13 +8613,13 @@ function WithResButtons(_ref) {
 /***/ }),
 
 /***/ "react":
-/*!*********************************!*\
-  !*** external {"this":"React"} ***!
-  \*********************************/
+/*!************************!*\
+  !*** external "React" ***!
+  \************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-(function() { module.exports = this["React"]; }());
+(function() { module.exports = window["React"]; }());
 
 /***/ })
 

@@ -13,17 +13,19 @@ const { select } = wp.data;
 import "./editor.scss";
 import Inspector from "./inspector";
 import {
-	DEFAULT_PROGRESS,
 	DEFAULT_HEIGHT,
 	DEFAULT_BACKGROUND,
-	DEFAULT_PROGRESS_COLOR,
-	DEFAULT_TOOLTIP_COLOR,
-	DEFAULT_TOOLTIP_TEXT_COLOR,
 	CONTAINER_CLASS,
 	WRAPPER_CLASS,
 	PROGRESSBAR_HEIGHT,
 	PROGRESSBAR_WIDTH,
+	STRIPE_CLASS,
 } from "./constants";
+
+import {
+	typoPrefix_title,
+	typoPrefix_counter,
+} from "./constants/typographyConstants";
 
 import {
 	getFlipTransform,
@@ -60,24 +62,20 @@ export default function Edit(props) {
 		colorType,
 		progressBackground,
 		progressColor,
+		isProgressGradient,
 		progressGradient,
-		titleFontSize,
+		showStripe,
+		stripeAnimation,
 		titleColor,
+		counterColor,
+		showInline,
 		percentageType,
 		percentageColor,
 		tooltipBackground,
 		heightUnit,
-		titleFontFamily,
-		titleFontSizeUnit,
-		titleFontWeight,
-		titleTextTransform,
-		titleTextDecoration,
-		titleLineHeight,
-		titleLineHeightUnit,
-		titleLetterSpacing,
-		titleLetterSpacingUnit,
 	} = attributes;
 
+	// progress bar width
 	const {
 		rangeStylesDesktop: progressBarWidthDesktop,
 		rangeStylesTab: progressBarWidthTab,
@@ -88,31 +86,144 @@ export default function Edit(props) {
 		attributes,
 	});
 
+	// progress bar height
+	const {
+		rangeStylesDesktop: progressBarHeightDesktop,
+		rangeStylesTab: progressBarHeightTab,
+		rangeStylesMobile: progressBarHeightMobile,
+	} = generateResponsiveRangeStyles({
+		controlName: PROGRESSBAR_HEIGHT,
+		property: "height",
+		attributes,
+		customUnit: "px",
+	});
+
+	// title typography
+	const {
+		typoStylesDesktop: titleTypoStylesDesktop,
+		typoStylesTab: titleTypoStylesTab,
+		typoStylesMobile: titleTypoStylesMobile,
+	} = generateTypographyStyles({
+		attributes,
+		prefixConstant: typoPrefix_title,
+	});
+
+	// counter typography
+	const {
+		typoStylesDesktop: counterTypoStylesDesktop,
+		typoStylesTab: counterTypoStylesTab,
+		typoStylesMobile: counterTypoStylesMobile,
+	} = generateTypographyStyles({
+		attributes,
+		prefixConstant: typoPrefix_counter,
+	});
+
 	const desktopStyles = `
 		.${blockId} .eb-progressbar-line {
-			background-color: ${backgroundColor};
+			${progressBarHeightDesktop}
+			background-color: ${backgroundColor || "transparent"};
+		}
+
+		.${blockId} .eb-progressbar-circle-half {
+			border-color: ${backgroundColor || "transparent"};
+		}
+
+		.${blockId} .eb-progressbar-line-fill {
+			${progressBarHeightDesktop}
+			${
+				isProgressGradient
+					? "background: " + progressGradient
+					: "background-color: " + progressColor
+			};
+			transition-duration: ${animationDuration}ms;
+			width: ${progress}%;
 		}
 
 		.${blockId} .eb-progressbar-line-container {
 			${progressBarWidthDesktop}
 		}
+
+		.${blockId} .eb-progressbar-title {
+			${titleTypoStylesDesktop}
+			color: ${titleColor};
+		}
+
+		.${blockId} .eb-progressbar-count-wrap {
+			${counterTypoStylesDesktop}
+			color: ${counterColor};
+		}
 	`;
 
 	const tabStyles = `
+		.${blockId} .eb-progressbar-line, .${blockId} .eb-progressbar-line-fill {
+			${progressBarHeightTab}
+		}
+
 		.${blockId} .eb-progressbar-line-container {
 			${progressBarWidthTab}
+		}
+
+		.${blockId} .eb-progressbar-title {
+			${titleTypoStylesTab}
+		}
+
+		.${blockId} .eb-progressbar-title {
+			${titleTypoStylesTab}
+		}
+
+		.${blockId} .eb-progressbar-count-wrap {
+			${counterTypoStylesTab}
 		}
 	`;
 
 	const mobileStyles = `
+		.${blockId} .eb-progressbar-line, .${blockId} .eb-progressbar-line-fill {
+			${progressBarHeightMobile}
+		}
+
 		.${blockId} .eb-progressbar-line-container {
 			${progressBarWidthMobile}
 		}
+
+		.${blockId} .eb-progressbar-title {
+			${titleTypoStylesMobile}
+		}
+
+		.${blockId} .eb-progressbar-title {
+			${titleTypoStylesMobile}
+		}
+
+		.${blockId} .eb-progressbar-count-wrap {
+			${counterTypoStylesMobile}
+		}
 	`;
+
+	var inlineStyle = "";
+	if (showInline) {
+		inlineStyle = `
+			.${blockId} .eb-progressbar-line-container {
+				position: relative;
+			}
+
+			.${blockId} .eb-progressbar-line-container .eb-progressbar-title {
+				position: absolute;
+				top: 50%;
+				left: 0;
+				transform: translateY(-50%);
+				z-index: 9;
+			}
+
+			.${blockId} .eb-progressbar-line-container .eb-progressbar-line .eb-progressbar-count-wrap {
+				bottom: 50% !important;
+				transform: translateY(50%) !important;
+			}
+		`;
+	}
 
 	// all css styles for large screen width (desktop/laptop) in strings ⬇
 	const desktopAllStyles = softMinifyCssStrings(`
 		${isCssExists(desktopStyles) ? desktopStyles : " "}
+		${isCssExists(inlineStyle) ? inlineStyle : " "}
 	`);
 
 	// all css styles for Tab in strings ⬇
@@ -167,15 +278,7 @@ export default function Edit(props) {
 		className: `eb-guten-block-main-parent-wrapper`,
 	});
 
-	const containerStyle = {
-		backgroundColor: progressBackground || DEFAULT_BACKGROUND,
-		height: `${height || DEFAULT_HEIGHT}${heightUnit}`,
-	};
-
-	const lineFill = {
-		transitionDuration: "1500ms",
-		width: "75%",
-	};
+	const stripeClass = showStripe ? " " + STRIPE_CLASS[stripeAnimation] : "";
 
 	return [
 		isSelected && <Inspector {...props} />,
@@ -225,7 +328,7 @@ export default function Edit(props) {
 					)}
 
 					<div
-						className={`eb-progressbar eb-progressbar-line-animate ${WRAPPER_CLASS[layout]}`}
+						className={`eb-progressbar ${WRAPPER_CLASS[layout]}${stripeClass}`}
 						data-layout={layout}
 						data-count={progress}
 						data-duration={animationDuration}
@@ -283,7 +386,7 @@ export default function Edit(props) {
 										<span class="postfix">%</span>
 									</span>
 								)}
-								<span class="eb-progressbar-line-fill" style={lineFill}></span>
+								<span class="eb-progressbar-line-fill"></span>
 							</>
 						)}
 

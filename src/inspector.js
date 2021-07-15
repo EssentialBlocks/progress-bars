@@ -53,6 +53,7 @@ const Inspector = ({ attributes, setAttributes }) => {
 		displayProgress,
 		animationDuration,
 		titleColor,
+		counterColor,
 		progressColor,
 		isProgressGradient,
 		progressGradient,
@@ -117,7 +118,7 @@ const Inspector = ({ attributes, setAttributes }) => {
 					]}
 				>
 					{(tab) => (
-						<div className={"eb-tab-controls" + tab.name}>
+						<div className={"eb-tab-controls " + tab.name}>
 							{tab.name === "general" && (
 								<>
 									<PanelBody title={__("Layout")}>
@@ -232,61 +233,65 @@ const Inspector = ({ attributes, setAttributes }) => {
 												setAttributes({ backgroundColor })
 											}
 										/>
-										<BaseControl>
-											<h3 className="eb-control-title">
-												{__("Fill Color", "progress-bar")}
-											</h3>
-										</BaseControl>
-										<ToggleControl
-											label={__("Show Fill Gradient", "progress-bar")}
-											checked={isProgressGradient}
-											onChange={() => {
-												setAttributes({
-													isProgressGradient: !isProgressGradient,
-												});
-											}}
-										/>
-										{isProgressGradient || (
-											<ColorControl
-												label={__("Color", "progress-bar")}
-												color={progressColor}
-												onChange={(progressColor) =>
-													setAttributes({ progressColor })
-												}
-											/>
-										)}
-										{isProgressGradient && (
-											<GradientColorControl
-												label={__("Gradient Color", "progress-bar")}
-												color={progressGradient}
-												onChange={(progressGradient) =>
-													setAttributes({ progressGradient })
-												}
-											/>
-										)}
-										<hr />
-										<ToggleControl
-											label={__("Show Stripe", "progress-bar")}
-											checked={showStripe}
-											onChange={() => {
-												setAttributes({
-													showStripe: !showStripe,
-												});
-											}}
-										/>
-										{showStripe && (
-											<SelectControl
-												label={__("Stripe Animation", "progress-bars")}
-												value={stripeAnimation}
-												options={[
-													{ label: "Left To Right", value: "normal" },
-													{ label: "Right To Left", value: "reverse" },
-													{ label: "Disabled", value: "none" },
-												]}
-												onChange={(newTitleTag) =>
-													setAttributes({ titleTag: newTitleTag })
-												}
-											/>
+										{layout !== "line_rainbow" && (
+											<>
+												<BaseControl>
+													<h3 className="eb-control-title">
+														{__("Fill Color", "progress-bar")}
+													</h3>
+												</BaseControl>
+												<ToggleControl
+													label={__("Show Fill Gradient", "progress-bar")}
+													checked={isProgressGradient}
+													onChange={() => {
+														setAttributes({
+															isProgressGradient: !isProgressGradient,
+														});
+													}}
+												/>
+												{isProgressGradient || (
+													<ColorControl
+														label={__("Color", "progress-bar")}
+														color={progressColor}
+														onChange={(progressColor) =>
+															setAttributes({ progressColor })
+														}
+													/>
+												)}
+												{isProgressGradient && (
+													<GradientColorControl
+														label={__("Gradient Color", "progress-bar")}
+														color={progressGradient}
+														onChange={(progressGradient) =>
+															setAttributes({ progressGradient })
+														}
+													/>
+												)}
+												<hr />
+												<ToggleControl
+													label={__("Show Stripe", "progress-bar")}
+													checked={showStripe}
+													onChange={() => {
+														setAttributes({
+															showStripe: !showStripe,
+														});
+													}}
+												/>
+												{showStripe && (
+													<SelectControl
+														label={__("Stripe Animation", "progress-bars")}
+														value={stripeAnimation}
+														options={[
+															{ label: "Left To Right", value: "normal" },
+															{ label: "Right To Left", value: "reverse" },
+															{ label: "Disabled", value: "none" },
+														]}
+														onChange={(stripeAnimation) =>
+															setAttributes({ stripeAnimation })
+														}
+													/>
+												)}
+											</>
 										)}
 									</PanelBody>
 									<PanelBody title={__("Typography", "progress-bar")}>
@@ -308,9 +313,9 @@ const Inspector = ({ attributes, setAttributes }) => {
 										/>
 										<ColorControl
 											label={__("Counter Color")}
-											color={progressColor}
-											onChange={(progressColor) =>
-												setAttributes({ progressColor })
+											color={counterColor}
+											onChange={(counterColor) =>
+												setAttributes({ counterColor })
 											}
 										/>
 									</PanelBody>

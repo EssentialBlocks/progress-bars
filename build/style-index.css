@@ -43,7 +43,9 @@
 
 .eb-progressbar-title {
   font-size: 20px;
-  font-weight: 400; }
+  font-weight: 400;
+  margin: 0 !important;
+  padding: 0 !important; }
 
 .eb-progressbar-line {
   position: relative;

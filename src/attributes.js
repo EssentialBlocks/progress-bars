@@ -68,6 +68,9 @@ const attributes = {
 	titleColor: {
 		type: "string",
 	},
+	counterColor: {
+		type: "string",
+	},
 	progressColor: {
 		type: "string",
 		default: "#000000",
@@ -78,7 +81,7 @@ const attributes = {
 	},
 	progressGradient: {
 		type: "string",
-		default: "linear-gradient(45deg,#00F260,#0575E6)",
+		// default: "linear-gradient(45deg,#00F260,#0575E6)",
 	},
 	showInline: {
 		type: "boolean",
