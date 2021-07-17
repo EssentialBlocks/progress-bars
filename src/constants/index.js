@@ -1,12 +1,5 @@
 const { __ } = wp.i18n;
 
-export const DEFAULT_PROGRESS = 50;
-export const DEFAULT_HEIGHT = "30";
-export const DEFAULT_BACKGROUND = "#edf1f7";
-export const DEFAULT_TOOLTIP_COLOR = "#7967ff";
-export const DEFAULT_PROGRESS_COLOR = "#7967ff";
-export const DEFAULT_TOOLTIP_TEXT_COLOR = "#ffffff";
-
 export const LAYOUT = [
 	{ label: __("Line"), value: "line" },
 	{ label: __("Line Rainbow"), value: "line_rainbow" },
@@ -33,8 +26,7 @@ export const WRAPPER_CLASS = {
 	circle: "eb-progressbar-circle",
 	circle_fill: "eb-progressbar-circle eb-progressbar-circle-fill",
 	half_circle: "eb-progressbar-half-circle",
-	half_circle_fill:
-		"eb-progressbar-circle eb-progressbar-half-circle eb-progressbar-half-circle-fill",
+	half_circle_fill: "eb-progressbar-half-circle eb-progressbar-half-circle-fill",
 	box: "eb-progressbar-box",
 };
 
@@ -52,6 +44,5 @@ export const PX_PERCENTAGE = [
 // responsive range controll
 export const PROGRESSBAR_WIDTH = "wrpWidth";
 export const PROGRESSBAR_HEIGHT = "wrpHeight";
-
-// background controls
-export const FILL_BACKGROUND = "fill";
+export const PROGRESSBAR_SIZE = "wrpSize";
+export const STROKE_WIDTH = "stkWidth";

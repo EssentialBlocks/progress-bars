@@ -3,7 +3,7 @@
  */
 const { __ } = wp.i18n;
 const { RichText } = wp.editor;
-const { useEffect } = wp.element;
+const { useEffect, useRef } = wp.element;
 const { BlockControls, AlignmentToolbar, useBlockProps } = wp.blockEditor;
 const { select } = wp.data;
 
@@ -13,13 +13,13 @@ const { select } = wp.data;
 import "./editor.scss";
 import Inspector from "./inspector";
 import {
-	DEFAULT_HEIGHT,
-	DEFAULT_BACKGROUND,
 	CONTAINER_CLASS,
 	WRAPPER_CLASS,
 	PROGRESSBAR_HEIGHT,
 	PROGRESSBAR_WIDTH,
 	STRIPE_CLASS,
+	STROKE_WIDTH,
+	PROGRESSBAR_SIZE,
 } from "./constants";
 
 import {
@@ -42,6 +42,12 @@ import {
 
 export default function Edit(props) {
 	const { isSelected, attributes, setAttributes, clientId } = props;
+	const circle_half_left = useRef(null);
+	const circle_half_right = useRef(null);
+	const circle_pie = useRef(null);
+	const line = useRef(null);
+	const circle_half = useRef(null);
+	const box = useRef(null);
 
 	const {
 		blockId,
@@ -53,14 +59,9 @@ export default function Edit(props) {
 		titleTag,
 		progress,
 		displayProgress,
-		height,
 		animationDuration,
 		backgroundColor,
-		displayTitle,
 		title,
-		displayPercentage,
-		colorType,
-		progressBackground,
 		progressColor,
 		isProgressGradient,
 		progressGradient,
@@ -69,11 +70,39 @@ export default function Edit(props) {
 		titleColor,
 		counterColor,
 		showInline,
+		strokeColor,
+		prefix,
+		suffix,
 		percentageType,
 		percentageColor,
 		tooltipBackground,
 		heightUnit,
 	} = attributes;
+
+	useEffect(() => {
+		
+		if (layout == "line" || layout === "line_rainbow") {
+			line.current.style.width = progress + "%";
+		} else if (layout == "half_circle" || layout === "half_circle_fill") {
+			var rotate = progress * 1.8;
+			circle_half.current.style.transform = "rotate(" + rotate + "deg)";
+		} else if ( layout === "box") {
+			box.current.style.height = progress + "%";
+			box.current.style.transitionDuration = animationDuration + "ms";
+		}
+
+		if( layout === "circle" || layout === "circle_fill" ) {
+			var rotate = progress * 3.6;
+			circle_half_left.current.style.transform = "rotate(" + rotate + "deg)";
+			if( rotate > 180 ) {
+				circle_pie.current.style.clipPath = "inset(0)";
+				circle_half_right.current.style.visibility = "visible";
+			} else {
+				circle_pie.current.style.clipPath = "";
+				circle_half_right.current.style.visibility = "";
+			}
+		}
+	}, [attributes]);
 
 	// progress bar width
 	const {
@@ -96,7 +125,43 @@ export default function Edit(props) {
 		property: "height",
 		attributes,
 		customUnit: "px",
-	});
+	});	
+
+	// stroke width
+	const {
+		rangeStylesDesktop: strokeWidthDesktop,
+		rangeStylesTab: strokeWidthTab,
+		rangeStylesMobile: strokeWidthMobile,
+	} = generateResponsiveRangeStyles({
+		controlName: STROKE_WIDTH,
+		property: "border-width",
+		attributes,
+		customUnit: "px",
+	});	
+
+	// circle progressbar width
+	const {
+		rangeStylesDesktop: circleWidthDesktop,
+		rangeStylesTab: circleWidthTab,
+		rangeStylesMobile: circleWidthMobile,
+	} = generateResponsiveRangeStyles({
+		controlName: PROGRESSBAR_SIZE,
+		property: "width",
+		attributes,
+		customUnit: "px",
+	});	
+
+	// circle progressbar height
+	const {
+		rangeStylesDesktop: circleHeightDesktop,
+		rangeStylesTab: circleHeightTab,
+		rangeStylesMobile: circleHeightMobile,
+	} = generateResponsiveRangeStyles({
+		controlName: PROGRESSBAR_SIZE,
+		property: "height",
+		attributes,
+		customUnit: "px",
+	});	
 
 	// title typography
 	const {
@@ -121,11 +186,18 @@ export default function Edit(props) {
 	const desktopStyles = `
 		.${blockId} .eb-progressbar-line {
 			${progressBarHeightDesktop}
-			background-color: ${backgroundColor || "transparent"};
+			background-color: ${strokeColor || "transparent"};
+		}
+
+		.${blockId} .eb-progressbar-circle {
+			${circleWidthDesktop}
+			${circleHeightDesktop}
 		}
 
 		.${blockId} .eb-progressbar-circle-half {
-			border-color: ${backgroundColor || "transparent"};
+			${strokeWidthDesktop}
+			border-color: ${progressColor};
+			transition-duration: ${animationDuration}ms;
 		}
 
 		.${blockId} .eb-progressbar-line-fill {
@@ -152,11 +224,47 @@ export default function Edit(props) {
 			${counterTypoStylesDesktop}
 			color: ${counterColor};
 		}
-	`;
+
+		.${blockId} .eb-progressbar-circle-inner {
+			background-color: ${backgroundColor};
+			border-color: ${strokeColor || "transparent"};
+			${strokeWidthDesktop}
+		}
+
+		.${blockId} .eb-progressbar-half-circle-after {
+			${circleWidthDesktop}
+		}
+
+		.${blockId} .eb-progressbar-half-circle {
+			${circleWidthDesktop}
+			height: calc(${circleWidthDesktop.replace(/\D/g,"") / 2} * 1px);
+		}
+
+		.${blockId} .eb-progressbar-box {
+			${progressBarWidthDesktop}
+			${progressBarHeightDesktop}
+			${strokeWidthDesktop}
+			background-color: ${backgroundColor || "transparent"};
+			border-color: ${strokeColor || "transparent"};
+		}
+
+		.${blockId} .eb-progressbar-box-fill {
+			${
+				isProgressGradient
+					? "background: " + progressGradient
+					: "background-color: " + progressColor
+			};
+		}
+ 	`;	
 
 	const tabStyles = `
 		.${blockId} .eb-progressbar-line, .${blockId} .eb-progressbar-line-fill {
 			${progressBarHeightTab}
+		}
+
+		.${blockId} .eb-progressbar-circle {
+			${circleWidthTab}
+			${circleHeightTab}
 		}
 
 		.${blockId} .eb-progressbar-line-container {
@@ -174,11 +282,24 @@ export default function Edit(props) {
 		.${blockId} .eb-progressbar-count-wrap {
 			${counterTypoStylesTab}
 		}
+
+		.${blockId} .eb-progressbar-circle-inner {
+			${strokeWidthTab}
+		}
+
+		.${blockId} .eb-progressbar-half-circle-after {
+			${circleWidthTab}
+		}
 	`;
 
 	const mobileStyles = `
 		.${blockId} .eb-progressbar-line, .${blockId} .eb-progressbar-line-fill {
 			${progressBarHeightMobile}
+		}
+
+		.${blockId} .eb-progressbar-circle {
+			${circleWidthMobile}
+			${circleHeightMobile}
 		}
 
 		.${blockId} .eb-progressbar-line-container {
@@ -195,6 +316,14 @@ export default function Edit(props) {
 
 		.${blockId} .eb-progressbar-count-wrap {
 			${counterTypoStylesMobile}
+		}
+
+		.${blockId} .eb-progressbar-circle-inner {
+			${strokeWidthMobile}
+		}
+
+		.${blockId} .eb-progressbar-half-circle-after {
+			${circleWidthMobile}
 		}
 	`;
 
@@ -329,27 +458,27 @@ export default function Edit(props) {
 
 					<div
 						className={`eb-progressbar ${WRAPPER_CLASS[layout]}${stripeClass}`}
-						data-layout={layout}
-						data-count={progress}
-						data-duration={animationDuration}
+						// data-layout={layout}
+						// data-count={progress}
+						// data-duration={animationDuration}
 					>
 						{(layout === "circle" || layout === "circle_fill") && (
 							<>
-								<div class="eb-progressbar-circle-pie">
-									<div class="eb-progressbar-circle-half-left eb-progressbar-circle-half"></div>
-									<div class="eb-progressbar-circle-half-right eb-progressbar-circle-half"></div>
+								<div class="eb-progressbar-circle-pie" ref={circle_pie}>
+									<div className="eb-progressbar-circle-half-left eb-progressbar-circle-half" ref={circle_half_left}></div>
+									<div className="eb-progressbar-circle-half-right eb-progressbar-circle-half" ref={circle_half_right}></div>
 								</div>
-								<div class="eb-progressbar-circle-inner"></div>
-								<div class="eb-progressbar-circle-inner-content">
+								<div className="eb-progressbar-circle-inner"></div>
+								<div className="eb-progressbar-circle-inner-content">
 									{title && (
-										<attributes.titleTag class="eb-progressbar-title">
+										<attributes.titleTag className="eb-progressbar-title">
 											{title}
 										</attributes.titleTag>
 									)}
 									{displayProgress && (
-										<span class="eb-progressbar-count-wrap">
-											<span class="eb-progressbar-count">{progress}</span>
-											<span class="postfix">%</span>
+										<span className="eb-progressbar-count-wrap">
+											<span className="eb-progressbar-count">{progress}</span>
+											<span className="postfix">%</span>
 										</span>
 									)}
 								</div>
@@ -358,20 +487,20 @@ export default function Edit(props) {
 
 						{(layout === "half_circle" || layout === "half_circle_fill") && (
 							<>
-								<div class="eb-progressbar-circle">
-									<div class="eb-progressbar-circle-pie">
-										<div class="eb-progressbar-circle-half"></div>
+								<div className="eb-progressbar-circle">
+									<div className="eb-progressbar-circle-pie">
+										<div className="eb-progressbar-circle-half" ref={circle_half}></div>
 									</div>
-									<div class="eb-progressbar-circle-inner"></div>
+									<div className="eb-progressbar-circle-inner"></div>
 								</div>
-								<div class="eb-progressbar-circle-inner-content">
-									<attributes.titleTag class="eb-progressbar-title">
+								<div className="eb-progressbar-circle-inner-content">
+									<attributes.titleTag className="eb-progressbar-title">
 										{title}
 									</attributes.titleTag>
 									{displayProgress && (
-										<span class="eb-progressbar-count-wrap">
-											<span class="eb-progressbar-count">{progress}</span>
-											<span class="postfix">%</span>
+										<span className="eb-progressbar-count-wrap">
+											<span className="eb-progressbar-count">{progress}</span>
+											<span className="postfix">%</span>
 										</span>
 									)}
 								</div>
@@ -386,7 +515,7 @@ export default function Edit(props) {
 										<span class="postfix">%</span>
 									</span>
 								)}
-								<span class="eb-progressbar-line-fill"></span>
+								<span class="eb-progressbar-line-fill" ref={line}></span>
 							</>
 						)}
 
@@ -403,15 +532,15 @@ export default function Edit(props) {
 										</span>
 									)}
 								</div>
-								<div class="eb-progressbar-box-fill"></div>
+								<div class="eb-progressbar-box-fill" ref={box}></div>
 							</>
 						)}
 					</div>
 					{(layout === "half_circle" || layout === "half_circle_fill") && (
 						<>
 							<div class="eb-progressbar-half-circle-after">
-								<span class="eb-progressbar-prefix-label">Prefix</span>
-								<span class="eb-progressbar-postfix-label">Postfix</span>
+								<span class="eb-progressbar-prefix-label">{prefix}</span>
+								<span class="eb-progressbar-postfix-label">{suffix}</span>
 							</div>
 						</>
 					)}
