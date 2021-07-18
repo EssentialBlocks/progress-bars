@@ -124,6 +124,9 @@ window.addEventListener("DOMContentLoaded", function (event) {
 								progressbar.querySelector(
 									".eb-progressbar-circle-half-left"
 								).style.transform = "rotate(" + width + "deg)";
+								progressbar.querySelector(
+									".eb-progressbar-circle-half-left"
+								).style.transitionDuration = duration + "ms";
 							} else if (
 								layout === "half_circle" ||
 								layout === "half_circle_fill"

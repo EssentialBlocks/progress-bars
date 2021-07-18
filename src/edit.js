@@ -258,6 +258,7 @@ export default function Edit(props) {
 		.${blockId} .eb-progressbar-circle-half {
 			${strokeWidthDesktop}
 			border-color: ${progressColor};
+			transition: rotate 1500ms linear;
 		}
 
 		.${blockId} .eb-progressbar-line-fill {
