@@ -3,15 +3,7 @@
  */
 const { useBlockProps } = wp.blockEditor;
 
-import {
-	DEFAULT_HEIGHT,
-	DEFAULT_BACKGROUND,
-	CONTAINER_CLASS,
-	WRAPPER_CLASS,
-	PROGRESSBAR_HEIGHT,
-	PROGRESSBAR_WIDTH,
-	STRIPE_CLASS,
-} from "./constants";
+import { CONTAINER_CLASS, WRAPPER_CLASS, STRIPE_CLASS } from "./constants";
 
 const save = ({ attributes }) => {
 	const {
@@ -21,26 +13,12 @@ const save = ({ attributes }) => {
 		titleTag,
 		progress,
 		displayProgress,
-		height,
 		animationDuration,
-		backgroundColor,
-		displayTitle,
 		title,
-		displayPercentage,
-		colorType,
-		progressBackground,
-		progressColor,
-		isProgressGradient,
-		progressGradient,
 		showStripe,
 		stripeAnimation,
-		titleColor,
-		counterColor,
-		showInline,
-		percentageType,
-		percentageColor,
-		tooltipBackground,
-		heightUnit,
+		prefix,
+		suffix,
 	} = attributes;
 
 	const stripeClass = showStripe ? " " + STRIPE_CLASS[stripeAnimation] : "";
@@ -140,8 +118,8 @@ const save = ({ attributes }) => {
 					{(layout === "half_circle" || layout === "half_circle_fill") && (
 						<>
 							<div class="eb-progressbar-half-circle-after">
-								<span class="eb-progressbar-prefix-label">Prefix</span>
-								<span class="eb-progressbar-postfix-label">Postfix</span>
+								<span class="eb-progressbar-prefix-label">{prefix}</span>
+								<span class="eb-progressbar-postfix-label">{suffix}</span>
 							</div>
 						</>
 					)}

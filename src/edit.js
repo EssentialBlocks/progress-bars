@@ -30,16 +30,12 @@ import {
 } from "./constants/typographyConstants";
 
 import {
-	getFlipTransform,
 	mimmikCssForPreviewBtnClick,
 	duplicateBlockIdFix,
 	softMinifyCssStrings,
 	isCssExists,
 	generateTypographyStyles,
-	generateDimensionsControlStyles,
 	generateResponsiveRangeStyles,
-	generateBackgroundControlStyles,
-	generateBorderShadowStyles,
 } from "../util/helpers";
 
 export default function Edit(props) {
@@ -272,7 +268,6 @@ export default function Edit(props) {
 					: "background-color: " + progressColor
 			};
 			transition-duration: ${animationDuration}ms;
-			width: ${progress}%;
 		}
 
 		.${blockId} .eb-progressbar-line-container {
@@ -318,6 +313,7 @@ export default function Edit(props) {
 					? "background: " + progressGradient
 					: "background-color: " + progressColor
 			};
+			transition-duration: ${animationDuration}ms;
 		}
  	`;
 
@@ -534,9 +530,6 @@ export default function Edit(props) {
 
 					<div
 						className={`eb-progressbar ${WRAPPER_CLASS[layout]}${stripeClass}`}
-						// data-layout={layout}
-						// data-count={progress}
-						// data-duration={animationDuration}
 					>
 						{(layout === "circle" || layout === "circle_fill") && (
 							<>

@@ -97,9 +97,11 @@ const attributes = {
 	},
 	prefix: {
 		type: "string",
+		default: __("Prefix", "progress-bar"),
 	},
 	suffix: {
 		type: "string",
+		default: __("Postfix", "progress-bar"),
 	},
 	// typography attributes
 	...generateTypographyAttributes(Object.values(typoPrefixs)),
