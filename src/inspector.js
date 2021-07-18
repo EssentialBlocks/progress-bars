@@ -11,6 +11,7 @@ const {
 	SelectControl,
 	TextControl,
 	RangeControl,
+	NumberControl,
 	Button,
 	BaseControl,
 	TabPanel,
@@ -36,6 +37,8 @@ import {
 	PROGRESSBAR_HEIGHT,
 	PROGRESSBAR_SIZE,
 	STROKE_WIDTH,
+	BOX_WIDTH,
+	BOX_HEIGHT,
 } from "./constants";
 import {
 	typoPrefix_title,
@@ -175,11 +178,7 @@ const Inspector = ({ attributes, setAttributes }) => {
 										<RangeControl
 											label={__("Counter Value", "progress-bar")}
 											value={progress}
-											onChange={(newProgress) =>
-												setAttributes({
-													progress: newProgress,
-												})
-											}
+											onChange={(progress) => setAttributes({ progress })}
 											step={1}
 											min={0}
 											max={100}
@@ -372,18 +371,18 @@ const Inspector = ({ attributes, setAttributes }) => {
 											<>
 												<ResponsiveRangeController
 													baseLabel={__("Width", "pregress-bar")}
-													controlName={PROGRESSBAR_WIDTH}
+													controlName={BOX_WIDTH}
 													resRequiredProps={resRequiredProps}
-													units={PX_PERCENTAGE}
 													min={100}
-													max={1000}
+													max={500}
 													step={1}
+													noUnits
 												/>
 												<ResponsiveRangeController
 													baseLabel={__("Height", "progress-bar")}
-													controlName={PROGRESSBAR_HEIGHT}
+													controlName={BOX_HEIGHT}
 													resRequiredProps={resRequiredProps}
-													min={0}
+													min={100}
 													max={500}
 													step={1}
 													noUnits

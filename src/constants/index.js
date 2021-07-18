@@ -26,7 +26,8 @@ export const WRAPPER_CLASS = {
 	circle: "eb-progressbar-circle",
 	circle_fill: "eb-progressbar-circle eb-progressbar-circle-fill",
 	half_circle: "eb-progressbar-half-circle",
-	half_circle_fill: "eb-progressbar-half-circle eb-progressbar-half-circle-fill",
+	half_circle_fill:
+		"eb-progressbar-half-circle eb-progressbar-half-circle-fill",
 	box: "eb-progressbar-box",
 };
 
@@ -46,3 +47,5 @@ export const PROGRESSBAR_WIDTH = "wrpWidth";
 export const PROGRESSBAR_HEIGHT = "wrpHeight";
 export const PROGRESSBAR_SIZE = "wrpSize";
 export const STROKE_WIDTH = "stkWidth";
+export const BOX_WIDTH = "boxWidth";
+export const BOX_HEIGHT = "boxHeight";

@@ -4,7 +4,9 @@ import {
 	PROGRESSBAR_HEIGHT,
 	PROGRESSBAR_WIDTH,
 	PROGRESSBAR_SIZE,
-	STROKE_WIDTH
+	STROKE_WIDTH,
+	BOX_HEIGHT,
+	BOX_WIDTH,
 } from "./constants";
 import {
 	generateTypographyAttributes,
@@ -113,6 +115,14 @@ const attributes = {
 	}),
 	...generateResponsiveRangeAttributes(STROKE_WIDTH, {
 		defaultRange: 12,
+		noUnits: true,
+	}),
+	...generateResponsiveRangeAttributes(BOX_HEIGHT, {
+		defaultRange: 200,
+		noUnits: true,
+	}),
+	...generateResponsiveRangeAttributes(BOX_WIDTH, {
+		defaultRange: 140,
 		noUnits: true,
 	}),
 	// end new attributes

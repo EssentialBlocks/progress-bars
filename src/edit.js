@@ -20,6 +20,8 @@ import {
 	STRIPE_CLASS,
 	STROKE_WIDTH,
 	PROGRESSBAR_SIZE,
+	BOX_HEIGHT,
+	BOX_WIDTH,
 } from "./constants";
 
 import {
@@ -73,36 +75,75 @@ export default function Edit(props) {
 		strokeColor,
 		prefix,
 		suffix,
-		percentageType,
-		percentageColor,
-		tooltipBackground,
-		heightUnit,
 	} = attributes;
 
 	useEffect(() => {
-		
 		if (layout == "line" || layout === "line_rainbow") {
-			line.current.style.width = progress + "%";
-		} else if (layout == "half_circle" || layout === "half_circle_fill") {
-			var rotate = progress * 1.8;
-			circle_half.current.style.transform = "rotate(" + rotate + "deg)";
-		} else if ( layout === "box") {
-			box.current.style.height = progress + "%";
-			box.current.style.transitionDuration = animationDuration + "ms";
+			line.current.style.width = "unset";
+		} else if (layout === "box") {
+			box.current.style.height = "unset";
+		} else if (layout === "circle" || layout === "circle_fill") {
+			circle_half_left.current.style.transform = "rotate(0deg)";
+			circle_pie.current.style.clipPath = "";
+			circle_half_right.current.style.visibility = "";
+		} else if (layout === "half_circle" || layout === "half_circle_fill") {
+			circle_half.current.style.transform = "rotate(0deg)";
+			circle_half.current.style.transition = "none";
 		}
+		let id = "";
+		const changeWidthEffect = () => {
+			var i = 0;
+			if (i == 0) {
+				i = 1;
+				var width = 0;
+				var value = progress;
+				if (layout === "circle" || layout === "circle_fill") {
+					value = progress * 3.6;
+				} else if (layout === "half_circle" || layout === "half_circle_fill") {
+					value = progress * 1.8;
+				}
 
-		if( layout === "circle" || layout === "circle_fill" ) {
-			var rotate = progress * 3.6;
-			circle_half_left.current.style.transform = "rotate(" + rotate + "deg)";
-			if( rotate > 180 ) {
-				circle_pie.current.style.clipPath = "inset(0)";
-				circle_half_right.current.style.visibility = "visible";
-			} else {
-				circle_pie.current.style.clipPath = "";
-				circle_half_right.current.style.visibility = "";
+				id = setInterval(ebChangeframe, 10);
+				function ebChangeframe() {
+					if (layout === "circle" || layout === "circle_fill") {
+						if (width > 180) {
+							circle_pie.current.style.clipPath = "inset(0)";
+							circle_half_right.current.style.visibility = "visible";
+						} else {
+							circle_pie.current.style.clipPath = "";
+							circle_half_right.current.style.visibility = "";
+						}
+					}
+					if (width >= value) {
+						clearInterval(id);
+						i = 0;
+					} else {
+						width++;
+						if (layout == "line" || layout === "line_rainbow") {
+							line.current.style.width = width + "%";
+						} else if (layout === "box") {
+							box.current.style.height = width + "%";
+						}
+						if (layout === "circle" || layout === "circle_fill") {
+							circle_half_left.current.style.transform =
+								"rotate(" + width + "deg)";
+						} else if (
+							layout === "half_circle" ||
+							layout === "half_circle_fill"
+						) {
+							circle_half.current.style.transform = "rotate(" + width + "deg)";
+						}
+					}
+				}
 			}
-		}
-	}, [attributes]);
+		};
+		const progressSetTimeout = setTimeout(changeWidthEffect, 500);
+
+		return () => {
+			clearInterval(id);
+			clearTimeout(progressSetTimeout);
+		};
+	}, [layout, progress]);
 
 	// progress bar width
 	const {
@@ -125,7 +166,7 @@ export default function Edit(props) {
 		property: "height",
 		attributes,
 		customUnit: "px",
-	});	
+	});
 
 	// stroke width
 	const {
@@ -137,7 +178,7 @@ export default function Edit(props) {
 		property: "border-width",
 		attributes,
 		customUnit: "px",
-	});	
+	});
 
 	// circle progressbar width
 	const {
@@ -149,7 +190,7 @@ export default function Edit(props) {
 		property: "width",
 		attributes,
 		customUnit: "px",
-	});	
+	});
 
 	// circle progressbar height
 	const {
@@ -161,7 +202,31 @@ export default function Edit(props) {
 		property: "height",
 		attributes,
 		customUnit: "px",
-	});	
+	});
+
+	// box progressbar height
+	const {
+		rangeStylesDesktop: boxHeightDesktop,
+		rangeStylesTab: boxHeightTab,
+		rangeStylesMobile: boxHeightMobile,
+	} = generateResponsiveRangeStyles({
+		controlName: BOX_HEIGHT,
+		property: "height",
+		attributes,
+		customUnit: "px",
+	});
+
+	// box progressbar width
+	const {
+		rangeStylesDesktop: boxWidthDesktop,
+		rangeStylesTab: boxWidthTab,
+		rangeStylesMobile: boxWidthMobile,
+	} = generateResponsiveRangeStyles({
+		controlName: BOX_WIDTH,
+		property: "width",
+		attributes,
+		customUnit: "px",
+	});
 
 	// title typography
 	const {
@@ -197,7 +262,6 @@ export default function Edit(props) {
 		.${blockId} .eb-progressbar-circle-half {
 			${strokeWidthDesktop}
 			border-color: ${progressColor};
-			transition-duration: ${animationDuration}ms;
 		}
 
 		.${blockId} .eb-progressbar-line-fill {
@@ -237,12 +301,12 @@ export default function Edit(props) {
 
 		.${blockId} .eb-progressbar-half-circle {
 			${circleWidthDesktop}
-			height: calc(${circleWidthDesktop.replace(/\D/g,"") / 2} * 1px);
+			height: calc(${circleWidthDesktop.replace(/\D/g, "") / 2} * 1px);
 		}
 
 		.${blockId} .eb-progressbar-box {
-			${progressBarWidthDesktop}
-			${progressBarHeightDesktop}
+			${boxHeightDesktop}
+			${boxWidthDesktop}
 			${strokeWidthDesktop}
 			background-color: ${backgroundColor || "transparent"};
 			border-color: ${strokeColor || "transparent"};
@@ -255,7 +319,7 @@ export default function Edit(props) {
 					: "background-color: " + progressColor
 			};
 		}
- 	`;	
+ 	`;
 
 	const tabStyles = `
 		.${blockId} .eb-progressbar-line, .${blockId} .eb-progressbar-line-fill {
@@ -289,6 +353,12 @@ export default function Edit(props) {
 
 		.${blockId} .eb-progressbar-half-circle-after {
 			${circleWidthTab}
+		}
+
+		.${blockId} .eb-progressbar-box {
+			${boxHeightTab}
+			${boxWidthTab}
+			${strokeWidthTab}
 		}
 	`;
 
@@ -324,6 +394,12 @@ export default function Edit(props) {
 
 		.${blockId} .eb-progressbar-half-circle-after {
 			${circleWidthMobile}
+		}
+
+		.${blockId} .eb-progressbar-box {
+			${boxHeightMobile}
+			${boxWidthMobile}
+			${strokeWidthMobile}
 		}
 	`;
 
@@ -465,8 +541,14 @@ export default function Edit(props) {
 						{(layout === "circle" || layout === "circle_fill") && (
 							<>
 								<div class="eb-progressbar-circle-pie" ref={circle_pie}>
-									<div className="eb-progressbar-circle-half-left eb-progressbar-circle-half" ref={circle_half_left}></div>
-									<div className="eb-progressbar-circle-half-right eb-progressbar-circle-half" ref={circle_half_right}></div>
+									<div
+										className="eb-progressbar-circle-half-left eb-progressbar-circle-half"
+										ref={circle_half_left}
+									></div>
+									<div
+										className="eb-progressbar-circle-half-right eb-progressbar-circle-half"
+										ref={circle_half_right}
+									></div>
 								</div>
 								<div className="eb-progressbar-circle-inner"></div>
 								<div className="eb-progressbar-circle-inner-content">
@@ -489,7 +571,10 @@ export default function Edit(props) {
 							<>
 								<div className="eb-progressbar-circle">
 									<div className="eb-progressbar-circle-pie">
-										<div className="eb-progressbar-circle-half" ref={circle_half}></div>
+										<div
+											className="eb-progressbar-circle-half"
+											ref={circle_half}
+										></div>
 									</div>
 									<div className="eb-progressbar-circle-inner"></div>
 								</div>
