@@ -286,7 +286,7 @@ const Inspector = ({ attributes, setAttributes }) => {
 														{isProgressGradient && (
 															<GradientColorControl
 																label={__("Gradient Color", "progress-bar")}
-																color={progressGradient}
+																gradientColor={progressGradient}
 																onChange={(progressGradient) =>
 																	setAttributes({ progressGradient })
 																}
@@ -420,7 +420,7 @@ const Inspector = ({ attributes, setAttributes }) => {
 												{isProgressGradient && (
 													<GradientColorControl
 														label={__("Gradient Color", "progress-bar")}
-														color={progressGradient}
+														gradientColor={progressGradient}
 														onChange={(progressGradient) =>
 															setAttributes({ progressGradient })
 														}
