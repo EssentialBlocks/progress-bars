@@ -2,7 +2,6 @@
  * WordPress dependencies
  */
 const { __ } = wp.i18n;
-const { RichText } = wp.editor;
 const { useEffect, useRef } = wp.element;
 const { BlockControls, AlignmentToolbar, useBlockProps } = wp.blockEditor;
 const { select } = wp.data;
@@ -72,6 +71,7 @@ export default function Edit(props) {
 		prefix,
 		suffix,
 	} = attributes;
+	console.log("attribute", { attributes });
 
 	useEffect(() => {
 		if (layout == "line" || layout === "line_rainbow") {
@@ -139,7 +139,7 @@ export default function Edit(props) {
 			clearInterval(id);
 			clearTimeout(progressSetTimeout);
 		};
-	}, [layout, progress]);
+	}, [layout, progress, animationDuration]);
 
 	// progress bar width
 	const {
@@ -258,13 +258,17 @@ export default function Edit(props) {
 		.${blockId} .eb-progressbar-circle-half {
 			${strokeWidthDesktop}
 			border-color: ${progressColor};
-			transition: rotate 1500ms linear;
+		}
+
+		.${blockId} .eb-progressbar-circle-fill .eb-progressbar-circle-half,
+		.${blockId} .eb-progressbar-half-circle-fill .eb-progressbar-circle-half {
+			background-color: ${progressColor};
 		}
 
 		.${blockId} .eb-progressbar-line-fill {
 			${progressBarHeightDesktop}
 			${
-				isProgressGradient
+				layout === "line" && isProgressGradient
 					? "background: " + progressGradient
 					: "background-color: " + progressColor
 			};
@@ -336,12 +340,12 @@ export default function Edit(props) {
 			${titleTypoStylesTab}
 		}
 
-		.${blockId} .eb-progressbar-title {
-			${titleTypoStylesTab}
-		}
-
 		.${blockId} .eb-progressbar-count-wrap {
 			${counterTypoStylesTab}
+		}
+
+		.${blockId} .eb-progressbar-circle-half {
+			${strokeWidthTab}
 		}
 
 		.${blockId} .eb-progressbar-circle-inner {
@@ -350,6 +354,11 @@ export default function Edit(props) {
 
 		.${blockId} .eb-progressbar-half-circle-after {
 			${circleWidthTab}
+		}
+
+		.${blockId} .eb-progressbar-half-circle {
+			${circleWidthTab}
+			height: calc(${circleWidthTab.replace(/\D/g, "") / 2} * 1px);
 		}
 
 		.${blockId} .eb-progressbar-box {
@@ -377,12 +386,12 @@ export default function Edit(props) {
 			${titleTypoStylesMobile}
 		}
 
-		.${blockId} .eb-progressbar-title {
-			${titleTypoStylesMobile}
-		}
-
 		.${blockId} .eb-progressbar-count-wrap {
 			${counterTypoStylesMobile}
+		}
+
+		.${blockId} .eb-progressbar-circle-half {
+			${strokeWidthMobile}
 		}
 
 		.${blockId} .eb-progressbar-circle-inner {
@@ -397,6 +406,11 @@ export default function Edit(props) {
 			${boxHeightMobile}
 			${boxWidthMobile}
 			${strokeWidthMobile}
+		}
+
+		.${blockId} .eb-progressbar-half-circle {
+			${circleWidthMobile}
+			height: calc(${circleWidthMobile.replace(/\D/g, "") / 2} * 1px);
 		}
 	`;
 
@@ -458,7 +472,7 @@ export default function Edit(props) {
 
 	// this useEffect is for creating an unique id for each block's unique className by a random unique number
 	useEffect(() => {
-		const BLOCK_PREFIX = "eb-price-table";
+		const BLOCK_PREFIX = "eb-progressbar";
 		duplicateBlockIdFix({
 			BLOCK_PREFIX,
 			blockId,
