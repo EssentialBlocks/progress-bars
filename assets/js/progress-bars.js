@@ -73,6 +73,7 @@ window.addEventListener("DOMContentLoaded", function (event) {
 				var i = 0;
 				if (i == 0) {
 					var width = 0;
+					var counter = 0;
 					var value = count;
 					if (layout === "circle" || layout === "circle_fill") {
 						value = count * 3.6;
@@ -106,6 +107,7 @@ window.addEventListener("DOMContentLoaded", function (event) {
 							i = 0;
 						} else {
 							width++;
+							counter++;
 							if (layout == "line" || layout === "line_rainbow") {
 								progressbar.querySelector(
 									".eb-progressbar-line-fill"
@@ -135,10 +137,17 @@ window.addEventListener("DOMContentLoaded", function (event) {
 									".eb-progressbar-circle-half"
 								).style.transition = duration + "ms";
 							}
+							// progressbar
+							// 	.querySelector(".eb-progressbar-count")
+							// 	.textContent(counter);
 						}
 					}
 				}
 			}
+		}
+
+		if (isInViewport(progressbar)) {
+			handleAnimationOnScroll();
 		}
 
 		window.addEventListener("scroll", debounce(handleAnimationOnScroll));
