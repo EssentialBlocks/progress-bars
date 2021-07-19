@@ -75,6 +75,7 @@ const attributes = {
 	},
 	progressGradient: {
 		type: "string",
+		default: "linear-gradient(45deg, #000000cc 0% , #00000088 100%)",
 	},
 	showInline: {
 		type: "boolean",

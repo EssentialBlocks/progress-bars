@@ -137,7 +137,7 @@ const Inspector = ({ attributes, setAttributes }) => {
 												setAttributes({ layout: newLayout })
 											}
 										/>
-										{layout === "line" && (
+										{(layout === "line" || layout === "line_rainbow") && (
 											<ToggleControl
 												label={__("Show Inline", "progress-bar")}
 												checked={showInline}
