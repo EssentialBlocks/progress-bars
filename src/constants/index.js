@@ -49,3 +49,6 @@ export const PROGRESSBAR_SIZE = "wrpSize";
 export const STROKE_WIDTH = "stkWidth";
 export const BOX_WIDTH = "boxWidth";
 export const BOX_HEIGHT = "boxHeight";
+
+// dimension control
+export const WRAPPER_MARGIN = "wrpMargin";

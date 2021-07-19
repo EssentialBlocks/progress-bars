@@ -39,6 +39,7 @@ import {
 	STROKE_WIDTH,
 	BOX_WIDTH,
 	BOX_HEIGHT,
+	WRAPPER_MARGIN,
 } from "./constants";
 import {
 	typoPrefix_title,
@@ -469,6 +470,12 @@ const Inspector = ({ attributes, setAttributes }) => {
 											onChange={(counterColor) =>
 												setAttributes({ counterColor })
 											}
+										/>
+									</PanelBody>
+									<PanelBody title={__("Margin", "progress-bar")}>
+										<ResponsiveDimensionsControl
+											resRequiredProps={resRequiredProps}
+											controlName={WRAPPER_MARGIN}
 										/>
 									</PanelBody>
 								</>

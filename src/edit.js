@@ -21,6 +21,7 @@ import {
 	PROGRESSBAR_SIZE,
 	BOX_HEIGHT,
 	BOX_WIDTH,
+	WRAPPER_MARGIN,
 } from "./constants";
 
 import {
@@ -35,6 +36,7 @@ import {
 	isCssExists,
 	generateTypographyStyles,
 	generateResponsiveRangeStyles,
+	generateDimensionsControlStyles,
 } from "../util/helpers";
 
 export default function Edit(props) {
@@ -71,7 +73,6 @@ export default function Edit(props) {
 		prefix,
 		suffix,
 	} = attributes;
-	console.log("attribute", { attributes });
 
 	useEffect(() => {
 		if (layout == "line" || layout === "line_rainbow") {
@@ -140,6 +141,17 @@ export default function Edit(props) {
 			clearTimeout(progressSetTimeout);
 		};
 	}, [layout, progress, animationDuration]);
+
+	// wrapper margin
+	const {
+		dimensionStylesDesktop: wrapperMarginDesktop,
+		dimensionStylesTab: wrapperMarginTab,
+		dimensionStylesMobile: wrapperMarginMobile,
+	} = generateDimensionsControlStyles({
+		controlName: WRAPPER_MARGIN,
+		styleFor: "margin",
+		attributes,
+	});
 
 	// progress bar width
 	const {
@@ -245,6 +257,10 @@ export default function Edit(props) {
 	});
 
 	const desktopStyles = `
+		.${blockId}.eb-progressbar-wrapper {
+			${wrapperMarginDesktop}
+		}
+
 		.${blockId} .eb-progressbar-line {
 			${progressBarHeightDesktop}
 			background-color: ${strokeColor || "transparent"};
@@ -323,6 +339,10 @@ export default function Edit(props) {
  	`;
 
 	const tabStyles = `
+		.${blockId}.eb-progressbar-wrapper {
+			${wrapperMarginTab}
+		}
+
 		.${blockId} .eb-progressbar-line, .${blockId} .eb-progressbar-line-fill {
 			${progressBarHeightTab}
 		}
@@ -369,6 +389,10 @@ export default function Edit(props) {
 	`;
 
 	const mobileStyles = `
+		.${blockId}.eb-progressbar-wrapper {
+			${wrapperMarginMobile}
+		}
+
 		.${blockId} .eb-progressbar-line, .${blockId} .eb-progressbar-line-fill {
 			${progressBarHeightMobile}
 		}

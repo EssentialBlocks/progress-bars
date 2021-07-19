@@ -7,11 +7,12 @@ import {
 	STROKE_WIDTH,
 	BOX_HEIGHT,
 	BOX_WIDTH,
+	WRAPPER_MARGIN,
 } from "./constants";
 import {
 	generateTypographyAttributes,
 	generateResponsiveRangeAttributes,
-	generateBackgroundAttributes,
+	generateDimensionsAttributes,
 } from "../util/helpers";
 const attributes = {
 	resOption: {
@@ -126,6 +127,13 @@ const attributes = {
 	...generateResponsiveRangeAttributes(BOX_WIDTH, {
 		defaultRange: 140,
 		noUnits: true,
+	}),
+	...generateDimensionsAttributes(WRAPPER_MARGIN, {
+		top: 0,
+		right: 0,
+		bottom: 25,
+		left: 0,
+		isLinked: false,
 	}),
 	// end new attributes
 };

@@ -137,9 +137,6 @@ window.addEventListener("DOMContentLoaded", function (event) {
 									".eb-progressbar-circle-half"
 								).style.transition = duration + "ms";
 							}
-							// progressbar
-							// 	.querySelector(".eb-progressbar-count")
-							// 	.textContent(counter);
 						}
 					}
 				}
