@@ -62,9 +62,11 @@ const attributes = {
 	},
 	titleColor: {
 		type: "string",
+		default: "#4d4d4d",
 	},
 	counterColor: {
 		type: "string",
+		default: "#4d4d4d",
 	},
 	progressColor: {
 		type: "string",

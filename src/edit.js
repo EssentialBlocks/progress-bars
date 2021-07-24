@@ -288,7 +288,6 @@ export default function Edit(props) {
 					? "background: " + progressGradient
 					: "background-color: " + progressColor
 			};
-			transition-duration: ${animationDuration}ms;
 		}
 
 		.${blockId} .eb-progressbar-line-container {
@@ -334,7 +333,6 @@ export default function Edit(props) {
 					? "background: " + progressGradient
 					: "background-color: " + progressColor
 			};
-			transition-duration: ${animationDuration}ms;
 		}
  	`;
 

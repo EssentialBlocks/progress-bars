@@ -23,8 +23,6 @@ import ColorControl from "../util/color-control";
 import ResponsiveRangeController from "../util/responsive-range-control";
 import ResponsiveDimensionsControl from "../util/dimensions-control-v2";
 import TypographyDropdown from "../util/typography-control-v2";
-import BackgroundControl from "../util/background-control";
-import BorderShadowControl from "../util/border-shadow-control";
 import {
 	mimmikCssForResBtns,
 	mimmikCssOnPreviewBtnClickWhileBlockSelected,
