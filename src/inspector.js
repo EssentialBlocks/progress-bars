@@ -469,24 +469,24 @@ const Inspector = ({ attributes, setAttributes }) => {
 												setAttributes({ counterColor })
 											}
 										/>
-										{layout === "half_circle" ||
-											(layout === "half_circle_fill" && (
-												<>
-													<hr />
-													<TypographyDropdown
-														baseLabel={__("Prefix & Suffix")}
-														typographyPrefixConstant={typoPrefix_prefix}
-														resRequiredProps={resRequiredProps}
-													/>
-													<ColorControl
-														label={__("Prefix & Suffix Color")}
-														color={prefixColor}
-														onChange={(prefixColor) =>
-															setAttributes({ prefixColor })
-														}
-													/>
-												</>
-											))}
+										{(layout === "half_circle" ||
+											layout === "half_circle_fill") && (
+											<>
+												<hr />
+												<TypographyDropdown
+													baseLabel={__("Prefix & Suffix")}
+													typographyPrefixConstant={typoPrefix_prefix}
+													resRequiredProps={resRequiredProps}
+												/>
+												<ColorControl
+													label={__("Prefix & Suffix Color")}
+													color={prefixColor}
+													onChange={(prefixColor) =>
+														setAttributes({ prefixColor })
+													}
+												/>
+											</>
+										)}
 									</PanelBody>
 									<PanelBody
 										title={__("Margin", "progress-bar")}
