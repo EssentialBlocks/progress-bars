@@ -1,5 +1,5 @@
 === Progress Bars ===
-Contributors: wpdevteam, re_enter_rupok, Asif2BD, alam789
+Contributors: wpdevteam, re_enter_rupok, Asif2BD, alam789, fencermonir
 Tags: gutenberg, block, blocks, editor, progress, progress bar, skill bar, responsive progress bar, animated skillbar, animated progress bar, skill-bars, percentage bar, chart bar, graph bar, gutenberg blocks
 Requires at least: 5.0
 Tested up to: 5.5
@@ -84,6 +84,18 @@ Yes, it will work with any standard WordPress theme.
 
 
 == Changelog ==
+
+= 1.1.0 - (dev)
+
+* Added: 7 New Layouts(Line, Line Rainbow, Circle, Circle Fill, Half Circle, Half Circle Fill, Box)
+* Added: Responsive Controls
+* Added: Margin Option in Wrapper
+* Added: Progress Bar Alignment
+* Added: Advanced and Responsive Typography Option
+* Added: Scroll Animation On Frontend View
+* Added: Stripe Animation
+* Improved: Inspector Panel Design
+* Improved: Inspector Panel Controllers
 
 = 1.0.1 - 23-08-2020 =
 
