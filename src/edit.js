@@ -272,31 +272,31 @@ export default function Edit(props) {
 	const halfCircleHeightMobile = circleWidthMobile || circleWidthDesktop;
 
 	const desktopStyles = `
-		.${blockId}.eb-progressbar-wrapper {
+		.eb-progressbar-wrapper.${blockId} {
 			${wrapperMarginDesktop}
 		}
 
-		.${blockId} .eb-progressbar-line {
+		.eb-progressbar-wrapper.${blockId} .eb-progressbar-line {
 			${progressBarHeightDesktop}
 			background-color: ${strokeColor || "transparent"};
 		}
 
-		.${blockId} .eb-progressbar-circle {
+		.eb-progressbar-wrapper.${blockId} .eb-progressbar-circle {
 			${circleWidthDesktop}
 			${circleHeightDesktop}
 		}
 
-		.${blockId} .eb-progressbar-circle-half {
+		.eb-progressbar-wrapper.${blockId} .eb-progressbar-circle-half {
 			${strokeWidthDesktop}
 			border-color: ${progressColor};
 		}
 
-		.${blockId} .eb-progressbar-circle-fill .eb-progressbar-circle-half,
-		.${blockId} .eb-progressbar-half-circle-fill .eb-progressbar-circle-half {
+		.eb-progressbar-wrapper.${blockId} .eb-progressbar-circle-fill .eb-progressbar-circle-half,
+		.eb-progressbar-wrapper.${blockId} .eb-progressbar-half-circle-fill .eb-progressbar-circle-half {
 			background-color: ${progressColor};
 		}
 
-		.${blockId} .eb-progressbar-line-fill {
+		.eb-progressbar-wrapper.${blockId} .eb-progressbar-line-fill {
 			${progressBarHeightDesktop}
 			${
 				layout === "line" && isProgressGradient
@@ -305,38 +305,38 @@ export default function Edit(props) {
 			};
 		}
 
-		.${blockId} .eb-progressbar-line-container {
+		.eb-progressbar-wrapper.${blockId} .eb-progressbar-line-container {
 			${progressBarWidthDesktop}
 		}
 
-		.${blockId} .eb-progressbar-title {
+		.eb-progressbar-wrapper.${blockId} .eb-progressbar-title {
 			${titleTypoStylesDesktop}
 			color: ${titleColor};
 		}
 
-		.${blockId} .eb-progressbar-count-wrap {
+		.eb-progressbar-wrapper.${blockId} .eb-progressbar-count-wrap {
 			${counterTypoStylesDesktop}
 			color: ${counterColor};
 		}
 
-		.${blockId} .eb-progressbar-circle-inner {
+		.eb-progressbar-wrapper.${blockId} .eb-progressbar-circle-inner {
 			background-color: ${backgroundColor};
 			border-color: ${strokeColor || "transparent"};
 			${strokeWidthDesktop}
 		}
 
-		.${blockId} .eb-progressbar-half-circle-after {
+		.eb-progressbar-wrapper.${blockId} .eb-progressbar-half-circle-after {
 			${circleWidthDesktop}
 			${prefixTypoStylesDesktop}
 			color: ${prefixColor};
 		}
 
-		.${blockId} .eb-progressbar-half-circle {
+		.eb-progressbar-wrapper.${blockId} .eb-progressbar-half-circle {
 			${circleWidthDesktop}
 			height: calc(${circleWidthDesktop.replace(/\D/g, "") / 2} * 1px);
 		}
 
-		.${blockId} .eb-progressbar-box {
+		.eb-progressbar-wrapper.${blockId} .eb-progressbar-box {
 			${boxHeightDesktop}
 			${boxWidthDesktop}
 			${strokeWidthDesktop}
@@ -344,7 +344,7 @@ export default function Edit(props) {
 			border-color: ${strokeColor || "transparent"};
 		}
 
-		.${blockId} .eb-progressbar-box-fill {
+		.eb-progressbar-wrapper.${blockId} .eb-progressbar-box-fill {
 			${
 				isProgressGradient
 					? "background: " + progressGradient
@@ -354,50 +354,50 @@ export default function Edit(props) {
  	`;
 
 	const tabStyles = `
-		.${blockId}.eb-progressbar-wrapper {
+		.eb-progressbar-wrapper.${blockId} {
 			${wrapperMarginTab}
 		}
 
-		.${blockId} .eb-progressbar-line, .${blockId} .eb-progressbar-line-fill {
+		.eb-progressbar-wrapper.${blockId} .eb-progressbar-line, .eb-progressbar-wrapper.${blockId} .eb-progressbar-line-fill {
 			${progressBarHeightTab}
 		}
 
-		.${blockId} .eb-progressbar-circle {
+		.eb-progressbar-wrapper.${blockId} .eb-progressbar-circle {
 			${circleWidthTab}
 			${circleHeightTab}
 		}
 
-		.${blockId} .eb-progressbar-line-container {
+		.eb-progressbar-wrapper.${blockId} .eb-progressbar-line-container {
 			${progressBarWidthTab}
 		}
 
-		.${blockId} .eb-progressbar-title {
+		.eb-progressbar-wrapper.${blockId} .eb-progressbar-title {
 			${titleTypoStylesTab}
 		}
 
-		.${blockId} .eb-progressbar-count-wrap {
+		.eb-progressbar-wrapper.${blockId} .eb-progressbar-count-wrap {
 			${counterTypoStylesTab}
 		}
 
-		.${blockId} .eb-progressbar-circle-half {
+		.eb-progressbar-wrapper.${blockId} .eb-progressbar-circle-half {
 			${strokeWidthTab}
 		}
 
-		.${blockId} .eb-progressbar-circle-inner {
+		.eb-progressbar-wrapper.${blockId} .eb-progressbar-circle-inner {
 			${strokeWidthTab}
 		}
 
-		.${blockId} .eb-progressbar-half-circle-after {
+		.eb-progressbar-wrapper.${blockId} .eb-progressbar-half-circle-after {
 			${circleWidthTab}
 			${prefixTypoStylesTab}
 		}
 
-		.${blockId} .eb-progressbar-half-circle {
+		.eb-progressbar-wrapper.${blockId} .eb-progressbar-half-circle {
 			${circleWidthTab}
 			height: calc(${halfCircleHeightTab.replace(/\D/g, "") / 2} * 1px);
 		}
 
-		.${blockId} .eb-progressbar-box {
+		.eb-progressbar-wrapper.${blockId} .eb-progressbar-box {
 			${boxHeightTab}
 			${boxWidthTab}
 			${strokeWidthTab}
@@ -405,51 +405,51 @@ export default function Edit(props) {
 	`;
 
 	const mobileStyles = `
-		.${blockId}.eb-progressbar-wrapper {
+		.eb-progressbar-wrapper.${blockId} {
 			${wrapperMarginMobile}
 		}
 
-		.${blockId} .eb-progressbar-line, .${blockId} .eb-progressbar-line-fill {
+		.eb-progressbar-wrapper.${blockId} .eb-progressbar-line, .eb-progressbar-wrapper.${blockId} .eb-progressbar-line-fill {
 			${progressBarHeightMobile}
 		}
 
-		.${blockId} .eb-progressbar-circle {
+		.eb-progressbar-wrapper.${blockId} .eb-progressbar-circle {
 			${circleWidthMobile}
 			${circleHeightMobile}
 		}
 
-		.${blockId} .eb-progressbar-line-container {
+		.eb-progressbar-wrapper.${blockId} .eb-progressbar-line-container {
 			${progressBarWidthMobile}
 		}
 
-		.${blockId} .eb-progressbar-title {
+		.eb-progressbar-wrapper.${blockId} .eb-progressbar-title {
 			${titleTypoStylesMobile}
 		}
 
-		.${blockId} .eb-progressbar-count-wrap {
+		.eb-progressbar-wrapper.${blockId} .eb-progressbar-count-wrap {
 			${counterTypoStylesMobile}
 		}
 
-		.${blockId} .eb-progressbar-circle-half {
+		.eb-progressbar-wrapper.${blockId} .eb-progressbar-circle-half {
 			${strokeWidthMobile}
 		}
 
-		.${blockId} .eb-progressbar-circle-inner {
+		.eb-progressbar-wrapper.${blockId} .eb-progressbar-circle-inner {
 			${strokeWidthMobile}
 		}
 
-		.${blockId} .eb-progressbar-half-circle-after {
+		.eb-progressbar-wrapper.${blockId} .eb-progressbar-half-circle-after {
 			${circleWidthMobile}
 			${prefixTypoStylesMobile}
 		}
 
-		.${blockId} .eb-progressbar-box {
+		.eb-progressbar-wrapper.${blockId} .eb-progressbar-box {
 			${boxHeightMobile}
 			${boxWidthMobile}
 			${strokeWidthMobile}
 		}
 
-		.${blockId} .eb-progressbar-half-circle {
+		.eb-progressbar-wrapper.${blockId} .eb-progressbar-half-circle {
 			${circleWidthMobile}
 			height: calc(${halfCircleHeightMobile.replace(/\D/g, "") / 2} * 1px);
 		}
@@ -458,11 +458,11 @@ export default function Edit(props) {
 	var inlineStyle = "";
 	if (showInline) {
 		inlineStyle = `
-			.${blockId} .eb-progressbar-line-container {
+			.eb-progressbar-wrapper.${blockId} .eb-progressbar-line-container {
 				position: relative;
 			}
 
-			.${blockId} .eb-progressbar-line-container .eb-progressbar-title {
+			.eb-progressbar-wrapper.${blockId} .eb-progressbar-line-container .eb-progressbar-title {
 				position: absolute;
 				top: 50%;
 				left: 0;
@@ -470,7 +470,7 @@ export default function Edit(props) {
 				z-index: 9;
 			}
 
-			.${blockId} .eb-progressbar-line-container .eb-progressbar-line .eb-progressbar-count-wrap {
+			.eb-progressbar-wrapper.${blockId} .eb-progressbar-line-container .eb-progressbar-line .eb-progressbar-count-wrap {
 				bottom: 50% !important;
 				transform: translateY(50%) !important;
 			}
