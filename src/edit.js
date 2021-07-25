@@ -27,6 +27,7 @@ import {
 import {
 	typoPrefix_title,
 	typoPrefix_counter,
+	typoPrefix_prefix,
 } from "./constants/typographyConstants";
 
 import {
@@ -72,6 +73,7 @@ export default function Edit(props) {
 		strokeColor,
 		prefix,
 		suffix,
+		prefixColor,
 	} = attributes;
 
 	useEffect(() => {
@@ -256,6 +258,16 @@ export default function Edit(props) {
 		prefixConstant: typoPrefix_counter,
 	});
 
+	// prefix & suffix typography
+	const {
+		typoStylesDesktop: prefixTypoStylesDesktop,
+		typoStylesTab: prefixTypoStylesTab,
+		typoStylesMobile: prefixTypoStylesMobile,
+	} = generateTypographyStyles({
+		attributes,
+		prefixConstant: typoPrefix_prefix,
+	});
+
 	const halfCircleHeightTab = circleWidthTab || circleWidthDesktop;
 	const halfCircleHeightMobile = circleWidthMobile || circleWidthDesktop;
 
@@ -315,6 +327,8 @@ export default function Edit(props) {
 
 		.${blockId} .eb-progressbar-half-circle-after {
 			${circleWidthDesktop}
+			${prefixTypoStylesDesktop}
+			color: ${prefixColor};
 		}
 
 		.${blockId} .eb-progressbar-half-circle {
@@ -375,6 +389,7 @@ export default function Edit(props) {
 
 		.${blockId} .eb-progressbar-half-circle-after {
 			${circleWidthTab}
+			${prefixTypoStylesTab}
 		}
 
 		.${blockId} .eb-progressbar-half-circle {
@@ -425,6 +440,7 @@ export default function Edit(props) {
 
 		.${blockId} .eb-progressbar-half-circle-after {
 			${circleWidthMobile}
+			${prefixTypoStylesMobile}
 		}
 
 		.${blockId} .eb-progressbar-box {

@@ -11,18 +11,16 @@ const {
 	SelectControl,
 	TextControl,
 	RangeControl,
-	NumberControl,
-	Button,
 	BaseControl,
 	TabPanel,
 } = wp.components;
 
 import objAttributes from "./attributes";
-import faIcons from "../util/faIcons";
 import ColorControl from "../util/color-control";
 import ResponsiveRangeController from "../util/responsive-range-control";
 import ResponsiveDimensionsControl from "../util/dimensions-control-v2";
 import TypographyDropdown from "../util/typography-control-v2";
+import GradientColorControl from "../util/gradient-color-controller";
 import {
 	mimmikCssForResBtns,
 	mimmikCssOnPreviewBtnClickWhileBlockSelected,
@@ -42,14 +40,13 @@ import {
 import {
 	typoPrefix_title,
 	typoPrefix_counter,
+	typoPrefix_prefix,
 } from "./constants/typographyConstants";
-import GradientColorControl from "../util/gradient-color-controller";
 
 const Inspector = ({ attributes, setAttributes }) => {
 	const {
 		resOption,
 		layout,
-		wrapperAlign,
 		title,
 		titleTag,
 		progress,
@@ -67,7 +64,7 @@ const Inspector = ({ attributes, setAttributes }) => {
 		strokeColor,
 		prefix,
 		suffix,
-		// new attributes
+		prefixColor,
 	} = attributes;
 
 	// this useEffect is for setting the resOption attribute to desktop/tab/mobile depending on the added 'eb-res-option-' class only the first time once
@@ -445,7 +442,10 @@ const Inspector = ({ attributes, setAttributes }) => {
 										)}
 									</PanelBody>
 
-									<PanelBody title={__("Typography", "progress-bar")}>
+									<PanelBody
+										title={__("Typography", "progress-bar")}
+										initialOpen={false}
+									>
 										<TypographyDropdown
 											baseLabel={__("Title")}
 											typographyPrefixConstant={typoPrefix_title}
@@ -469,8 +469,29 @@ const Inspector = ({ attributes, setAttributes }) => {
 												setAttributes({ counterColor })
 											}
 										/>
+										{layout === "half_circle" ||
+											(layout === "half_circle_fill" && (
+												<>
+													<hr />
+													<TypographyDropdown
+														baseLabel={__("Prefix & Suffix")}
+														typographyPrefixConstant={typoPrefix_prefix}
+														resRequiredProps={resRequiredProps}
+													/>
+													<ColorControl
+														label={__("Prefix & Suffix Color")}
+														color={prefixColor}
+														onChange={(prefixColor) =>
+															setAttributes({ prefixColor })
+														}
+													/>
+												</>
+											))}
 									</PanelBody>
-									<PanelBody title={__("Margin", "progress-bar")}>
+									<PanelBody
+										title={__("Margin", "progress-bar")}
+										initialOpen={false}
+									>
 										<ResponsiveDimensionsControl
 											resRequiredProps={resRequiredProps}
 											controlName={WRAPPER_MARGIN}

@@ -106,6 +106,10 @@ const attributes = {
 		type: "string",
 		default: __("Postfix", "progress-bar"),
 	},
+	prefixColor: {
+		type: "string",
+		default: "#4d4d4d",
+	},
 	// typography attributes
 	...generateTypographyAttributes(Object.values(typoPrefixs)),
 	// range controller

@@ -61,53 +61,54 @@ window.addEventListener("DOMContentLoaded", function (event) {
 		var duration = progressbar.getAttribute("data-duration");
 
 		function handleAnimationOnScroll() {
-			if (!showedElement && isInViewport(progressbar)) {
-				showedElement = true;
-				animate({
-					duration: duration,
-					timing: function (timeFraction) {
-						return timeFraction;
-					},
-					draw: function (progress) {
-						var counter = Math.floor(progress * 100);
-						if (counter <= count) {
-							if (layout === "line" || layout === "line_rainbow") {
-								progressbar.querySelector(
-									".eb-progressbar-line-fill"
-								).style.width = counter + "%";
-							} else if (layout === "circle" || layout === "circle_fill") {
-								var rotate = counter * 3.6;
-								progressbar.querySelector(
-									".eb-progressbar-circle-half-left"
-								).style.transform = "rotate(" + rotate + "deg)";
-								if (rotate > 180) {
+			setTimeout(function () {
+				if (!showedElement && isInViewport(progressbar)) {
+					animate({
+						duration: duration,
+						timing: function (timeFraction) {
+							return timeFraction;
+						},
+						draw: function (progress) {
+							var counter = Math.floor(progress * 100);
+							if (counter <= count) {
+								if (layout === "line" || layout === "line_rainbow") {
 									progressbar.querySelector(
-										".eb-progressbar-circle-pie"
-									).style.clipPath = "inset(0)";
+										".eb-progressbar-line-fill"
+									).style.width = counter + "%";
+								} else if (layout === "circle" || layout === "circle_fill") {
+									var rotate = counter * 3.6;
 									progressbar.querySelector(
-										".eb-progressbar-circle-half-right"
-									).style.visibility = "visible";
+										".eb-progressbar-circle-half-left"
+									).style.transform = "rotate(" + rotate + "deg)";
+									if (rotate > 180) {
+										progressbar.querySelector(
+											".eb-progressbar-circle-pie"
+										).style.clipPath = "inset(0)";
+										progressbar.querySelector(
+											".eb-progressbar-circle-half-right"
+										).style.visibility = "visible";
+									}
+								} else if (
+									layout === "half_circle" ||
+									layout === "half_circle_fill"
+								) {
+									var rotate = counter * 1.8;
+									progressbar.querySelector(
+										".eb-progressbar-circle-half"
+									).style.transform = "rotate(" + rotate + "deg)";
+								} else if (layout === "box") {
+									progressbar.querySelector(
+										".eb-progressbar-box-fill"
+									).style.height = counter + "%";
 								}
-							} else if (
-								layout === "half_circle" ||
-								layout === "half_circle_fill"
-							) {
-								var rotate = counter * 1.8;
-								progressbar.querySelector(
-									".eb-progressbar-circle-half"
-								).style.transform = "rotate(" + rotate + "deg)";
-							} else if (layout === "box") {
-								progressbar.querySelector(
-									".eb-progressbar-box-fill"
-								).style.height = counter + "%";
+								progressbar.querySelector(".eb-progressbar-count").innerText =
+									counter;
 							}
-							progressbar.querySelector(
-								".eb-progressbar-count"
-							).innerText = counter;
-						}
-					},
-				});
-			}
+						},
+					});
+					showedElement = true;
+				}
+			}, 20);
 		}
 
 		if (isInViewport(progressbar)) {
