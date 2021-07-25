@@ -256,6 +256,9 @@ export default function Edit(props) {
 		prefixConstant: typoPrefix_counter,
 	});
 
+	const halfCircleHeightTab = circleWidthTab || circleWidthDesktop;
+	const halfCircleHeightMobile = circleWidthMobile || circleWidthDesktop;
+
 	const desktopStyles = `
 		.${blockId}.eb-progressbar-wrapper {
 			${wrapperMarginDesktop}
@@ -288,7 +291,6 @@ export default function Edit(props) {
 					? "background: " + progressGradient
 					: "background-color: " + progressColor
 			};
-			transition-duration: ${animationDuration}ms;
 		}
 
 		.${blockId} .eb-progressbar-line-container {
@@ -334,7 +336,6 @@ export default function Edit(props) {
 					? "background: " + progressGradient
 					: "background-color: " + progressColor
 			};
-			transition-duration: ${animationDuration}ms;
 		}
  	`;
 
@@ -378,7 +379,7 @@ export default function Edit(props) {
 
 		.${blockId} .eb-progressbar-half-circle {
 			${circleWidthTab}
-			height: calc(${circleWidthTab.replace(/\D/g, "") / 2} * 1px);
+			height: calc(${halfCircleHeightTab.replace(/\D/g, "") / 2} * 1px);
 		}
 
 		.${blockId} .eb-progressbar-box {
@@ -434,7 +435,7 @@ export default function Edit(props) {
 
 		.${blockId} .eb-progressbar-half-circle {
 			${circleWidthMobile}
-			height: calc(${circleWidthMobile.replace(/\D/g, "") / 2} * 1px);
+			height: calc(${halfCircleHeightMobile.replace(/\D/g, "") / 2} * 1px);
 		}
 	`;
 

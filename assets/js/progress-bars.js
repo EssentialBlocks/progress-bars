@@ -10,6 +10,23 @@ const isInViewport = function (elem) {
 	);
 };
 
+const animate = function ({ duration, draw, timing }) {
+	let start = performance.now();
+
+	requestAnimationFrame(function animate(time) {
+		let timeFraction = (time - start) / duration;
+		if (timeFraction > 1) timeFraction = 1;
+
+		let progress = timing(timeFraction);
+
+		draw(progress);
+
+		if (timeFraction < 1) {
+			requestAnimationFrame(animate);
+		}
+	});
+};
+
 window.addEventListener("DOMContentLoaded", function (event) {
 	var progressbars = document.querySelectorAll(".eb-progressbar");
 	if (!progressbars) return;
@@ -45,101 +62,51 @@ window.addEventListener("DOMContentLoaded", function (event) {
 
 		function handleAnimationOnScroll() {
 			if (!showedElement && isInViewport(progressbar)) {
-				if (layout == "line" || layout === "line_rainbow") {
-					progressbar.querySelector(".eb-progressbar-line-fill").style.width =
-						"unset";
-				} else if (layout === "box") {
-					progressbar.querySelector(".eb-progressbar-box-fill").style.height =
-						"unset";
-				} else if (layout === "circle" || layout === "circle_fill") {
-					progressbar.querySelector(
-						".eb-progressbar-circle-half-left"
-					).style.transform = "rotate(0deg)";
-					progressbar.querySelector(
-						".eb-progressbar-circle-pie"
-					).style.clipPath = "";
-					progressbar.querySelector(
-						".eb-progressbar-circle-half-right"
-					).style.visibility = "";
-				} else if (layout === "half_circle" || layout === "half_circle_fill") {
-					progressbar.querySelector(
-						".eb-progressbar-circle-half"
-					).style.transform = "rotate(0deg)";
-					progressbar.querySelector(
-						".eb-progressbar-circle-half"
-					).style.transition = "none";
-				}
 				showedElement = true;
-				var i = 0;
-				if (i == 0) {
-					var width = 0;
-					var counter = 0;
-					var value = count;
-					if (layout === "circle" || layout === "circle_fill") {
-						value = count * 3.6;
-					} else if (
-						layout === "half_circle" ||
-						layout === "half_circle_fill"
-					) {
-						value = count * 1.8;
-					}
-					var id = setInterval(frame, 10);
-					function frame() {
-						if (layout === "circle" || layout === "circle_fill") {
-							if (width > 180) {
-								progressbar.querySelector(
-									".eb-progressbar-circle-pie"
-								).style.clipPath = "inset(0)";
-								progressbar.querySelector(
-									".eb-progressbar-circle-half-right"
-								).style.visibility = "visible";
-							} else {
-								progressbar.querySelector(
-									".eb-progressbar-circle-pie"
-								).style.clipPath = "";
-								progressbar.querySelector(
-									".eb-progressbar-circle-half-right"
-								).style.visibility = "";
-							}
-						}
-						if (width >= value) {
-							clearInterval(id);
-							i = 0;
-						} else {
-							width++;
-							counter++;
-							if (layout == "line" || layout === "line_rainbow") {
+				animate({
+					duration: duration,
+					timing: function (timeFraction) {
+						return timeFraction;
+					},
+					draw: function (progress) {
+						var counter = Math.floor(progress * 100);
+						if (counter <= count) {
+							if (layout === "line" || layout === "line_rainbow") {
 								progressbar.querySelector(
 									".eb-progressbar-line-fill"
-								).style.width = width + "%";
-								progressbar.querySelector(
-									".eb-progressbar-line-fill"
-								).style.transitionDuration = duration + "ms";
-							} else if (layout === "box") {
-								progressbar.querySelector(
-									".eb-progressbar-box-fill"
-								).style.height = width + "%";
-								progressbar.querySelector(
-									".eb-progressbar-box-fill"
-								).style.transitionDuration = duration + "ms";
+								).style.width = counter + "%";
 							} else if (layout === "circle" || layout === "circle_fill") {
+								var rotate = counter * 3.6;
 								progressbar.querySelector(
 									".eb-progressbar-circle-half-left"
-								).style.transform = "rotate(" + width + "deg)";
+								).style.transform = "rotate(" + rotate + "deg)";
+								if (rotate > 180) {
+									progressbar.querySelector(
+										".eb-progressbar-circle-pie"
+									).style.clipPath = "inset(0)";
+									progressbar.querySelector(
+										".eb-progressbar-circle-half-right"
+									).style.visibility = "visible";
+								}
 							} else if (
 								layout === "half_circle" ||
 								layout === "half_circle_fill"
 							) {
+								var rotate = counter * 1.8;
 								progressbar.querySelector(
 									".eb-progressbar-circle-half"
-								).style.transform = "rotate(" + width + "deg)";
+								).style.transform = "rotate(" + rotate + "deg)";
+							} else if (layout === "box") {
 								progressbar.querySelector(
-									".eb-progressbar-circle-half"
-								).style.transition = duration + "ms";
+									".eb-progressbar-box-fill"
+								).style.height = counter + "%";
 							}
+							progressbar.querySelector(
+								".eb-progressbar-count"
+							).innerText = counter;
 						}
-					}
-				}
+					},
+				});
 			}
 		}
 
