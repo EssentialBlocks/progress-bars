@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name:     Progress Bars
+ * Plugin Name:     Progress Bar
  * Plugin URI: 		https://essential-blocks.com
  * Description:     Make your website interactive with stunning progress bar
  * Version:         1.0.1
