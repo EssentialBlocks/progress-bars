@@ -1,120 +1,128 @@
 /**
  * WordPress dependencies
  */
-import { RichText } from "@wordpress/block-editor";
+const { useBlockProps } = wp.blockEditor;
 
-/**
- * Internal dependencies
- */
-import {
-	DEFAULT_PROGRESS,
-	DEFAULT_HEIGHT,
-	DEFAULT_BACKGROUND,
-	DEFAULT_PROGRESS_COLOR,
-	DEFAULT_TOOLTIP_COLOR,
-	DEFAULT_TOOLTIP_TEXT_COLOR,
-} from "./constants";
+import { CONTAINER_CLASS, WRAPPER_CLASS, STRIPE_CLASS } from "./constants";
 
 const save = ({ attributes }) => {
 	const {
+		blockId,
+		layout,
+		wrapperAlign,
+		titleTag,
 		progress,
-		height,
-		displayTitle,
+		displayProgress,
+		animationDuration,
 		title,
-		displayPercentage,
-		colorType,
-		progressBackground,
-		progressColor,
-		progressGradient,
-		titleFontSize,
-		titleColor,
-		percentageType,
-		percentageColor,
-		tooltipBackground,
-		heightUnit,
-		titleFontFamily,
-		titleFontSizeUnit,
-		titleFontWeight,
-		titleTextTransform,
-		titleTextDecoration,
-		titleLineHeight,
-		titleLineHeightUnit,
-		titleLetterSpacing,
-		titleLetterSpacingUnit,
+		showStripe,
+		stripeAnimation,
+		prefix,
+		suffix,
 	} = attributes;
 
-	const wrapperStyles = {
-		paddingTop:
-			displayPercentage && percentageType === "tooltip" ? DEFAULT_HEIGHT : 0,
-	};
-
-	const containerStyle = {
-		backgroundColor: progressBackground || DEFAULT_BACKGROUND,
-		height: `${height || DEFAULT_HEIGHT}${heightUnit}`,
-	};
-
-	const titleStyles = {
-		visibility: displayTitle ? "visible" : "hidden",
-		fontSize: `${titleFontSize}px`,
-		fontFamily: titleFontFamily,
-		fontWeight: titleFontWeight,
-		textDecoration: titleTextDecoration,
-		textTransform: titleTextTransform,
-		letterSpacing: titleLetterSpacing
-			? `${titleLetterSpacing}${titleLetterSpacingUnit}`
-			: undefined,
-		lineHeight: titleLineHeight
-			? `${titleLineHeight}${titleLineHeightUnit}`
-			: undefined,
-		color: titleColor,
-	};
-
-	const progressStyle = {
-		backgroundColor:
-			colorType === "fill" ? progressColor : DEFAULT_PROGRESS_COLOR,
-		width: `${progress || DEFAULT_PROGRESS}%`,
-		backgroundImage: colorType === "gradient" ? progressGradient : "none",
-		fontSize: `${titleFontSize}px`,
-	};
-
-	const tooltipStyles = {
-		display:
-			displayPercentage && percentageType == "tooltip" ? "block" : "none",
-		backgroundColor: tooltipBackground || DEFAULT_TOOLTIP_COLOR,
-		color: percentageColor || DEFAULT_TOOLTIP_TEXT_COLOR,
-	};
-
-	const tooltipArrowStyles = {
-		borderTop: `5px solid ${tooltipBackground || DEFAULT_TOOLTIP_COLOR}`,
-	};
-
-	const innerProgressStyle = {
-		display: displayPercentage && percentageType == "inline" ? "block" : "none",
-		paddingRight: 8,
-		fontSize: titleFontSize,
-		color: titleColor,
-	};
+	const stripeClass = showStripe ? " " + STRIPE_CLASS[stripeAnimation] : "";
 
 	return (
-		<div className="eb-progressbar-wrapper" style={wrapperStyles}>
-			<div className="eb-progressbar-container" style={containerStyle}>
-				<div className="eb-progressbar-progress" style={progressStyle}>
-					<div className="eb-progressbar-tooltip" style={tooltipStyles}>
-						{`${progress || DEFAULT_PROGRESS}%`}
-						<span
-							className="eb-progressbar-tooltip-arrow"
-							style={tooltipArrowStyles}
-						/>
+		<div {...useBlockProps.save()}>
+			<div className={`eb-progressbar-wrapper ${blockId}`}>
+				<div
+					className={`eb-progressbar-${CONTAINER_CLASS[layout]}-container ${wrapperAlign}`}
+				>
+					{(layout === "line" || layout === "line_rainbow") && title && (
+						<attributes.titleTag class="eb-progressbar-title">
+							{title}
+						</attributes.titleTag>
+					)}
+
+					<div
+						className={`eb-progressbar ${WRAPPER_CLASS[layout]}${stripeClass}`}
+						data-layout={layout}
+						data-count={progress}
+						data-duration={animationDuration}
+					>
+						{(layout === "circle" || layout === "circle_fill") && (
+							<>
+								<div class="eb-progressbar-circle-pie">
+									<div class="eb-progressbar-circle-half-left eb-progressbar-circle-half"></div>
+									<div class="eb-progressbar-circle-half-right eb-progressbar-circle-half"></div>
+								</div>
+								<div class="eb-progressbar-circle-inner"></div>
+								<div class="eb-progressbar-circle-inner-content">
+									{title && (
+										<attributes.titleTag class="eb-progressbar-title">
+											{title}
+										</attributes.titleTag>
+									)}
+									{displayProgress && (
+										<span class="eb-progressbar-count-wrap">
+											<span class="eb-progressbar-count">{progress}</span>
+											<span class="postfix">%</span>
+										</span>
+									)}
+								</div>
+							</>
+						)}
+
+						{(layout === "half_circle" || layout === "half_circle_fill") && (
+							<>
+								<div class="eb-progressbar-circle">
+									<div class="eb-progressbar-circle-pie">
+										<div class="eb-progressbar-circle-half"></div>
+									</div>
+									<div class="eb-progressbar-circle-inner"></div>
+								</div>
+								<div class="eb-progressbar-circle-inner-content">
+									<attributes.titleTag class="eb-progressbar-title">
+										{title}
+									</attributes.titleTag>
+									{displayProgress && (
+										<span class="eb-progressbar-count-wrap">
+											<span class="eb-progressbar-count">{progress}</span>
+											<span class="postfix">%</span>
+										</span>
+									)}
+								</div>
+							</>
+						)}
+
+						{(layout === "line" || layout === "line_rainbow") && (
+							<>
+								{displayProgress && (
+									<span class="eb-progressbar-count-wrap">
+										<span class="eb-progressbar-count">{progress}</span>
+										<span class="postfix">%</span>
+									</span>
+								)}
+								<span class="eb-progressbar-line-fill"></span>
+							</>
+						)}
+
+						{layout === "box" && (
+							<>
+								<div class="eb-progressbar-box-inner-content">
+									<attributes.titleTag class="eb-progressbar-title">
+										{title}
+									</attributes.titleTag>
+									{displayProgress && (
+										<span class="eb-progressbar-count-wrap">
+											<span class="eb-progressbar-count">{progress}</span>
+											<span class="postfix">%</span>
+										</span>
+									)}
+								</div>
+								<div class="eb-progressbar-box-fill"></div>
+							</>
+						)}
 					</div>
-					<RichText.Content
-						tagName="div"
-						className="eb-progressbar-title"
-						style={titleStyles}
-						value={title}
-					/>
-					<div style={innerProgressStyle}>{`${
-						progress || DEFAULT_PROGRESS
-					}%`}</div>
+					{(layout === "half_circle" || layout === "half_circle_fill") && (
+						<>
+							<div class="eb-progressbar-half-circle-after">
+								<span class="eb-progressbar-prefix-label">{prefix}</span>
+								<span class="eb-progressbar-postfix-label">{suffix}</span>
+							</div>
+						</>
+					)}
 				</div>
 			</div>
 		</div>

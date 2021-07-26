@@ -1,9 +1,9 @@
 <?php
 /**
- * Plugin Name:     Progress Bars
+ * Plugin Name:     Progress Bar
  * Plugin URI: 		https://essential-blocks.com
  * Description:     Make your website interactive with stunning progress bar
- * Version:         1.0.1
+ * Version:         1.1.0
  * Author:          WPDeveloper
  * Author URI: 		https://wpdeveloper.net
  * License:         GPL-3.0-or-later
@@ -22,6 +22,7 @@
 
 require_once __DIR__ . '/includes/font-loader.php';
 require_once __DIR__ . '/includes/post-meta.php';
+require_once __DIR__ . '/lib/style-handler/style-handler.php';
 
 function create_block_progress_bar_block_init() {
 	$dir = dirname( __FILE__ );
@@ -33,12 +34,25 @@ function create_block_progress_bar_block_init() {
 		);
 	}
 	$index_js     = 'build/index.js';
-	$script_asset = require( $script_asset_path );
 	wp_register_script(
 		'create-block-progress-bar-block-editor',
 		plugins_url( $index_js, __FILE__ ),
-		$script_asset['dependencies'],
-		$script_asset['version']
+		array(
+			'wp-blocks',
+			'wp-i18n',
+			'wp-element',
+			'wp-block-editor',
+			'wp-editor',
+		),
+		filemtime("$dir/$index_js")
+	);
+
+	$editor_css = 'build/index.css';
+	wp_register_style(
+		'create-block-progress-bar-block-editor',
+		plugins_url($editor_css, __FILE__),
+		array(),
+		filemtime("$dir/$editor_css")
 	);
 
 	$style_css = 'build/style-index.css';
@@ -49,11 +63,27 @@ function create_block_progress_bar_block_init() {
 		filemtime( "$dir/$style_css" )
 	);
 
+	$progress_bar_js = 'assets/js/progress-bars.js';
+	wp_register_script(
+		'eb-progress-bar',
+		plugins_url($progress_bar_js, __FILE__ ),
+		array(),
+		filemtime("$dir/$progress_bar_js"),
+		true
+	);
+
+
 	if( ! WP_Block_Type_Registry::get_instance()->is_registered( 'essential-blocks/progress-bar' ) ) {
     register_block_type( 'progress-bars/progress-bar-block', array(
       'editor_script' => 'create-block-progress-bar-block-editor',
       'editor_style'  => 'create-block-progress-bar-block-editor',
       'style'         => 'create-block-progress-bar-block',
+	  'render_callback' => function( $attribs, $content ) {
+		  if( !is_admin() ) {
+			wp_enqueue_script( 'eb-progress-bar' );
+		  }
+		return $content;
+	}
     ) );
   }
 }

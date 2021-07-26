@@ -1,87 +1,147 @@
+const { __ } = wp.i18n;
+import * as typoPrefixs from "./constants/typographyConstants";
+import {
+	PROGRESSBAR_HEIGHT,
+	PROGRESSBAR_WIDTH,
+	PROGRESSBAR_SIZE,
+	STROKE_WIDTH,
+	BOX_HEIGHT,
+	BOX_WIDTH,
+	WRAPPER_MARGIN,
+} from "./constants";
+import {
+	generateTypographyAttributes,
+	generateResponsiveRangeAttributes,
+	generateDimensionsAttributes,
+} from "../util/helpers";
 const attributes = {
-	progress: {
-		type: "number",
+	resOption: {
+		type: "string",
+		default: "Desktop",
 	},
-	height: {
-		type: "number",
+	// blockId attribute for making unique className and other uniqueness ⬇
+	blockId: {
+		type: "string",
 	},
-	displayTitle: {
-		type: "boolean",
-		default: true,
+	blockRoot: {
+		type: "string",
+		default: "essential_block",
+	},
+	// blockMeta is for keeping all the styles ⬇
+	blockMeta: {
+		type: "object",
+	},
+	// new attributes
+	layout: {
+		type: "string",
+		default: "line",
+	},
+	wrapperAlign: {
+		type: "string",
+		default: "center",
 	},
 	title: {
 		type: "string",
+		default: __("Progress Bar", "progress-bar"),
 	},
-	displayPercentage: {
+	titleTag: {
+		type: "string",
+		default: "div",
+	},
+	progress: {
+		type: "number",
+		default: 50,
+	},
+	displayProgress: {
 		type: "boolean",
 		default: true,
 	},
-	colorType: {
-		type: "string",
-		default: "fill",
-	},
-	progressBackground: {
-		type: "string",
-	},
-	progressColor: {
-		type: "string",
-	},
-	titleFontSize: {
+	animationDuration: {
 		type: "number",
-		default: 16,
-	},
-	titleFontSizeUnit: {
-		type: "string",
-		default: "px",
+		default: 1500,
 	},
 	titleColor: {
 		type: "string",
+		default: "#4d4d4d",
 	},
-	percentageType: {
+	counterColor: {
 		type: "string",
-		default: "tooltip",
+		default: "#4d4d4d",
 	},
-	tooltipBackground: {
+	progressColor: {
 		type: "string",
+		default: "#000000",
 	},
-	percentageColor: {
-		type: "string",
+	isProgressGradient: {
+		type: "boolean",
+		default: false,
 	},
 	progressGradient: {
 		type: "string",
-		default: "linear-gradient(45deg,#00F260,#0575E6)",
 	},
-	heightUnit: {
-		type: "string",
-		default: "px",
+	showInline: {
+		type: "boolean",
+		default: false,
 	},
-	titleFontFamily: {
-		type: "string",
-	},
-	titleFontWeight: {
-		type: "string",
-		default: "normal",
-	},
-	titleLetterSpacing: {
-		type: "number",
-	},
-	titleLetterSpacingUnit: {
-		type: "string",
-		default: "px",
-	},
-	titleLineHeight: {
-		type: "number",
-	},
-	titleLineHeightUnit: {
-		type: "string",
-		default: "px",
-	},
-	titleTextTransform: {
+	backgroundColor: {
 		type: "string",
 	},
-	titleTextDecoration: {
-		type: "string",
+	showStripe: {
+		type: "boolean",
+		default: false,
 	},
+	stripeAnimation: {
+		type: "string",
+		default: "none",
+	},
+	strokeColor: {
+		type: "string",
+		default: "#eaeaea",
+	},
+	prefix: {
+		type: "string",
+		default: __("Prefix", "progress-bar"),
+	},
+	suffix: {
+		type: "string",
+		default: __("Postfix", "progress-bar"),
+	},
+	prefixColor: {
+		type: "string",
+		default: "#4d4d4d",
+	},
+	// typography attributes
+	...generateTypographyAttributes(Object.values(typoPrefixs)),
+	// range controller
+	...generateResponsiveRangeAttributes(PROGRESSBAR_WIDTH),
+	...generateResponsiveRangeAttributes(PROGRESSBAR_HEIGHT, {
+		defaultRange: 12,
+		noUnits: true,
+	}),
+	...generateResponsiveRangeAttributes(PROGRESSBAR_SIZE, {
+		defaultRange: 200,
+		noUnits: true,
+	}),
+	...generateResponsiveRangeAttributes(STROKE_WIDTH, {
+		defaultRange: 12,
+		noUnits: true,
+	}),
+	...generateResponsiveRangeAttributes(BOX_HEIGHT, {
+		defaultRange: 200,
+		noUnits: true,
+	}),
+	...generateResponsiveRangeAttributes(BOX_WIDTH, {
+		defaultRange: 140,
+		noUnits: true,
+	}),
+	...generateDimensionsAttributes(WRAPPER_MARGIN, {
+		top: 0,
+		right: 0,
+		bottom: 25,
+		left: 0,
+		isLinked: false,
+	}),
+	// end new attributes
 };
 
 export default attributes;

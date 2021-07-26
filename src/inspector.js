@@ -1,317 +1,508 @@
 /**
  * WordPress dependencies
  */
-import { __ } from "@wordpress/i18n";
-import { InspectorControls } from "@wordpress/block-editor";
-import {
+const { __ } = wp.i18n;
+const { useEffect } = wp.element;
+const { InspectorControls } = wp.blockEditor;
+const { select } = wp.data;
+const {
 	PanelBody,
 	ToggleControl,
-	RangeControl,
 	SelectControl,
+	TextControl,
+	RangeControl,
 	BaseControl,
-	Dropdown,
-	Button,
-} from "@wordpress/components";
+	TabPanel,
+} = wp.components;
 
-/**
- *
- * Internal dependencies
- */
-import {
-	DEFAULT_PROGRESS,
-	DEFAULT_HEIGHT,
-	FONT_WEIGHTS,
-	TEXT_TRANSFORM,
-	TEXT_DECORATION,
-} from "./constants";
-import GradientColorController from "../util/gradient-color-controller";
-import UnitControl from "../util/unit-control";
-import FontPicker from "../util/typography-control/FontPicker";
+import objAttributes from "./attributes";
 import ColorControl from "../util/color-control";
+import ResponsiveRangeController from "../util/responsive-range-control";
+import ResponsiveDimensionsControl from "../util/dimensions-control-v2";
+import TypographyDropdown from "../util/typography-control-v2";
+import GradientColorControl from "../util/gradient-color-controller";
+import {
+	mimmikCssForResBtns,
+	mimmikCssOnPreviewBtnClickWhileBlockSelected,
+} from "../util/helpers";
+
+import {
+	LAYOUT,
+	PX_PERCENTAGE,
+	PROGRESSBAR_WIDTH,
+	PROGRESSBAR_HEIGHT,
+	PROGRESSBAR_SIZE,
+	STROKE_WIDTH,
+	BOX_WIDTH,
+	BOX_HEIGHT,
+	WRAPPER_MARGIN,
+} from "./constants";
+import {
+	typoPrefix_title,
+	typoPrefix_counter,
+	typoPrefix_prefix,
+} from "./constants/typographyConstants";
 
 const Inspector = ({ attributes, setAttributes }) => {
 	const {
+		resOption,
+		layout,
+		title,
+		titleTag,
 		progress,
-		height,
-		displayTitle,
-		displayPercentage,
-		colorType,
-		progressBackground,
-		progressColor,
-		progressGradient,
-		titleFontSize,
+		displayProgress,
+		animationDuration,
 		titleColor,
-		percentageType,
-		percentageColor,
-		tooltipBackground,
-		heightUnit,
-		titleFontFamily,
-		titleFontSizeUnit,
-		titleFontWeight,
-		titleTextTransform,
-		titleTextDecoration,
-		titleLineHeight,
-		titleLineHeightUnit,
-		titleLetterSpacing,
-		titleLetterSpacingUnit,
+		counterColor,
+		progressColor,
+		isProgressGradient,
+		progressGradient,
+		showInline,
+		backgroundColor,
+		showStripe,
+		stripeAnimation,
+		strokeColor,
+		prefix,
+		suffix,
+		prefixColor,
 	} = attributes;
 
-	const TITLE_SIZE_MAX = titleFontSizeUnit === "em" ? 10 : 100;
-	const TITLE_SIZE_STEP = titleFontSizeUnit === "em" ? 0.1 : 1;
+	// this useEffect is for setting the resOption attribute to desktop/tab/mobile depending on the added 'eb-res-option-' class only the first time once
+	useEffect(() => {
+		setAttributes({
+			resOption: select("core/edit-post").__experimentalGetPreviewDeviceType(),
+		});
+	}, []);
 
-	const TITLE_LINE_HEIGHT_MAX = titleLineHeightUnit === "em" ? 10 : 100;
-	const TITLE_LINE_HEIGHT_STEP = titleLineHeightUnit === "em" ? 0.1 : 1;
+	// this useEffect is for mimmiking css for all the eb blocks on resOption changing
+	useEffect(() => {
+		mimmikCssForResBtns({
+			domObj: document,
+			resOption,
+		});
+	}, [resOption]);
 
-	const TITLE_SPACING_MAX = titleLetterSpacingUnit === "em" ? 10 : 100;
-	const TITLE_SPACING_STEP = titleLetterSpacingUnit === "em" ? 0.1 : 1;
+	// this useEffect is to mimmik css for responsive preview in the editor page when clicking the buttons in the 'Preview button of wordpress' located beside the 'update' button while any block is selected and it's inspector panel is mounted in the DOM
+	useEffect(() => {
+		const cleanUp = mimmikCssOnPreviewBtnClickWhileBlockSelected({
+			domObj: document,
+			select,
+			setAttributes,
+		});
+		return () => {
+			cleanUp();
+		};
+	}, []);
+
+	const resRequiredProps = {
+		setAttributes,
+		resOption,
+		attributes,
+		objAttributes,
+	};
 
 	return (
 		<InspectorControls key="controls">
-			<PanelBody>
-				<RangeControl
-					label={__("Progress")}
-					value={progress || DEFAULT_PROGRESS}
-					allowReset
-					onChange={(newValue) => setAttributes({ progress: newValue })}
-					min={0}
-					max={100}
-				/>
-
-				<UnitControl
-					selectedUnit={heightUnit}
-					unitTypes={[
-						{ label: "px", value: "px" },
-						{ label: "em", value: "em" },
+			<div className="eb-panel-control">
+				<TabPanel
+					className="eb-parent-tab-panel"
+					activeClass="active-tab"
+					tabs={[
+						{
+							name: "general",
+							title: "General",
+							className: "eb-tab general",
+						},
+						{
+							name: "styles",
+							title: "Styles",
+							className: "eb-tab styles",
+						},
 					]}
-					onClick={(heightUnit) => setAttributes({ heightUnit })}
-				/>
-
-				<RangeControl
-					label={__("Height")}
-					value={height || DEFAULT_HEIGHT}
-					allowReset
-					onChange={(newValue) => setAttributes({ height: newValue })}
-					min={0}
-					max={100}
-				/>
-
-				<ToggleControl
-					label={__("Display Title")}
-					checked={displayTitle}
-					onChange={() => setAttributes({ displayTitle: !displayTitle })}
-				/>
-
-				<ToggleControl
-					label={__("Display Percentage")}
-					checked={displayPercentage}
-					onChange={() =>
-						setAttributes({ displayPercentage: !displayPercentage })
-					}
-				/>
-
-				{displayPercentage && (
-					<ToggleControl
-						label={__("Inline percentage")}
-						checked={percentageType === "inline"}
-						onChange={() =>
-							percentageType === "inline"
-								? setAttributes({ percentageType: "tooltip" })
-								: setAttributes({ percentageType: "inline" })
-						}
-					/>
-				)}
-
-				<ToggleControl
-					label={__("Gradient Color")}
-					checked={colorType === "gradient"}
-					onChange={() =>
-						colorType === "fill"
-							? setAttributes({ colorType: "gradient" })
-							: setAttributes({ colorType: "fill" })
-					}
-				/>
-
-				{displayTitle && (
-					<BaseControl
-						label={__("Title Typography")}
-						className="eb-typography-base"
-					>
-						<Dropdown
-							className="eb-typography-dropdown"
-							contentClassName="my-popover-content-classname"
-							position="bottom right"
-							renderToggle={({ isOpen, onToggle }) => (
-								<Button
-									isSmall
-									onClick={onToggle}
-									aria-expanded={isOpen}
-									icon="edit"
-								></Button>
+				>
+					{(tab) => (
+						<div className={"eb-tab-controls " + tab.name}>
+							{tab.name === "general" && (
+								<>
+									<PanelBody title={__("Layout")}>
+										<SelectControl
+											label={__("Layout", "progress-bars")}
+											value={layout}
+											options={LAYOUT}
+											onChange={(newLayout) =>
+												setAttributes({ layout: newLayout })
+											}
+										/>
+										{(layout === "line" || layout === "line_rainbow") && (
+											<ToggleControl
+												label={__("Show Inline", "progress-bar")}
+												checked={showInline}
+												onChange={() => {
+													setAttributes({
+														showInline: !showInline,
+													});
+												}}
+											/>
+										)}
+										<hr />
+										<TextControl
+											label={__("Title", "progress-bars")}
+											value={title}
+											onChange={(newTitle) =>
+												setAttributes({ title: newTitle })
+											}
+										/>
+										<SelectControl
+											label={__("Title HTML Tag", "progress-bars")}
+											value={titleTag}
+											options={[
+												{ label: "H1", value: "h1" },
+												{ label: "H2", value: "h2" },
+												{ label: "H3", value: "h3" },
+												{ label: "H4", value: "h4" },
+												{ label: "H5", value: "h5" },
+												{ label: "H6", value: "h6" },
+												{ label: "div", value: "div" },
+												{ label: "span", value: "span" },
+												{ label: "p", value: "p" },
+											]}
+											onChange={(newTitleTag) =>
+												setAttributes({ titleTag: newTitleTag })
+											}
+										/>
+										<hr />
+										<RangeControl
+											label={__("Counter Value", "progress-bar")}
+											value={progress}
+											onChange={(progress) => setAttributes({ progress })}
+											step={1}
+											min={0}
+											max={100}
+										/>
+										<ToggleControl
+											label={__("Show Counter?", "progress-bar")}
+											checked={displayProgress}
+											onChange={() => {
+												setAttributes({
+													displayProgress: !displayProgress,
+												});
+											}}
+										/>
+										<hr />
+										<RangeControl
+											label={__("Animation Duration", "progress-bar")}
+											value={animationDuration}
+											onChange={(newAnimationDuration) =>
+												setAttributes({
+													animationDuration: newAnimationDuration,
+												})
+											}
+											step={100}
+											min={1000}
+											max={10000}
+										/>
+										{(layout === "half_circle" ||
+											layout === "half_circle_fill") && (
+											<>
+												<hr />
+												<TextControl
+													label={__("Prefix", "progress-bars")}
+													value={prefix}
+													onChange={(newPrefix) =>
+														setAttributes({ prefix: newPrefix })
+													}
+												/>
+												<TextControl
+													label={__("Suffix", "progress-bars")}
+													value={suffix}
+													onChange={(newSuffix) =>
+														setAttributes({ suffix: newSuffix })
+													}
+												/>
+											</>
+										)}
+									</PanelBody>
+								</>
 							)}
-							renderContent={() => (
-								<div style={{ padding: "1rem" }}>
-									<FontPicker
-										label={__("Font Family")}
-										value={titleFontFamily}
-										onChange={(titleFontFamily) =>
-											setAttributes({ titleFontFamily })
-										}
-									/>
+							{tab.name === "styles" && (
+								<>
+									<PanelBody title={__("General", "progress-bar")}>
+										{(layout === "line" || layout === "line_rainbow") && (
+											<>
+												<ResponsiveRangeController
+													baseLabel={__("Width", "pregress-bar")}
+													controlName={PROGRESSBAR_WIDTH}
+													resRequiredProps={resRequiredProps}
+													units={PX_PERCENTAGE}
+													min={100}
+													max={1000}
+													step={1}
+												/>
+												<ResponsiveRangeController
+													baseLabel={__("Height", "progress-bar")}
+													controlName={PROGRESSBAR_HEIGHT}
+													resRequiredProps={resRequiredProps}
+													min={0}
+													max={100}
+													step={1}
+													noUnits
+												/>
+												<ColorControl
+													label={__("Background Color", "progress-bar")}
+													color={strokeColor}
+													onChange={(strokeColor) =>
+														setAttributes({ strokeColor })
+													}
+												/>
+												{layout !== "line_rainbow" && (
+													<>
+														<BaseControl>
+															<h3 className="eb-control-title">
+																{__("Fill Color", "progress-bar")}
+															</h3>
+														</BaseControl>
+														<ToggleControl
+															label={__("Show Fill Gradient", "progress-bar")}
+															checked={isProgressGradient}
+															onChange={() => {
+																setAttributes({
+																	isProgressGradient: !isProgressGradient,
+																});
+															}}
+														/>
+														{isProgressGradient || (
+															<ColorControl
+																label={__("Color", "progress-bar")}
+																color={progressColor}
+																onChange={(progressColor) =>
+																	setAttributes({ progressColor })
+																}
+															/>
+														)}
+														{isProgressGradient && (
+															<GradientColorControl
+																label={__("Gradient Color", "progress-bar")}
+																gradientColor={progressGradient}
+																onChange={(progressGradient) =>
+																	setAttributes({ progressGradient })
+																}
+															/>
+														)}
+														<hr />
+														<ToggleControl
+															label={__("Show Stripe", "progress-bar")}
+															checked={showStripe}
+															onChange={() => {
+																setAttributes({
+																	showStripe: !showStripe,
+																});
+															}}
+														/>
+														{showStripe && (
+															<SelectControl
+																label={__("Stripe Animation", "progress-bars")}
+																value={stripeAnimation}
+																options={[
+																	{ label: "Left To Right", value: "normal" },
+																	{ label: "Right To Left", value: "reverse" },
+																	{ label: "Disabled", value: "none" },
+																]}
+																onChange={(stripeAnimation) =>
+																	setAttributes({ stripeAnimation })
+																}
+															/>
+														)}
+													</>
+												)}
+											</>
+										)}
+										{(layout === "circle" ||
+											layout === "circle_fill" ||
+											layout === "half_circle" ||
+											layout === "half_circle_fill") && (
+											<>
+												<ResponsiveRangeController
+													baseLabel={__("Size", "progress-bar")}
+													controlName={PROGRESSBAR_SIZE}
+													resRequiredProps={resRequiredProps}
+													min={50}
+													max={500}
+													step={1}
+													noUnits
+												/>
+												<ColorControl
+													label={__("Background Color", "progress-bar")}
+													color={backgroundColor}
+													onChange={(backgroundColor) =>
+														setAttributes({ backgroundColor })
+													}
+												/>
+												<ColorControl
+													label={__("Fill Color", "progress-bar")}
+													color={progressColor}
+													onChange={(progressColor) =>
+														setAttributes({ progressColor })
+													}
+												/>
+												<hr />
+												<ResponsiveRangeController
+													baseLabel={__("Stroke Width", "progress-bar")}
+													controlName={STROKE_WIDTH}
+													resRequiredProps={resRequiredProps}
+													min={0}
+													max={100}
+													step={1}
+													noUnits
+												/>
+												<ColorControl
+													label={__("Stroke Color", "progress-bar")}
+													color={strokeColor}
+													onChange={(strokeColor) =>
+														setAttributes({ strokeColor })
+													}
+												/>
+											</>
+										)}
+										{layout === "box" && (
+											<>
+												<ResponsiveRangeController
+													baseLabel={__("Width", "pregress-bar")}
+													controlName={BOX_WIDTH}
+													resRequiredProps={resRequiredProps}
+													min={100}
+													max={500}
+													step={1}
+													noUnits
+												/>
+												<ResponsiveRangeController
+													baseLabel={__("Height", "progress-bar")}
+													controlName={BOX_HEIGHT}
+													resRequiredProps={resRequiredProps}
+													min={100}
+													max={500}
+													step={1}
+													noUnits
+												/>
+												<ColorControl
+													label={__("Background Color", "progress-bar")}
+													color={backgroundColor}
+													onChange={(backgroundColor) =>
+														setAttributes({ backgroundColor })
+													}
+												/>
+												<BaseControl>
+													<h3 className="eb-control-title">
+														{__("Fill Color", "progress-bar")}
+													</h3>
+												</BaseControl>
+												<ToggleControl
+													label={__("Show Fill Gradient", "progress-bar")}
+													checked={isProgressGradient}
+													onChange={() => {
+														setAttributes({
+															isProgressGradient: !isProgressGradient,
+														});
+													}}
+												/>
+												{isProgressGradient || (
+													<ColorControl
+														label={__("Color", "progress-bar")}
+														color={progressColor}
+														onChange={(progressColor) =>
+															setAttributes({ progressColor })
+														}
+													/>
+												)}
+												{isProgressGradient && (
+													<GradientColorControl
+														label={__("Gradient Color", "progress-bar")}
+														gradientColor={progressGradient}
+														onChange={(progressGradient) =>
+															setAttributes({ progressGradient })
+														}
+													/>
+												)}
+												<ResponsiveRangeController
+													baseLabel={__("Stroke Width", "progress-bar")}
+													controlName={STROKE_WIDTH}
+													resRequiredProps={resRequiredProps}
+													min={0}
+													max={100}
+													step={1}
+													noUnits
+												/>
+												<ColorControl
+													label={__("Stroke Color", "progress-bar")}
+													color={strokeColor}
+													onChange={(strokeColor) =>
+														setAttributes({ strokeColor })
+													}
+												/>
+											</>
+										)}
+									</PanelBody>
 
-									<UnitControl
-										selectedUnit={titleFontSizeUnit}
-										unitTypes={[
-											{ label: "px", value: "px" },
-											{ label: "%", value: "%" },
-											{ label: "em", value: "em" },
-										]}
-										onClick={(titleFontSizeUnit) =>
-											setAttributes({ titleFontSizeUnit })
-										}
-									/>
-
-									<RangeControl
-										label={__("Font Size")}
-										value={titleFontSize}
-										onChange={(titleFontSize) =>
-											setAttributes({ titleFontSize })
-										}
-										step={TITLE_SIZE_STEP}
-										min={0}
-										max={TITLE_SIZE_MAX}
-									/>
-
-									<SelectControl
-										label={__("Font Weight")}
-										value={titleFontWeight}
-										options={FONT_WEIGHTS}
-										onChange={(titleFontWeight) =>
-											setAttributes({ titleFontWeight })
-										}
-									/>
-
-									<SelectControl
-										label={__("Text Transform")}
-										value={titleTextTransform}
-										options={TEXT_TRANSFORM}
-										onChange={(titleTextTransform) =>
-											setAttributes({ titleTextTransform })
-										}
-									/>
-
-									<SelectControl
-										label={__("Text Decoration")}
-										value={titleTextDecoration}
-										options={TEXT_DECORATION}
-										onChange={(titleTextDecoration) =>
-											setAttributes({ titleTextDecoration })
-										}
-									/>
-
-									<UnitControl
-										selectedUnit={titleLetterSpacingUnit}
-										unitTypes={[
-											{ label: "px", value: "px" },
-											{ label: "em", value: "em" },
-										]}
-										onClick={(titleLetterSpacingUnit) =>
-											setAttributes({ titleLetterSpacingUnit })
-										}
-									/>
-
-									<RangeControl
-										label={__("Letter Spacing")}
-										value={titleLetterSpacing}
-										onChange={(titleLetterSpacing) =>
-											setAttributes({ titleLetterSpacing })
-										}
-										min={0}
-										max={TITLE_SPACING_MAX}
-										step={TITLE_SPACING_STEP}
-									/>
-
-									<UnitControl
-										selectedUnit={titleLineHeightUnit}
-										unitTypes={[
-											{ label: "px", value: "px" },
-											{ label: "em", value: "em" },
-										]}
-										onClick={(titleLineHeightUnit) =>
-											setAttributes({ titleLineHeightUnit })
-										}
-									/>
-
-									<RangeControl
-										label={__("Line Height")}
-										value={titleLineHeight}
-										onChange={(titleLineHeight) =>
-											setAttributes({ titleLineHeight })
-										}
-										min={0}
-										max={TITLE_LINE_HEIGHT_MAX}
-										step={TITLE_LINE_HEIGHT_STEP}
-									/>
-								</div>
+									<PanelBody
+										title={__("Typography", "progress-bar")}
+										initialOpen={false}
+									>
+										<TypographyDropdown
+											baseLabel={__("Title")}
+											typographyPrefixConstant={typoPrefix_title}
+											resRequiredProps={resRequiredProps}
+										/>
+										<ColorControl
+											label={__("Title Color")}
+											color={titleColor}
+											onChange={(titleColor) => setAttributes({ titleColor })}
+										/>
+										<hr />
+										<TypographyDropdown
+											baseLabel={__("Counter")}
+											typographyPrefixConstant={typoPrefix_counter}
+											resRequiredProps={resRequiredProps}
+										/>
+										<ColorControl
+											label={__("Counter Color")}
+											color={counterColor}
+											onChange={(counterColor) =>
+												setAttributes({ counterColor })
+											}
+										/>
+										{(layout === "half_circle" ||
+											layout === "half_circle_fill") && (
+											<>
+												<hr />
+												<TypographyDropdown
+													baseLabel={__("Prefix & Suffix")}
+													typographyPrefixConstant={typoPrefix_prefix}
+													resRequiredProps={resRequiredProps}
+												/>
+												<ColorControl
+													label={__("Prefix & Suffix Color")}
+													color={prefixColor}
+													onChange={(prefixColor) =>
+														setAttributes({ prefixColor })
+													}
+												/>
+											</>
+										)}
+									</PanelBody>
+									<PanelBody
+										title={__("Margin", "progress-bar")}
+										initialOpen={false}
+									>
+										<ResponsiveDimensionsControl
+											resRequiredProps={resRequiredProps}
+											controlName={WRAPPER_MARGIN}
+										/>
+									</PanelBody>
+								</>
 							)}
-						/>
-					</BaseControl>
-				)}
-			</PanelBody>
-
-			<PanelBody title={__("Colors")} initialOpen={false}>
-				{displayTitle && (
-					<ColorControl
-						label={__("Title Color")}
-						color={titleColor}
-						onChange={(titleColor) => setAttributes({ titleColor })}
-					/>
-				)}
-
-				{displayPercentage && percentageType === "tooltip" && (
-					<ColorControl
-						label={__("Tooltip Background")}
-						color={tooltipBackground}
-						onChange={(tooltipBackground) =>
-							setAttributes({ tooltipBackground })
-						}
-					/>
-				)}
-
-				{displayPercentage && percentageType === "tooltip" && (
-					<ColorControl
-						label={__("Percentage Color")}
-						color={percentageColor}
-						onChange={(percentageColor) => setAttributes({ percentageColor })}
-					/>
-				)}
-
-				<ColorControl
-					label={__("Background Color")}
-					color={progressBackground}
-					onChange={(progressBackground) =>
-						setAttributes({ progressBackground })
-					}
-				/>
-
-				{colorType == "fill" && (
-					<ColorControl
-						label={__("Progressbar Color")}
-						color={progressColor}
-						onChange={(progressColor) => setAttributes({ progressColor })}
-					/>
-				)}
-
-				{colorType === "gradient" && (
-					<PanelBody title={__("Gradient Color")} initialOpen={false}>
-						<GradientColorController
-							gradientColor={progressGradient}
-							onChange={(progressGradient) =>
-								setAttributes({ progressGradient })
-							}
-						/>
-					</PanelBody>
-				)}
-			</PanelBody>
+						</div>
+					)}
+				</TabPanel>
+			</div>
 		</InspectorControls>
 	);
 };
