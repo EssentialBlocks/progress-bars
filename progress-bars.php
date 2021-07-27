@@ -81,12 +81,6 @@ function create_block_progress_bar_block_init() {
 			'render_callback' => function( $attribs, $content ) {
 				if( !is_admin() ) {
 					wp_enqueue_script( 'eb-progress-bar' );
-					wp_enqueue_script(
-						'essential-blocks-category-icon',
-						plugins_url("lib/update-category-icon/index.js", dirname(__FILE__)),
-						array(),
-						true
-					);
 				}
 				return $content;
 			}
