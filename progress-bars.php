@@ -78,13 +78,13 @@ function create_block_progress_bar_block_init() {
       'editor_script' => 'create-block-progress-bar-block-editor',
       'editor_style'  => 'create-block-progress-bar-block-editor',
       'style'         => 'create-block-progress-bar-block',
-	  'render_callback' => function( $attribs, $content ) {
-		  if( !is_admin() ) {
-			wp_enqueue_script( 'eb-progress-bar' );
-		  }
-		return $content;
-	}
-    ) );
+			'render_callback' => function( $attribs, $content ) {
+				if( !is_admin() ) {
+					wp_enqueue_script( 'eb-progress-bar' );
+				}
+				return $content;
+			}
+    ));
   }
 }
 
