@@ -86,7 +86,7 @@ Yes, it will work with any standard WordPress theme.
 
 == Changelog ==
 
-= 1.1.0 - 26-07-2021
+= 1.1.0 - 27-07-2021
 
 * Added: 7 New Layouts(Line, Line Rainbow, Circle, Circle Fill, Half Circle, Half Circle Fill, Box)
 * Added: Responsive Controls

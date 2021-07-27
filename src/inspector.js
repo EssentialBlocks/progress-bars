@@ -193,29 +193,33 @@ const Inspector = ({ attributes, setAttributes }) => {
 												});
 											}}
 										/>
-										<hr />
-										<ToggleControl
-											label={__("Show Stripe", "progress-bar")}
-											checked={showStripe}
-											onChange={() => {
-												setAttributes({
-													showStripe: !showStripe,
-												});
-											}}
-										/>
-										{showStripe && (
-											<SelectControl
-												label={__("Stripe Animation", "progress-bars")}
-												value={stripeAnimation}
-												options={[
-													{ label: "Left To Right", value: "normal" },
-													{ label: "Right To Left", value: "reverse" },
-													{ label: "Disabled", value: "none" },
-												]}
-												onChange={(stripeAnimation) =>
-													setAttributes({ stripeAnimation })
-												}
-											/>
+										{(layout === "line" || layout === "line_rainbow") && (
+											<>
+												<hr />
+												<ToggleControl
+													label={__("Show Stripe", "progress-bar")}
+													checked={showStripe}
+													onChange={() => {
+														setAttributes({
+															showStripe: !showStripe,
+														});
+													}}
+												/>
+												{showStripe && (
+													<SelectControl
+														label={__("Stripe Animation", "progress-bars")}
+														value={stripeAnimation}
+														options={[
+															{ label: "Left To Right", value: "normal" },
+															{ label: "Right To Left", value: "reverse" },
+															{ label: "Disabled", value: "none" },
+														]}
+														onChange={(stripeAnimation) =>
+															setAttributes({ stripeAnimation })
+														}
+													/>
+												)}
+											</>
 										)}
 
 										{(layout === "half_circle" ||
