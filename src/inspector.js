@@ -118,6 +118,11 @@ const Inspector = ({ attributes, setAttributes }) => {
 							title: "Styles",
 							className: "eb-tab styles",
 						},
+						{
+							name: "advance",
+							title: "Advance",
+							className: "eb-tab advance",
+						},
 					]}
 				>
 					{(tab) => (
@@ -189,18 +194,30 @@ const Inspector = ({ attributes, setAttributes }) => {
 											}}
 										/>
 										<hr />
-										<RangeControl
-											label={__("Animation Duration", "progress-bar")}
-											value={animationDuration}
-											onChange={(newAnimationDuration) =>
+										<ToggleControl
+											label={__("Show Stripe", "progress-bar")}
+											checked={showStripe}
+											onChange={() => {
 												setAttributes({
-													animationDuration: newAnimationDuration,
-												})
-											}
-											step={100}
-											min={1000}
-											max={10000}
+													showStripe: !showStripe,
+												});
+											}}
 										/>
+										{showStripe && (
+											<SelectControl
+												label={__("Stripe Animation", "progress-bars")}
+												value={stripeAnimation}
+												options={[
+													{ label: "Left To Right", value: "normal" },
+													{ label: "Right To Left", value: "reverse" },
+													{ label: "Disabled", value: "none" },
+												]}
+												onChange={(stripeAnimation) =>
+													setAttributes({ stripeAnimation })
+												}
+											/>
+										)}
+
 										{(layout === "half_circle" ||
 											layout === "half_circle_fill") && (
 											<>
@@ -222,11 +239,10 @@ const Inspector = ({ attributes, setAttributes }) => {
 											</>
 										)}
 									</PanelBody>
-								</>
-							)}
-							{tab.name === "styles" && (
-								<>
-									<PanelBody title={__("General", "progress-bar")}>
+									<PanelBody
+										title={__("Settings", "progress-bar")}
+										initialOpen={false}
+									>
 										{(layout === "line" || layout === "line_rainbow") && (
 											<>
 												<ResponsiveRangeController
@@ -247,6 +263,85 @@ const Inspector = ({ attributes, setAttributes }) => {
 													step={1}
 													noUnits
 												/>
+											</>
+										)}
+										{(layout === "circle" ||
+											layout === "circle_fill" ||
+											layout === "half_circle" ||
+											layout === "half_circle_fill") && (
+											<>
+												<ResponsiveRangeController
+													baseLabel={__("Size", "progress-bar")}
+													controlName={PROGRESSBAR_SIZE}
+													resRequiredProps={resRequiredProps}
+													min={50}
+													max={500}
+													step={1}
+													noUnits
+												/>
+												<ResponsiveRangeController
+													baseLabel={__("Stroke Width", "progress-bar")}
+													controlName={STROKE_WIDTH}
+													resRequiredProps={resRequiredProps}
+													min={0}
+													max={100}
+													step={1}
+													noUnits
+												/>
+											</>
+										)}
+										{layout === "box" && (
+											<>
+												<ResponsiveRangeController
+													baseLabel={__("Width", "pregress-bar")}
+													controlName={BOX_WIDTH}
+													resRequiredProps={resRequiredProps}
+													min={100}
+													max={500}
+													step={1}
+													noUnits
+												/>
+												<ResponsiveRangeController
+													baseLabel={__("Height", "progress-bar")}
+													controlName={BOX_HEIGHT}
+													resRequiredProps={resRequiredProps}
+													min={100}
+													max={500}
+													step={1}
+													noUnits
+												/>
+
+												<ResponsiveRangeController
+													baseLabel={__("Stroke Width", "progress-bar")}
+													controlName={STROKE_WIDTH}
+													resRequiredProps={resRequiredProps}
+													min={0}
+													max={100}
+													step={1}
+													noUnits
+												/>
+											</>
+										)}
+										<RangeControl
+											label={__("Animation Duration", "progress-bar")}
+											value={animationDuration}
+											onChange={(newAnimationDuration) =>
+												setAttributes({
+													animationDuration: newAnimationDuration,
+												})
+											}
+											step={100}
+											min={1000}
+											max={10000}
+										/>
+									</PanelBody>
+								</>
+							)}
+							{tab.name === "styles" && (
+								<>
+									<PanelBody title={__("General", "progress-bar")}>
+										{(layout === "line" || layout === "line_rainbow") && (
+											<>
 												<ColorControl
 													label={__("Background Color", "progress-bar")}
 													color={strokeColor}
@@ -288,30 +383,6 @@ const Inspector = ({ attributes, setAttributes }) => {
 																}
 															/>
 														)}
-														<hr />
-														<ToggleControl
-															label={__("Show Stripe", "progress-bar")}
-															checked={showStripe}
-															onChange={() => {
-																setAttributes({
-																	showStripe: !showStripe,
-																});
-															}}
-														/>
-														{showStripe && (
-															<SelectControl
-																label={__("Stripe Animation", "progress-bars")}
-																value={stripeAnimation}
-																options={[
-																	{ label: "Left To Right", value: "normal" },
-																	{ label: "Right To Left", value: "reverse" },
-																	{ label: "Disabled", value: "none" },
-																]}
-																onChange={(stripeAnimation) =>
-																	setAttributes({ stripeAnimation })
-																}
-															/>
-														)}
 													</>
 												)}
 											</>
@@ -321,15 +392,6 @@ const Inspector = ({ attributes, setAttributes }) => {
 											layout === "half_circle" ||
 											layout === "half_circle_fill") && (
 											<>
-												<ResponsiveRangeController
-													baseLabel={__("Size", "progress-bar")}
-													controlName={PROGRESSBAR_SIZE}
-													resRequiredProps={resRequiredProps}
-													min={50}
-													max={500}
-													step={1}
-													noUnits
-												/>
 												<ColorControl
 													label={__("Background Color", "progress-bar")}
 													color={backgroundColor}
@@ -344,16 +406,7 @@ const Inspector = ({ attributes, setAttributes }) => {
 														setAttributes({ progressColor })
 													}
 												/>
-												<hr />
-												<ResponsiveRangeController
-													baseLabel={__("Stroke Width", "progress-bar")}
-													controlName={STROKE_WIDTH}
-													resRequiredProps={resRequiredProps}
-													min={0}
-													max={100}
-													step={1}
-													noUnits
-												/>
+
 												<ColorControl
 													label={__("Stroke Color", "progress-bar")}
 													color={strokeColor}
@@ -365,24 +418,6 @@ const Inspector = ({ attributes, setAttributes }) => {
 										)}
 										{layout === "box" && (
 											<>
-												<ResponsiveRangeController
-													baseLabel={__("Width", "pregress-bar")}
-													controlName={BOX_WIDTH}
-													resRequiredProps={resRequiredProps}
-													min={100}
-													max={500}
-													step={1}
-													noUnits
-												/>
-												<ResponsiveRangeController
-													baseLabel={__("Height", "progress-bar")}
-													controlName={BOX_HEIGHT}
-													resRequiredProps={resRequiredProps}
-													min={100}
-													max={500}
-													step={1}
-													noUnits
-												/>
 												<ColorControl
 													label={__("Background Color", "progress-bar")}
 													color={backgroundColor}
@@ -422,15 +457,6 @@ const Inspector = ({ attributes, setAttributes }) => {
 														}
 													/>
 												)}
-												<ResponsiveRangeController
-													baseLabel={__("Stroke Width", "progress-bar")}
-													controlName={STROKE_WIDTH}
-													resRequiredProps={resRequiredProps}
-													min={0}
-													max={100}
-													step={1}
-													noUnits
-												/>
 												<ColorControl
 													label={__("Stroke Color", "progress-bar")}
 													color={strokeColor}
@@ -443,54 +469,66 @@ const Inspector = ({ attributes, setAttributes }) => {
 									</PanelBody>
 
 									<PanelBody
-										title={__("Typography", "progress-bar")}
+										title={__("Title", "progress-bar")}
 										initialOpen={false}
 									>
 										<TypographyDropdown
-											baseLabel={__("Title")}
+											baseLabel={__("Typography", "progress-bar")}
 											typographyPrefixConstant={typoPrefix_title}
 											resRequiredProps={resRequiredProps}
 										/>
 										<ColorControl
-											label={__("Title Color")}
+											label={__("Color", "progress-bar")}
 											color={titleColor}
 											onChange={(titleColor) => setAttributes({ titleColor })}
 										/>
-										<hr />
+									</PanelBody>
+									<PanelBody
+										title={__("Counter", "progress-bar")}
+										initialOpen={false}
+									>
 										<TypographyDropdown
-											baseLabel={__("Counter")}
+											baseLabel={__("Typography", "progress-bar")}
 											typographyPrefixConstant={typoPrefix_counter}
 											resRequiredProps={resRequiredProps}
 										/>
 										<ColorControl
-											label={__("Counter Color")}
+											label={__("Color", "progress-bar")}
 											color={counterColor}
 											onChange={(counterColor) =>
 												setAttributes({ counterColor })
 											}
 										/>
-										{(layout === "half_circle" ||
-											layout === "half_circle_fill") && (
-											<>
-												<hr />
+									</PanelBody>
+									{(layout === "half_circle" ||
+										layout === "half_circle_fill") && (
+										<>
+											<PanelBody
+												title={__("Prefix & Suffix", "progress-bar")}
+												initialOpen={false}
+											>
 												<TypographyDropdown
-													baseLabel={__("Prefix & Suffix")}
+													baseLabel={__("Typography", "progress-bar")}
 													typographyPrefixConstant={typoPrefix_prefix}
 													resRequiredProps={resRequiredProps}
 												/>
 												<ColorControl
-													label={__("Prefix & Suffix Color")}
+													label={__("Color", "progress-bar")}
 													color={prefixColor}
 													onChange={(prefixColor) =>
 														setAttributes({ prefixColor })
 													}
 												/>
-											</>
-										)}
-									</PanelBody>
+											</PanelBody>
+										</>
+									)}
+								</>
+							)}
+							{tab.name === "advance" && (
+								<>
 									<PanelBody
 										title={__("Margin", "progress-bar")}
-										initialOpen={false}
+										initialOpen={true}
 									>
 										<ResponsiveDimensionsControl
 											resRequiredProps={resRequiredProps}
