@@ -1,9 +1,9 @@
 === Progress Bars ===
-Contributors: wpdevteam, re_enter_rupok, Asif2BD, alam789, fencermonir
+Contributors: wpdevteam, re_enter_rupok, Asif2BD, rahat89, fencermonir
 Tags: gutenberg, block, blocks, editor, progress, progress bar, skill bar, responsive progress bar, animated skillbar, animated progress bar, skill-bars, percentage bar, chart bar, graph bar, gutenberg blocks
-Requires at least: 5.0
-Tested up to: 5.5
-Stable tag: 1.0.1
+Requires at least: 5.5
+Tested up to: 5.7
+Stable tag: 1.1.1
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -20,7 +20,7 @@ Using this **Progress bar** block, you can easily make your website interactive 
 **Dedicated Support:** We’ve an extraordinary support team ready to help you. Ask your questions in the support forum, we’ll get back to you immediately
 
 
-## 🚀 BACKED BY A TRUSTED TEAM ## 
+## 🚀 BACKED BY A TRUSTED TEAM ##
 
 This Block is brought to you by [WPDeveloper](https://wpdeveloper.net), the team behind the most popular elements library [Essential Addons for Elementor](https://wordpress.org/plugins/essential-addons-for-elementor-lite/) (used by almost 700,000 happy users from 180+ countries).
 
@@ -32,6 +32,7 @@ This Block is brought to you by [WPDeveloper](https://wpdeveloper.net), the team
 - For more information about features, FAQs and documentation, check out our website at [WPDeveloper](https://wpdeveloper.net/).
 
 ## 🙌 JOIN THE COMMUNITY ##
+
 
 🎦 Subscribe to our [Youtube Channel](https://www.youtube.com/wpdevelopernet/?sub_confirmation=1) to watch video tutorials on WordPress.
 
@@ -64,7 +65,7 @@ Visit [WPDeveloper](https://wpdeveloper.net/) to learn more about how to do bett
 
 = Modern Way: =
 1. Go to the WordPress Block/Gutenberg Editor
-2. Search For "Progress Bar". 
+2. Search For "Progress Bar".
 3. Install in 1-click
 
 = Old Way: =
@@ -85,7 +86,10 @@ Yes, it will work with any standard WordPress theme.
 
 == Changelog ==
 
-= 1.1.0 - (dev)
+= 1.1.1 - 19/08/2021 =
+* Improved: Security for asset generation
+
+= 1.1.0 - 27-07-2021 =
 
 * Added: 7 New Layouts(Line, Line Rainbow, Circle, Circle Fill, Half Circle, Half Circle Fill, Box)
 * Added: Responsive Controls
@@ -107,4 +111,4 @@ Yes, it will work with any standard WordPress theme.
 
 
 == Upgrade Notice ==
-
+New presets and controls, improvement in design and structure

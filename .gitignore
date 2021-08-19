@@ -28,3 +28,5 @@ node_modules/
 
 # mac device created files
 .DS_Store
+
+package-lock.json
