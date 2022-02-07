@@ -1,7 +1,7 @@
 /**
  * WordPress dependencies
  */
-const { useBlockProps } = wp.blockEditor;
+ import { useBlockProps } from "@wordpress/block-editor";
 
 import { CONTAINER_CLASS, WRAPPER_CLASS, STRIPE_CLASS } from "./constants";
 

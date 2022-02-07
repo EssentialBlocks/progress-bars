@@ -1,13 +1,16 @@
-const { __ } = wp.i18n;
+import { __ } from "@wordpress/i18n";
 
 export const LAYOUT = [
-	{ label: __("Line"), value: "line" },
-	{ label: __("Line Rainbow"), value: "line_rainbow" },
-	{ label: __("Circle"), value: "circle" },
-	{ label: __("Circle Fill"), value: "circle_fill" },
-	{ label: __("Half Circle"), value: "half_circle" },
-	{ label: __("Half Circle Fill"), value: "half_circle_fill" },
-	{ label: __("Box"), value: "box" },
+	{ label: __("Line", "essential-blocks"), value: "line" },
+	{ label: __("Line Rainbow", "essential-blocks"), value: "line_rainbow" },
+	{ label: __("Circle", "essential-blocks"), value: "circle" },
+	{ label: __("Circle Fill", "essential-blocks"), value: "circle_fill" },
+	{ label: __("Half Circle", "essential-blocks"), value: "half_circle" },
+	{
+		label: __("Half Circle Fill", "essential-blocks"),
+		value: "half_circle_fill",
+	},
+	{ label: __("Box", "essential-blocks"), value: "box" },
 ];
 
 export const CONTAINER_CLASS = {
@@ -52,3 +55,4 @@ export const BOX_HEIGHT = "boxHeight";
 
 // dimension control
 export const WRAPPER_MARGIN = "wrpMargin";
+export const TITLE_SPACE = "ttlSpace";

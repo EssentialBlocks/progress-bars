@@ -101,8 +101,10 @@ window.addEventListener("DOMContentLoaded", function (event) {
 										".eb-progressbar-box-fill"
 									).style.height = counter + "%";
 								}
-								progressbar.querySelector(".eb-progressbar-count").innerText =
-									counter;
+								if (progressbar.querySelector(".eb-progressbar-count")) {
+									progressbar.querySelector(".eb-progressbar-count").innerText =
+										counter;
+								}
 							}
 						},
 					});

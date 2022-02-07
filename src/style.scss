@@ -63,11 +63,14 @@
 .eb-progressbar {
 	position: relative;
 }
+
+.eb-progressbar-wrapper * {
+	box-sizing: border-box;
+}
+
 .eb-progressbar-title {
 	font-size: 20px;
 	font-weight: 400;
-	margin: 0 !important;
-	padding: 0 !important;
 }
 .eb-progressbar-line {
 	position: relative;
@@ -95,9 +98,9 @@
 	-webkit-transform: translateY(-50%);
 	-ms-transform: translateY(-50%);
 	transform: translateY(-50%);
-		// -webkit-transition: width 1500ms linear;
-		// -o-transition: width 1500ms linear;
-		// transition: width 1500ms linear;
+	// -webkit-transition: width 1500ms linear;
+	// -o-transition: width 1500ms linear;
+	// transition: width 1500ms linear;
 	overflow: hidden;
 }
 .eb-progressbar-circle {
@@ -219,8 +222,26 @@
 			left: -35px;
 			width: calc(100% + 70px);
 			height: 100%;
-			background-image: -o-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
-			background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+			background-image: -o-linear-gradient(
+				45deg,
+				rgba(255, 255, 255, 0.15) 25%,
+				transparent 25%,
+				transparent 50%,
+				rgba(255, 255, 255, 0.15) 50%,
+				rgba(255, 255, 255, 0.15) 75%,
+				transparent 75%,
+				transparent
+			);
+			background-image: linear-gradient(
+				45deg,
+				rgba(255, 255, 255, 0.15) 25%,
+				transparent 25%,
+				transparent 50%,
+				rgba(255, 255, 255, 0.15) 50%,
+				rgba(255, 255, 255, 0.15) 75%,
+				transparent 75%,
+				transparent
+			);
 			background-size: 35px 35px;
 		}
 	}
@@ -242,7 +263,7 @@
 	}
 }
 .eb-progressbar-circle-wrap {
-	>div {
+	> div {
 		margin: 0 auto;
 	}
 }
@@ -250,12 +271,12 @@
 	margin: 0 auto 0 0;
 }
 .eb-progressbar-circle-container.left {
-	>div {
+	> div {
 		margin: 0 auto 0 0;
 	}
 }
 .eb-progressbar-box-container.left {
-	>div {
+	> div {
 		margin: 0 auto 0 0;
 	}
 }
@@ -263,12 +284,12 @@
 	margin: 0 auto;
 }
 .eb-progressbar-circle-container.center {
-	>div {
+	> div {
 		margin: 0 auto;
 	}
 }
 .eb-progressbar-box-container.center {
-	>div {
+	> div {
 		margin: 0 auto;
 	}
 }
@@ -276,12 +297,12 @@
 	margin: 0 0 0 auto;
 }
 .eb-progressbar-circle-container.right {
-	>div {
+	> div {
 		margin: 0 0 0 auto;
 	}
 }
 .eb-progressbar-box-container.right {
-	>div {
+	> div {
 		margin: 0 0 0 auto;
 	}
 }
@@ -317,9 +338,38 @@
 }
 .eb-progressbar-line-rainbow {
 	.eb-progressbar-line-fill {
-		background: -webkit-gradient(linear, right top, left top, from(#9400d3), color-stop(#4b0082), color-stop(#0000ff), color-stop(#00ff00), color-stop(#ffff00), color-stop(#ff7f00), to(#ff0000));
-		background: -o-linear-gradient(right, #9400d3, #4b0082, #0000ff, #00ff00, #ffff00, #ff7f00, #ff0000);
-		background: linear-gradient(270deg, #9400d3, #4b0082, #0000ff, #00ff00, #ffff00, #ff7f00, #ff0000);
+		background: -webkit-gradient(
+			linear,
+			right top,
+			left top,
+			from(#9400d3),
+			color-stop(#4b0082),
+			color-stop(#0000ff),
+			color-stop(#00ff00),
+			color-stop(#ffff00),
+			color-stop(#ff7f00),
+			to(#ff0000)
+		);
+		background: -o-linear-gradient(
+			right,
+			#9400d3,
+			#4b0082,
+			#0000ff,
+			#00ff00,
+			#ffff00,
+			#ff7f00,
+			#ff0000
+		);
+		background: linear-gradient(
+			270deg,
+			#9400d3,
+			#4b0082,
+			#0000ff,
+			#00ff00,
+			#ffff00,
+			#ff7f00,
+			#ff0000
+		);
 		background-size: 500% 500%;
 		-webkit-animation: animateRainbow 5s ease infinite;
 		animation: animateRainbow 5s ease infinite;
