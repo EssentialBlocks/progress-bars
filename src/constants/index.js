@@ -1,16 +1,16 @@
 import { __ } from "@wordpress/i18n";
 
 export const LAYOUT = [
-	{ label: __("Line", "essential-blocks"), value: "line" },
-	{ label: __("Line Rainbow", "essential-blocks"), value: "line_rainbow" },
-	{ label: __("Circle", "essential-blocks"), value: "circle" },
-	{ label: __("Circle Fill", "essential-blocks"), value: "circle_fill" },
-	{ label: __("Half Circle", "essential-blocks"), value: "half_circle" },
+	{ label: __("Line", "progress-bars"), value: "line" },
+	{ label: __("Line Rainbow", "progress-bars"), value: "line_rainbow" },
+	{ label: __("Circle", "progress-bars"), value: "circle" },
+	{ label: __("Circle Fill", "progress-bars"), value: "circle_fill" },
+	{ label: __("Half Circle", "progress-bars"), value: "half_circle" },
 	{
-		label: __("Half Circle Fill", "essential-blocks"),
+		label: __("Half Circle Fill", "progress-bars"),
 		value: "half_circle_fill",
 	},
-	{ label: __("Box", "essential-blocks"), value: "box" },
+	{ label: __("Box", "progress-bars"), value: "box" },
 ];
 
 export const CONTAINER_CLASS = {

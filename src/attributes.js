@@ -52,7 +52,7 @@ const attributes = {
 	},
 	title: {
 		type: "string",
-		default: __("Progress Bar", "essential-blocks"),
+		default: __("Progress Bar", "progress-bars"),
 	},
 	titleTag: {
 		type: "string",
@@ -110,11 +110,11 @@ const attributes = {
 	},
 	prefix: {
 		type: "string",
-		default: __("Prefix", "essential-blocks"),
+		default: __("Prefix", "progress-bars"),
 	},
 	suffix: {
 		type: "string",
-		default: __("Postfix", "essential-blocks"),
+		default: __("Postfix", "progress-bars"),
 	},
 	prefixColor: {
 		type: "string",

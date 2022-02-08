@@ -19,9 +19,9 @@ ebConditionalRegisterBlockType(metadata, {
 	icon: ProgressbarIcon,
 	attributes,
 	keywords: [
-		__("progress", "essential-blocks"),
-		__("bar", "essential-blocks"),
-		__("eb essential", "essential-blocks"),
+		__("progress", "progress-bars"),
+		__("bar", "progress-bars"),
+		__("eb essential", "progress-bars"),
 	],
 	edit: Edit,
 	save: Save,

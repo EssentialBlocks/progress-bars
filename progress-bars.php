@@ -30,7 +30,7 @@ function create_block_progress_bar_block_init()
 {
 	$dir = dirname(__FILE__);
 
-	define('PROGRESS_BARS_BLOCKS_VERSION', "1.1.3");
+	define('PROGRESS_BARS_BLOCKS_VERSION', "1.1.1");
 	define('PROGRESS_BARS_BLOCKS_ADMIN_URL', plugin_dir_url(__FILE__));
 	define('PROGRESS_BARS_BLOCKS_ADMIN_PATH', dirname(__FILE__));
 
