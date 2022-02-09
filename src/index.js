@@ -1,24 +1,29 @@
-const { registerBlockType } = wp.blocks;
-const { __ } = wp.i18n;
+/**
+ * WordPress dependeincies
+ */
+import { __ } from "@wordpress/i18n";
 
-import "./style.scss";
-
+/**
+ * Internal dependencies
+ */
+import { ProgressbarIcon } from "./icon";
 import Edit from "./edit";
-import save from "./save";
+import Save from "./save";
 import attributes from "./attributes";
-import icon from "./icon";
 import example from "./example";
+import metadata from "../block.json";
+import "./style.scss";
+const { ebConditionalRegisterBlockType } = EBProgressBarsControls;
 
-registerBlockType("progress-bars/progress-bar-block", {
-	title: __("Progress Bar", "progress-bars"),
-	description: __(
-		"Make your website interactive with stunning progress bar",
-		"progress-bars"
-	),
-	category: "widgets",
-	icon,
+ebConditionalRegisterBlockType(metadata, {
+	icon: ProgressbarIcon,
 	attributes,
+	keywords: [
+		__("progress", "progress-bars"),
+		__("bar", "progress-bars"),
+		__("eb essential", "progress-bars"),
+	],
 	edit: Edit,
-	save,
+	save: Save,
 	example,
 });

@@ -1,4 +1,5 @@
-const { __ } = wp.i18n;
+import { __ } from "@wordpress/i18n";
+
 import * as typoPrefixs from "./constants/typographyConstants";
 import {
 	PROGRESSBAR_HEIGHT,
@@ -8,12 +9,21 @@ import {
 	BOX_HEIGHT,
 	BOX_WIDTH,
 	WRAPPER_MARGIN,
+	TITLE_SPACE,
 } from "./constants";
-import {
+
+// import {
+// 	generateTypographyAttributes,
+// 	generateResponsiveRangeAttributes,
+// 	generateDimensionsAttributes,
+// } from "../../../util/helpers";
+
+const {
 	generateTypographyAttributes,
 	generateResponsiveRangeAttributes,
 	generateDimensionsAttributes,
-} from "../util/helpers";
+} = window.EBProgressBarsControls;
+
 const attributes = {
 	resOption: {
 		type: "string",
@@ -42,7 +52,7 @@ const attributes = {
 	},
 	title: {
 		type: "string",
-		default: __("Progress Bar", "progress-bar"),
+		default: __("Progress Bar", "progress-bars"),
 	},
 	titleTag: {
 		type: "string",
@@ -100,11 +110,11 @@ const attributes = {
 	},
 	prefix: {
 		type: "string",
-		default: __("Prefix", "progress-bar"),
+		default: __("Prefix", "progress-bars"),
 	},
 	suffix: {
 		type: "string",
-		default: __("Postfix", "progress-bar"),
+		default: __("Postfix", "progress-bars"),
 	},
 	prefixColor: {
 		type: "string",
@@ -139,6 +149,9 @@ const attributes = {
 		right: 0,
 		bottom: 25,
 		left: 0,
+		isLinked: false,
+	}),
+	...generateDimensionsAttributes(TITLE_SPACE, {
 		isLinked: false,
 	}),
 	// end new attributes

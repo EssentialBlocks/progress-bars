@@ -4,7 +4,7 @@
 	"description": "Example block written with ESNext standard and JSX support – build step required.",
 	"author": "The WordPress Contributors",
 	"license": "GPL-2.0-or-later",
-	"main": "build/index.js",
+	"main": "Gruntfile.js",
 	"scripts": {
 		"build": "wp-scripts build",
 		"format:js": "wp-scripts format-js",
@@ -15,9 +15,10 @@
 	},
 	"devDependencies": {
 		"@babel/plugin-proposal-class-properties": "^7.10.4",
-		"@wordpress/scripts": "^12.1.1"
+		"@wordpress/scripts": "^20.0.2"
 	},
 	"dependencies": {
-		"node-sass": "^4.14.1"
+		"node-sass": "^4.14.1",
+		"classnames": "^2.3.1"
 	}
 }
