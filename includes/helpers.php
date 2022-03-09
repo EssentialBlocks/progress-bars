@@ -68,10 +68,22 @@ class Progress_Bar_Helper
                 'all'
             );
         }
+
+        global $pagenow;
+
+        if ($pagenow == 'post-new.php' || $pagenow == 'post.php') {
+            wp_localize_script('progress-bars-blocks-controls-util', 'eb_conditional_localize', array(
+                'editor_type' => 'edit-post'
+            ));
+        } else if ($pagenow == 'site-editor.php') {
+            wp_localize_script('progress-bars-blocks-controls-util', 'eb_conditional_localize', array(
+                'editor_type' => 'edit-site'
+            ));
+        }
     }
     public static function get_block_register_path($blockname, $blockPath)
     {
-        if ((float) get_bloginfo('version') <= 5.6) {
+        if ((float) get_bloginfo('version') < 5.8) {
             return $blockname;
         } else {
             return $blockPath;
