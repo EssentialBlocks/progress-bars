@@ -88,6 +88,7 @@ Yes, it will work with any standard WordPress theme.
 
 == 1.2.1 - 09/03/2022 ==
 * Fixed: Error on style tab in controls panel
+* Fixed: minor bug of undefinded variable
 
 = 1.2.0 - 09/02/2022 =
 * Fixed: Block Base theme support
