@@ -89,7 +89,9 @@ const Inspector = ({ attributes, setAttributes }) => {
 	// this useEffect is for setting the resOption attribute to desktop/tab/mobile depending on the added 'eb-res-option-' class only the first time once
 	useEffect(() => {
 		setAttributes({
-			resOption: select(editorStoreForGettingPreivew).__experimentalGetPreviewDeviceType(),
+			resOption: select(
+				editorStoreForGettingPreivew
+			).__experimentalGetPreviewDeviceType(),
 		});
 	}, []);
 
@@ -380,10 +382,7 @@ const Inspector = ({ attributes, setAttributes }) => {
 															</h3>
 														</BaseControl>
 														<ToggleControl
-															label={__(
-																"Show Fill Gradient",
-																progress-bars
-															)}
+															label={__("Show Fill Gradient", "progress-bars")}
 															checked={isProgressGradient}
 															onChange={() => {
 																setAttributes({
@@ -535,7 +534,7 @@ const Inspector = ({ attributes, setAttributes }) => {
 										layout === "half_circle_fill") && (
 										<>
 											<PanelBody
-												title={__("Prefix & Suffix", "progress-bar")}
+												title={__("Prefix & Suffix", "progress-bars")}
 												initialOpen={false}
 											>
 												<TypographyDropdown
