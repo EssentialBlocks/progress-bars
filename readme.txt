@@ -86,7 +86,7 @@ Yes, it will work with any standard WordPress theme.
 
 == Changelog ==
 
-== 1.2.1 - 09/03/2022 ==
+== 1.2.1 - 10/03/2022 ==
 * Fixed: Error on style tab in the controls panel
 * Fixed: Minor bug of undefined variable
 
