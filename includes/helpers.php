@@ -40,17 +40,19 @@ class Progress_Bar_Helper
      */
     public function enqueues($hook)
     {
+        global $pagenow;
+
         /**
-         * Only for Admin Add/Edit Pages 
+         * Only for admin add/edit pages/posts
          */
-        if ($hook == 'post-new.php' || $hook == 'post.php' || $hook == 'site-editor.php') {
+        if ($pagenow == 'post-new.php' || $pagenow == 'post.php' || $pagenow == 'site-editor.php' || ($pagenow == 'themes.php' && !empty($_SERVER['QUERY_STRING']) && str_contains($_SERVER['QUERY_STRING'], 'gutenberg-edit-site'))) {
+
             $controls_dependencies = include_once PROGRESS_BARS_BLOCKS_ADMIN_PATH . '/dist/controls.asset.php';
 
-            // var_dump($controls_dependencies);die;
             wp_register_script(
                 "progress-bars-blocks-controls-util",
                 PROGRESS_BARS_BLOCKS_ADMIN_URL . '/dist/controls.js',
-                array_merge($controls_dependencies['dependencies'], array("essential-blocks-edit-post")),
+                array_merge($controls_dependencies['dependencies']),
                 $controls_dependencies['version'],
                 true
             );
@@ -60,6 +62,16 @@ class Progress_Bar_Helper
                 'rest_rootURL' => get_rest_url(),
             ));
 
+            if ($pagenow == 'post-new.php' || $pagenow == 'post.php') {
+                wp_localize_script('progress-bars-blocks-controls-util', 'eb_conditional_localize', array(
+                    'editor_type' => 'edit-post'
+                ));
+            } else if ($pagenow == 'site-editor.php' || $pagenow == 'themes.php') {
+                wp_localize_script('progress-bars-blocks-controls-util', 'eb_conditional_localize', array(
+                    'editor_type' => 'edit-site'
+                ));
+            }
+
             wp_enqueue_style(
                 'essential-blocks-editor-css',
                 PROGRESS_BARS_BLOCKS_ADMIN_URL . '/dist/controls.css',
@@ -67,18 +79,6 @@ class Progress_Bar_Helper
                 $controls_dependencies['version'],
                 'all'
             );
-        }
-
-        global $pagenow;
-
-        if ($pagenow == 'post-new.php' || $pagenow == 'post.php') {
-            wp_localize_script('progress-bars-blocks-controls-util', 'eb_conditional_localize', array(
-                'editor_type' => 'edit-post'
-            ));
-        } else if ($pagenow == 'site-editor.php') {
-            wp_localize_script('progress-bars-blocks-controls-util', 'eb_conditional_localize', array(
-                'editor_type' => 'edit-site'
-            ));
         }
     }
     public static function get_block_register_path($blockname, $blockPath)

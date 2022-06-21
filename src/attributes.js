@@ -52,7 +52,7 @@ const attributes = {
 	},
 	title: {
 		type: "string",
-		default: __("Progress Bar", "progress-bars"),
+		default: __("Progress Bar", "essential-blocks"),
 	},
 	titleTag: {
 		type: "string",
@@ -80,7 +80,7 @@ const attributes = {
 	},
 	progressColor: {
 		type: "string",
-		default: "#000000",
+		default: "#7967ff",
 	},
 	isProgressGradient: {
 		type: "boolean",
@@ -110,11 +110,11 @@ const attributes = {
 	},
 	prefix: {
 		type: "string",
-		default: __("Prefix", "progress-bars"),
+		default: __("Prefix", "essential-blocks"),
 	},
 	suffix: {
 		type: "string",
-		default: __("Postfix", "progress-bars"),
+		default: __("Postfix", "essential-blocks"),
 	},
 	prefixColor: {
 		type: "string",

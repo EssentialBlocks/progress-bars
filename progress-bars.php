@@ -4,7 +4,7 @@
  * Plugin Name:     Progress Bar
  * Plugin URI: 		https://essential-blocks.com
  * Description:     Make your website interactive with stunning progress bar
- * Version:         1.2.1
+ * Version:         1.2.2
  * Author:          WPDeveloper
  * Author URI: 		https://wpdeveloper.net
  * License:         GPL-3.0-or-later
@@ -30,7 +30,7 @@ function create_block_progress_bar_block_init()
 {
 	$dir = dirname(__FILE__);
 
-	define('PROGRESS_BARS_BLOCKS_VERSION', "1.2.1");
+	define('PROGRESS_BARS_BLOCKS_VERSION', "1.2.2");
 	define('PROGRESS_BARS_BLOCKS_ADMIN_URL', plugin_dir_url(__FILE__));
 	define('PROGRESS_BARS_BLOCKS_ADMIN_PATH', dirname(__FILE__));
 
@@ -47,7 +47,8 @@ function create_block_progress_bar_block_init()
 		'wp-i18n',
 		'wp-element',
 		'wp-block-editor',
-		'progress-bars-blocks-controls-util'
+		'progress-bars-blocks-controls-util',
+		'essential-blocks-eb-animation'
 	));
 
 	wp_register_script(
@@ -57,11 +58,28 @@ function create_block_progress_bar_block_init()
 		$script_asset['version']
 	);
 
+	$load_animation_js = PROGRESS_BARS_BLOCKS_ADMIN_URL . 'assets/js/eb-animation-load.js';
+	wp_register_script(
+		'essential-blocks-eb-animation',
+		$load_animation_js,
+		array(),
+		PROGRESS_BARS_BLOCKS_VERSION,
+		true
+	);
+
+	$animate_css = PROGRESS_BARS_BLOCKS_ADMIN_URL . 'assets/css/animate.min.css';
+	wp_register_style(
+		'essential-blocks-animation',
+		$animate_css,
+		array(),
+		PROGRESS_BARS_BLOCKS_VERSION
+	);
+
 	$style_css = PROGRESS_BARS_BLOCKS_ADMIN_URL . 'dist/style.css';
 	wp_register_style(
 		'progress-bars-block-frontend-style',
 		$style_css,
-		array(),
+		array('essential-blocks-animation'),
 		filemtime(PROGRESS_BARS_BLOCKS_ADMIN_PATH . '/dist/style.css')
 	);
 
@@ -86,6 +104,7 @@ function create_block_progress_bar_block_init()
 				'render_callback' => function ($attribs, $content) {
 					if (!is_admin()) {
 						wp_enqueue_script('eb-progress-bar-frontend');
+						wp_enqueue_script('essential-blocks-eb-animation');
 					}
 					return $content;
 				}
@@ -94,4 +113,4 @@ function create_block_progress_bar_block_init()
 	}
 }
 
-add_action('init', 'create_block_progress_bar_block_init');
+add_action('init', 'create_block_progress_bar_block_init', 99);

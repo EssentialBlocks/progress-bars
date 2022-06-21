@@ -9,6 +9,10 @@ export { default as BorderShadowControl } from "../controls/src/controls/border-
 export { default as BackgroundControl } from "../controls/src/controls/background-control";
 export { default as ResponsiveRangeController } from "../controls/src/controls/responsive-range-control";
 export { default as GradientColorControl } from "../controls/src/controls/gradient-color-controller";
+
+import "../controls/src/group-controls";
+export { default as AdvancedControls } from "../controls/src/group-controls/components/advanced-controls";
+
 //Export Helper Functions
 export {
 	softMinifyCssStrings,
