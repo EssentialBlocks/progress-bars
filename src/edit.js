@@ -45,11 +45,6 @@ const {
 	generateDimensionsControlStyles,
 } = window.EBProgressBarsControls;
 
-const editorStoreForGettingPreivew =
-	eb_conditional_localize.editor_type === "edit-site"
-		? "core/edit-site"
-		: "core/edit-post";
-
 export default function Edit(props) {
 	const { isSelected, attributes, setAttributes, className, clientId } = props;
 	const circle_half_left = useRef(null);
@@ -547,15 +542,6 @@ export default function Edit(props) {
 		}
 	}, [attributes]);
 
-	// this useEffect is for setting the resOption attribute to desktop/tab/mobile depending on the added 'eb-res-option-' class
-	useEffect(() => {
-		setAttributes({
-			resOption: select(
-				editorStoreForGettingPreivew
-			).__experimentalGetPreviewDeviceType(),
-		});
-	}, []);
-
 	// this useEffect is for creating an unique id for each block's unique className by a random unique number
 	useEffect(() => {
 		const BLOCK_PREFIX = "eb-progressbar";
@@ -618,7 +604,7 @@ export default function Edit(props) {
 							className={`eb-progressbar-${CONTAINER_CLASS[layout]}-container ${wrapperAlign}`}
 						>
 							{(layout === "line" || layout === "line_rainbow") && title && (
-								<attributes.titleTag className="eb-progressbar-title">
+								<attributes.titleTag class="eb-progressbar-title">
 									{title}
 								</attributes.titleTag>
 							)}
@@ -628,7 +614,7 @@ export default function Edit(props) {
 							>
 								{(layout === "circle" || layout === "circle_fill") && (
 									<>
-										<div className="eb-progressbar-circle-pie" ref={circle_pie}>
+										<div class="eb-progressbar-circle-pie" ref={circle_pie}>
 											<div
 												className="eb-progressbar-circle-half-left eb-progressbar-circle-half"
 												ref={circle_half_left}
@@ -683,37 +669,37 @@ export default function Edit(props) {
 								{(layout === "line" || layout === "line_rainbow") && (
 									<>
 										{displayProgress && (
-											<span className="eb-progressbar-count-wrap">
-												<span className="eb-progressbar-count">{progress}</span>
-												<span className="postfix">%</span>
+											<span class="eb-progressbar-count-wrap">
+												<span class="eb-progressbar-count">{progress}</span>
+												<span class="postfix">%</span>
 											</span>
 										)}
-										<span className="eb-progressbar-line-fill" ref={line}></span>
+										<span class="eb-progressbar-line-fill" ref={line}></span>
 									</>
 								)}
 
 								{layout === "box" && (
 									<>
-										<div className="eb-progressbar-box-inner-content">
-											<attributes.titleTag className="eb-progressbar-title">
+										<div class="eb-progressbar-box-inner-content">
+											<attributes.titleTag class="eb-progressbar-title">
 												{title}
 											</attributes.titleTag>
 											{displayProgress && (
-												<span className="eb-progressbar-count-wrap">
-													<span className="eb-progressbar-count">{progress}</span>
-													<span className="postfix">%</span>
+												<span class="eb-progressbar-count-wrap">
+													<span class="eb-progressbar-count">{progress}</span>
+													<span class="postfix">%</span>
 												</span>
 											)}
 										</div>
-										<div className="eb-progressbar-box-fill" ref={box}></div>
+										<div class="eb-progressbar-box-fill" ref={box}></div>
 									</>
 								)}
 							</div>
 							{(layout === "half_circle" || layout === "half_circle_fill") && (
 								<>
-									<div className="eb-progressbar-half-circle-after">
-										<span className="eb-progressbar-prefix-label">{prefix}</span>
-										<span className="eb-progressbar-postfix-label">{suffix}</span>
+									<div class="eb-progressbar-half-circle-after">
+										<span class="eb-progressbar-prefix-label">{prefix}</span>
+										<span class="eb-progressbar-postfix-label">{suffix}</span>
 									</div>
 								</>
 							)}

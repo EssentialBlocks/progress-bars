@@ -26,11 +26,6 @@ const {
 	AdvancedControls,
 } = window.EBProgressBarsControls;
 
-const editorStoreForGettingPreivew =
-	eb_conditional_localize.editor_type === "edit-site"
-		? "core/edit-site"
-		: "core/edit-post";
-
 import {
 	LAYOUT,
 	PX_PERCENTAGE,
@@ -72,15 +67,6 @@ const Inspector = ({ attributes, setAttributes }) => {
 		suffix,
 		prefixColor,
 	} = attributes;
-
-	// this useEffect is for setting the resOption attribute to desktop/tab/mobile depending on the added 'eb-res-option-' class only the first time once
-	useEffect(() => {
-		setAttributes({
-			resOption: select(
-				editorStoreForGettingPreivew
-			).__experimentalGetPreviewDeviceType(),
-		});
-	}, []);
 
 	const resRequiredProps = {
 		setAttributes,
@@ -212,24 +198,24 @@ const Inspector = ({ attributes, setAttributes }) => {
 
 										{(layout === "half_circle" ||
 											layout === "half_circle_fill") && (
-											<>
-												<hr />
-												<TextControl
-													label={__("Prefix", "essential-blocks")}
-													value={prefix}
-													onChange={(newPrefix) =>
-														setAttributes({ prefix: newPrefix })
-													}
-												/>
-												<TextControl
-													label={__("Suffix", "essential-blocks")}
-													value={suffix}
-													onChange={(newSuffix) =>
-														setAttributes({ suffix: newSuffix })
-													}
-												/>
-											</>
-										)}
+												<>
+													<hr />
+													<TextControl
+														label={__("Prefix", "essential-blocks")}
+														value={prefix}
+														onChange={(newPrefix) =>
+															setAttributes({ prefix: newPrefix })
+														}
+													/>
+													<TextControl
+														label={__("Suffix", "essential-blocks")}
+														value={suffix}
+														onChange={(newSuffix) =>
+															setAttributes({ suffix: newSuffix })
+														}
+													/>
+												</>
+											)}
 									</PanelBody>
 									<PanelBody
 										title={__("Settings", "essential-blocks")}
@@ -261,27 +247,27 @@ const Inspector = ({ attributes, setAttributes }) => {
 											layout === "circle_fill" ||
 											layout === "half_circle" ||
 											layout === "half_circle_fill") && (
-											<>
-												<ResponsiveRangeController
-													baseLabel={__("Size", "essential-blocks")}
-													controlName={PROGRESSBAR_SIZE}
-													resRequiredProps={resRequiredProps}
-													min={50}
-													max={500}
-													step={1}
-													noUnits
-												/>
-												<ResponsiveRangeController
-													baseLabel={__("Stroke Width", "essential-blocks")}
-													controlName={STROKE_WIDTH}
-													resRequiredProps={resRequiredProps}
-													min={0}
-													max={100}
-													step={1}
-													noUnits
-												/>
-											</>
-										)}
+												<>
+													<ResponsiveRangeController
+														baseLabel={__("Size", "essential-blocks")}
+														controlName={PROGRESSBAR_SIZE}
+														resRequiredProps={resRequiredProps}
+														min={50}
+														max={500}
+														step={1}
+														noUnits
+													/>
+													<ResponsiveRangeController
+														baseLabel={__("Stroke Width", "essential-blocks")}
+														controlName={STROKE_WIDTH}
+														resRequiredProps={resRequiredProps}
+														min={0}
+														max={100}
+														step={1}
+														noUnits
+													/>
+												</>
+											)}
 										{layout === "box" && (
 											<>
 												<ResponsiveRangeController
@@ -386,31 +372,31 @@ const Inspector = ({ attributes, setAttributes }) => {
 											layout === "circle_fill" ||
 											layout === "half_circle" ||
 											layout === "half_circle_fill") && (
-											<>
-												<ColorControl
-													label={__("Background Color", "essential-blocks")}
-													color={backgroundColor}
-													onChange={(backgroundColor) =>
-														setAttributes({ backgroundColor })
-													}
-												/>
-												<ColorControl
-													label={__("Fill Color", "essential-blocks")}
-													color={progressColor}
-													onChange={(progressColor) =>
-														setAttributes({ progressColor })
-													}
-												/>
+												<>
+													<ColorControl
+														label={__("Background Color", "essential-blocks")}
+														color={backgroundColor}
+														onChange={(backgroundColor) =>
+															setAttributes({ backgroundColor })
+														}
+													/>
+													<ColorControl
+														label={__("Fill Color", "essential-blocks")}
+														color={progressColor}
+														onChange={(progressColor) =>
+															setAttributes({ progressColor })
+														}
+													/>
 
-												<ColorControl
-													label={__("Stroke Color", "essential-blocks")}
-													color={strokeColor}
-													onChange={(strokeColor) =>
-														setAttributes({ strokeColor })
-													}
-												/>
-											</>
-										)}
+													<ColorControl
+														label={__("Stroke Color", "essential-blocks")}
+														color={strokeColor}
+														onChange={(strokeColor) =>
+															setAttributes({ strokeColor })
+														}
+													/>
+												</>
+											)}
 										{layout === "box" && (
 											<>
 												<ColorControl
@@ -502,26 +488,26 @@ const Inspector = ({ attributes, setAttributes }) => {
 									</PanelBody>
 									{(layout === "half_circle" ||
 										layout === "half_circle_fill") && (
-										<>
-											<PanelBody
-												title={__("Prefix & Suffix", "progress-bar")}
-												initialOpen={false}
-											>
-												<TypographyDropdown
-													baseLabel={__("Typography", "essential-blocks")}
-													typographyPrefixConstant={typoPrefix_prefix}
-													resRequiredProps={resRequiredProps}
-												/>
-												<ColorControl
-													label={__("Color", "essential-blocks")}
-													color={prefixColor}
-													onChange={(prefixColor) =>
-														setAttributes({ prefixColor })
-													}
-												/>
-											</PanelBody>
-										</>
-									)}
+											<>
+												<PanelBody
+													title={__("Prefix & Suffix", "progress-bar")}
+													initialOpen={false}
+												>
+													<TypographyDropdown
+														baseLabel={__("Typography", "essential-blocks")}
+														typographyPrefixConstant={typoPrefix_prefix}
+														resRequiredProps={resRequiredProps}
+													/>
+													<ColorControl
+														label={__("Color", "essential-blocks")}
+														color={prefixColor}
+														onChange={(prefixColor) =>
+															setAttributes({ prefixColor })
+														}
+													/>
+												</PanelBody>
+											</>
+										)}
 								</>
 							)}
 							{tab.name === "advance" && (
@@ -536,10 +522,7 @@ const Inspector = ({ attributes, setAttributes }) => {
 										/>
 									</PanelBody>
 
-									<AdvancedControls
-										attributes={attributes}
-										setAttributes={setAttributes}
-									/>
+									<AdvancedControls attributes={attributes} setAttributes={setAttributes} />
 								</>
 							)}
 						</div>
