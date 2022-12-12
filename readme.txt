@@ -2,8 +2,8 @@
 Contributors: wpdevteam, re_enter_rupok, Asif2BD, rahat89, fencermonir
 Tags: gutenberg, block, blocks, editor, progress, progress bar, skill bar, responsive progress bar, animated skillbar, animated progress bar, skill-bars, percentage bar, chart bar, graph bar, gutenberg blocks
 Requires at least: 5.6
-Tested up to: 6.0
-Stable tag: 1.2.4
+Tested up to: 6.1
+Stable tag: 1.2.5
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -22,14 +22,14 @@ Using this **Progress bar** block, you can easily make your website interactive 
 
 ## 🚀 BACKED BY A TRUSTED TEAM ##
 
-This Block is brought to you by [WPDeveloper](https://wpdeveloper.net), the team behind the most popular elements library [Essential Addons for Elementor](https://wordpress.org/plugins/essential-addons-for-elementor-lite/) (used by almost 700,000 happy users from 180+ countries).
+This Block is brought to you by [WPDeveloper](https://wpdeveloper.com), the team behind the most popular elements library [Essential Addons for Elementor](https://wordpress.org/plugins/essential-addons-for-elementor-lite/) (used by almost 1 million+ happy users from 180+ countries).
 
 ## 👨‍💻 DOCUMENTATION AND SUPPORT ##
 
 - For documentation and tutorials go to our [documentation](https://essential-blocks.com/docs/)
 - To report issue and contribution visit [Github](https://github.com/EssentialBlocks/progress-bars).
 - If you have any more questions, visit our support on the [Plugin's Forum](https://wordpress.org/support/plugin/progress-bars).
-- For more information about features, FAQs and documentation, check out our website at [WPDeveloper](https://wpdeveloper.net/).
+- For more information about features, FAQs and documentation, check out our website at [WPDeveloper](https://wpdeveloper.com/).
 
 ## 🙌 JOIN THE COMMUNITY ##
 
@@ -59,7 +59,7 @@ Consider checking out our other WordPress solutions & boost your WordPress websi
 ⚡ [Flexia](http://wordpress.org/plugins/flexia): Most lightweight, customizable & multi purpose theme for WordPress
 
 
-Visit [WPDeveloper](https://wpdeveloper.net/) to learn more about how to do better in WordPress with [Help Tutorial, Tips & Tricks](https://wpdeveloper.net/blog).
+Visit [WPDeveloper](https://wpdeveloper.com/) to learn more about how to do better in WordPress with [Help Tutorial, Tips & Tricks](https://wpdeveloper.com/blog).
 
 == Installation ==
 
@@ -85,6 +85,10 @@ Yes, it will work with any standard WordPress theme.
 
 
 == Changelog ==
+
+= 1.2.5 - 12/12/2022 =
+* Improved: Controls & structure
+* Fixed: Minor bugs
 
 = 1.2.4 - 12/09/2022 =
 * Improved: Controls & structure
