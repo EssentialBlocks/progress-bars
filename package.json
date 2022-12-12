@@ -1,7 +1,7 @@
 {
 	"name": "progress-bars",
-	"version": "1.2.4",
-	"description": "Example block written with ESNext standard and JSX support – build step required.",
+	"version": "1.2.5",
+	"description": "Make your website interactive with stunning progress bar",
 	"author": "The WordPress Contributors",
 	"license": "GPL-2.0-or-later",
 	"main": "Gruntfile.js",
