@@ -72,8 +72,7 @@ const deprecated = [
 									</>
 								)}
 
-								{(layout === "half_circle" ||
-									layout === "half_circle_fill") && (
+								{(layout === "half_circle" || layout === "half_circle_fill") && (
 									<>
 										<div class="eb-progressbar-circle">
 											<div class="eb-progressbar-circle-pie">

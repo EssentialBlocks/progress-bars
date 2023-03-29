@@ -12,6 +12,7 @@ import {
 	RangeControl,
 	BaseControl,
 	TabPanel,
+	__experimentalDivider as Divider,
 } from "@wordpress/components";
 import { select } from "@wordpress/data";
 
@@ -109,7 +110,9 @@ const Inspector = ({ attributes, setAttributes }) => {
 											value={layout}
 											options={LAYOUT}
 											onChange={(newLayout) =>
-												setAttributes({ layout: newLayout })
+												setAttributes({
+													layout: newLayout,
+												})
 											}
 										/>
 										{(layout === "line" || layout === "line_rainbow") && (
@@ -123,12 +126,14 @@ const Inspector = ({ attributes, setAttributes }) => {
 												}}
 											/>
 										)}
-										<hr />
+										<Divider />
 										<TextControl
 											label={__("Title", "essential-blocks")}
 											value={title}
 											onChange={(newTitle) =>
-												setAttributes({ title: newTitle })
+												setAttributes({
+													title: newTitle,
+												})
 											}
 										/>
 										<SelectControl
@@ -142,14 +147,19 @@ const Inspector = ({ attributes, setAttributes }) => {
 												{ label: "H5", value: "h5" },
 												{ label: "H6", value: "h6" },
 												{ label: "div", value: "div" },
-												{ label: "span", value: "span" },
+												{
+													label: "span",
+													value: "span",
+												},
 												{ label: "p", value: "p" },
 											]}
 											onChange={(newTitleTag) =>
-												setAttributes({ titleTag: newTitleTag })
+												setAttributes({
+													titleTag: newTitleTag,
+												})
 											}
 										/>
-										<hr />
+										<Divider />
 										<RangeControl
 											label={__("Counter Value", "essential-blocks")}
 											value={progress}
@@ -169,7 +179,7 @@ const Inspector = ({ attributes, setAttributes }) => {
 										/>
 										{(layout === "line" || layout === "line_rainbow") && (
 											<>
-												<hr />
+												<Divider />
 												<ToggleControl
 													label={__("Show Stripe", "essential-blocks")}
 													checked={showStripe}
@@ -184,12 +194,23 @@ const Inspector = ({ attributes, setAttributes }) => {
 														label={__("Stripe Animation", "essential-blocks")}
 														value={stripeAnimation}
 														options={[
-															{ label: "Left To Right", value: "normal" },
-															{ label: "Right To Left", value: "reverse" },
-															{ label: "Disabled", value: "none" },
+															{
+																label: "Left To Right",
+																value: "normal",
+															},
+															{
+																label: "Right To Left",
+																value: "reverse",
+															},
+															{
+																label: "Disabled",
+																value: "none",
+															},
 														]}
 														onChange={(stripeAnimation) =>
-															setAttributes({ stripeAnimation })
+															setAttributes({
+																stripeAnimation,
+															})
 														}
 													/>
 												)}
@@ -198,24 +219,28 @@ const Inspector = ({ attributes, setAttributes }) => {
 
 										{(layout === "half_circle" ||
 											layout === "half_circle_fill") && (
-												<>
-													<hr />
-													<TextControl
-														label={__("Prefix", "essential-blocks")}
-														value={prefix}
-														onChange={(newPrefix) =>
-															setAttributes({ prefix: newPrefix })
-														}
-													/>
-													<TextControl
-														label={__("Suffix", "essential-blocks")}
-														value={suffix}
-														onChange={(newSuffix) =>
-															setAttributes({ suffix: newSuffix })
-														}
-													/>
-												</>
-											)}
+											<>
+												<Divider />
+												<TextControl
+													label={__("Prefix", "essential-blocks")}
+													value={prefix}
+													onChange={(newPrefix) =>
+														setAttributes({
+															prefix: newPrefix,
+														})
+													}
+												/>
+												<TextControl
+													label={__("Suffix", "essential-blocks")}
+													value={suffix}
+													onChange={(newSuffix) =>
+														setAttributes({
+															suffix: newSuffix,
+														})
+													}
+												/>
+											</>
+										)}
 									</PanelBody>
 									<PanelBody
 										title={__("Settings", "essential-blocks")}
@@ -247,27 +272,27 @@ const Inspector = ({ attributes, setAttributes }) => {
 											layout === "circle_fill" ||
 											layout === "half_circle" ||
 											layout === "half_circle_fill") && (
-												<>
-													<ResponsiveRangeController
-														baseLabel={__("Size", "essential-blocks")}
-														controlName={PROGRESSBAR_SIZE}
-														resRequiredProps={resRequiredProps}
-														min={50}
-														max={500}
-														step={1}
-														noUnits
-													/>
-													<ResponsiveRangeController
-														baseLabel={__("Stroke Width", "essential-blocks")}
-														controlName={STROKE_WIDTH}
-														resRequiredProps={resRequiredProps}
-														min={0}
-														max={100}
-														step={1}
-														noUnits
-													/>
-												</>
-											)}
+											<>
+												<ResponsiveRangeController
+													baseLabel={__("Size", "essential-blocks")}
+													controlName={PROGRESSBAR_SIZE}
+													resRequiredProps={resRequiredProps}
+													min={50}
+													max={500}
+													step={1}
+													noUnits
+												/>
+												<ResponsiveRangeController
+													baseLabel={__("Stroke Width", "essential-blocks")}
+													controlName={STROKE_WIDTH}
+													resRequiredProps={resRequiredProps}
+													min={0}
+													max={100}
+													step={1}
+													noUnits
+												/>
+											</>
+										)}
 										{layout === "box" && (
 											<>
 												<ResponsiveRangeController
@@ -324,7 +349,9 @@ const Inspector = ({ attributes, setAttributes }) => {
 													label={__("Background Color", "essential-blocks")}
 													color={strokeColor}
 													onChange={(strokeColor) =>
-														setAttributes({ strokeColor })
+														setAttributes({
+															strokeColor,
+														})
 													}
 												/>
 												{layout !== "line_rainbow" && (
@@ -351,7 +378,9 @@ const Inspector = ({ attributes, setAttributes }) => {
 																label={__("Color", "essential-blocks")}
 																color={progressColor}
 																onChange={(progressColor) =>
-																	setAttributes({ progressColor })
+																	setAttributes({
+																		progressColor,
+																	})
 																}
 															/>
 														)}
@@ -360,7 +389,9 @@ const Inspector = ({ attributes, setAttributes }) => {
 																label={__("Gradient Color", "essential-blocks")}
 																gradientColor={progressGradient}
 																onChange={(progressGradient) =>
-																	setAttributes({ progressGradient })
+																	setAttributes({
+																		progressGradient,
+																	})
 																}
 															/>
 														)}
@@ -372,38 +403,46 @@ const Inspector = ({ attributes, setAttributes }) => {
 											layout === "circle_fill" ||
 											layout === "half_circle" ||
 											layout === "half_circle_fill") && (
-												<>
-													<ColorControl
-														label={__("Background Color", "essential-blocks")}
-														color={backgroundColor}
-														onChange={(backgroundColor) =>
-															setAttributes({ backgroundColor })
-														}
-													/>
-													<ColorControl
-														label={__("Fill Color", "essential-blocks")}
-														color={progressColor}
-														onChange={(progressColor) =>
-															setAttributes({ progressColor })
-														}
-													/>
+											<>
+												<ColorControl
+													label={__("Background Color", "essential-blocks")}
+													color={backgroundColor}
+													onChange={(backgroundColor) =>
+														setAttributes({
+															backgroundColor,
+														})
+													}
+												/>
+												<ColorControl
+													label={__("Fill Color", "essential-blocks")}
+													color={progressColor}
+													onChange={(progressColor) =>
+														setAttributes({
+															progressColor,
+														})
+													}
+												/>
 
-													<ColorControl
-														label={__("Stroke Color", "essential-blocks")}
-														color={strokeColor}
-														onChange={(strokeColor) =>
-															setAttributes({ strokeColor })
-														}
-													/>
-												</>
-											)}
+												<ColorControl
+													label={__("Stroke Color", "essential-blocks")}
+													color={strokeColor}
+													onChange={(strokeColor) =>
+														setAttributes({
+															strokeColor,
+														})
+													}
+												/>
+											</>
+										)}
 										{layout === "box" && (
 											<>
 												<ColorControl
 													label={__("Background Color", "essential-blocks")}
 													color={backgroundColor}
 													onChange={(backgroundColor) =>
-														setAttributes({ backgroundColor })
+														setAttributes({
+															backgroundColor,
+														})
 													}
 												/>
 												<BaseControl>
@@ -425,7 +464,9 @@ const Inspector = ({ attributes, setAttributes }) => {
 														label={__("Color", "essential-blocks")}
 														color={progressColor}
 														onChange={(progressColor) =>
-															setAttributes({ progressColor })
+															setAttributes({
+																progressColor,
+															})
 														}
 													/>
 												)}
@@ -434,7 +475,9 @@ const Inspector = ({ attributes, setAttributes }) => {
 														label={__("Gradient Color", "essential-blocks")}
 														gradientColor={progressGradient}
 														onChange={(progressGradient) =>
-															setAttributes({ progressGradient })
+															setAttributes({
+																progressGradient,
+															})
 														}
 													/>
 												)}
@@ -442,7 +485,9 @@ const Inspector = ({ attributes, setAttributes }) => {
 													label={__("Stroke Color", "essential-blocks")}
 													color={strokeColor}
 													onChange={(strokeColor) =>
-														setAttributes({ strokeColor })
+														setAttributes({
+															strokeColor,
+														})
 													}
 												/>
 											</>
@@ -488,26 +533,28 @@ const Inspector = ({ attributes, setAttributes }) => {
 									</PanelBody>
 									{(layout === "half_circle" ||
 										layout === "half_circle_fill") && (
-											<>
-												<PanelBody
-													title={__("Prefix & Suffix", "progress-bar")}
-													initialOpen={false}
-												>
-													<TypographyDropdown
-														baseLabel={__("Typography", "essential-blocks")}
-														typographyPrefixConstant={typoPrefix_prefix}
-														resRequiredProps={resRequiredProps}
-													/>
-													<ColorControl
-														label={__("Color", "essential-blocks")}
-														color={prefixColor}
-														onChange={(prefixColor) =>
-															setAttributes({ prefixColor })
-														}
-													/>
-												</PanelBody>
-											</>
-										)}
+										<>
+											<PanelBody
+												title={__("Prefix & Suffix", "progress-bar")}
+												initialOpen={false}
+											>
+												<TypographyDropdown
+													baseLabel={__("Typography", "essential-blocks")}
+													typographyPrefixConstant={typoPrefix_prefix}
+													resRequiredProps={resRequiredProps}
+												/>
+												<ColorControl
+													label={__("Color", "essential-blocks")}
+													color={prefixColor}
+													onChange={(prefixColor) =>
+														setAttributes({
+															prefixColor,
+														})
+													}
+												/>
+											</PanelBody>
+										</>
+									)}
 								</>
 							)}
 							{tab.name === "advance" && (
@@ -522,7 +569,10 @@ const Inspector = ({ attributes, setAttributes }) => {
 										/>
 									</PanelBody>
 
-									<AdvancedControls attributes={attributes} setAttributes={setAttributes} />
+									<AdvancedControls
+										attributes={attributes}
+										setAttributes={setAttributes}
+									/>
 								</>
 							)}
 						</div>

@@ -319,14 +319,15 @@ export default function Edit(props) {
 
 		.eb-progressbar-wrapper.${blockId} .eb-progressbar-line-fill {
 			${progressBarHeightDesktop}
-			${layout === "line" && isProgressGradient
-			? progressGradient
-				? `background-image: ${progressGradient};`
-				: ""
-			: progressColor
-				? `background-color: ${progressColor};`
-				: ""
-		};
+			${
+				layout === "line" && isProgressGradient
+					? progressGradient
+						? `background-image: ${progressGradient};`
+						: ""
+					: progressColor
+					? `background-color: ${progressColor};`
+					: ""
+			};
 		}
 
 		.eb-progressbar-wrapper.${blockId} .eb-progressbar-line-container {
@@ -370,14 +371,15 @@ export default function Edit(props) {
 		}
 
 		.eb-progressbar-wrapper.${blockId} .eb-progressbar-box-fill {
-			${isProgressGradient
-			? progressGradient
-				? `background-image: ${progressGradient};`
-				: ""
-			: progressColor
-				? `background-color: ${progressColor};`
-				: ""
-		};
+			${
+				isProgressGradient
+					? progressGradient
+						? `background-image: ${progressGradient};`
+						: ""
+					: progressColor
+					? `background-color: ${progressColor};`
+					: ""
+			};
 		}
  	`;
 
@@ -573,28 +575,28 @@ export default function Edit(props) {
 				<style>
 					{`
 				 ${desktopAllStyles}
- 
+
 				 /* mimmikcssStart */
- 
+
 				 ${resOption === "Tablet" ? tabAllStyles : " "}
 				 ${resOption === "Mobile" ? tabAllStyles + mobileAllStyles : " "}
- 
+
 				 /* mimmikcssEnd */
- 
-				 @media all and (max-width: 1024px) {	
- 
-					 /* tabcssStart */			
+
+				 @media all and (max-width: 1024px) {
+
+					 /* tabcssStart */
 					 ${softMinifyCssStrings(tabAllStyles)}
-					 /* tabcssEnd */			
-				 
+					 /* tabcssEnd */
+
 				 }
-				 
+
 				 @media all and (max-width: 767px) {
-					 
-					 /* mobcssStart */			
+
+					 /* mobcssStart */
 					 ${softMinifyCssStrings(mobileAllStyles)}
-					 /* mobcssEnd */			
-				 
+					 /* mobcssEnd */
+
 				 }
 				 `}
 				</style>
@@ -633,7 +635,9 @@ export default function Edit(props) {
 											)}
 											{displayProgress && (
 												<span className="eb-progressbar-count-wrap">
-													<span className="eb-progressbar-count">{progress}</span>
+													<span className="eb-progressbar-count">
+														{progress}
+													</span>
 													<span className="postfix">%</span>
 												</span>
 											)}
@@ -641,7 +645,8 @@ export default function Edit(props) {
 									</>
 								)}
 
-								{(layout === "half_circle" || layout === "half_circle_fill") && (
+								{(layout === "half_circle" ||
+									layout === "half_circle_fill") && (
 									<>
 										<div className="eb-progressbar-circle">
 											<div className="eb-progressbar-circle-pie">
@@ -658,7 +663,9 @@ export default function Edit(props) {
 											</attributes.titleTag>
 											{displayProgress && (
 												<span className="eb-progressbar-count-wrap">
-													<span className="eb-progressbar-count">{progress}</span>
+													<span className="eb-progressbar-count">
+														{progress}
+													</span>
 													<span className="postfix">%</span>
 												</span>
 											)}
