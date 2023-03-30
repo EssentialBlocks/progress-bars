@@ -50,7 +50,7 @@ src
 util
 .wordpress-org
 .idea
-controls
+/controls/
 config
 lib/style-handler/helpers.js
 lib/style-handler/style-handler.js
