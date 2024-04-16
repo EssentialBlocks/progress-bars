@@ -4,7 +4,7 @@
  * Plugin Name:     Progress Bar
  * Plugin URI:         https://essential-blocks.com
  * Description:     Make your website interactive with stunning progress bar
- * Version:         1.2.6
+ * Version:         1.2.7
  * Author:          WPDeveloper
  * Author URI:         https://wpdeveloper.net
  * License:         GPL-3.0-or-later
@@ -29,7 +29,7 @@ require_once __DIR__ . '/lib/style-handler/style-handler.php';
 function create_block_progress_bar_block_init() {
     $dir = dirname( __FILE__ );
 
-    define( 'PROGRESS_BARS_BLOCKS_VERSION', "1.2.6" );
+    define( 'PROGRESS_BARS_BLOCKS_VERSION', "1.2.7" );
     define( 'PROGRESS_BARS_BLOCKS_ADMIN_URL', plugin_dir_url( __FILE__ ) );
     define( 'PROGRESS_BARS_BLOCKS_ADMIN_PATH', dirname( __FILE__ ) );
 

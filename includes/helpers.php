@@ -47,12 +47,12 @@ class Progress_Bar_Helper
          */
         if ($pagenow == 'post-new.php' || $pagenow == 'post.php' || $pagenow == 'site-editor.php' || ($pagenow == 'themes.php' && !empty($_SERVER['QUERY_STRING']) && str_contains($_SERVER['QUERY_STRING'], 'gutenberg-edit-site'))) {
 
-            $controls_dependencies = include_once PROGRESS_BARS_BLOCKS_ADMIN_PATH . '/dist/controls.asset.php';
+            $controls_dependencies = include_once PROGRESS_BARS_BLOCKS_ADMIN_PATH . '/dist/modules.asset.php';
 
             wp_register_script(
                 "progress-bars-blocks-controls-util",
-                PROGRESS_BARS_BLOCKS_ADMIN_URL . '/dist/controls.js',
-                array_merge($controls_dependencies['dependencies']),
+                PROGRESS_BARS_BLOCKS_ADMIN_URL . 'dist/modules.js',
+                array_merge($controls_dependencies['dependencies'],['lodash']),
                 $controls_dependencies['version'],
                 true
             );
@@ -74,7 +74,7 @@ class Progress_Bar_Helper
 
             wp_enqueue_style(
                 'essential-blocks-editor-css',
-                PROGRESS_BARS_BLOCKS_ADMIN_URL . '/dist/controls.css',
+                PROGRESS_BARS_BLOCKS_ADMIN_URL . '/dist/modules.css',
                 array(),
                 $controls_dependencies['version'],
                 'all'
