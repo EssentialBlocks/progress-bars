@@ -1,61 +1,95 @@
-# A set of files you probably don't want in your WordPress.org distribution
-.babelrc
-.deployignore
-.distignore
-.editorconfig
-.eslintignore
-.eslintrc
-.gitmodules
+# Files and folders excluded from the production build.
+#
+# NOTE ON SYNTAX: `wp dist-archive` prefixes every entry with `*/` and, for any
+# entry that resolves to a directory, appends `/*`. A leading slash therefore
+# produces a double slash (`*//controls/*`) that never matches anything.
+# Write directory entries WITHOUT a leading or trailing slash.
+
+# Version control
 .git
 .gitignore
-.github
 .gitattributes
+.gitmodules
+.github
 .gitlab-ci.yml
-.travis.yml
-.DS_Store
-Thumbs.db
-behat.yml
-bitbucket-pipelines.yml
-bin
-.circleci/config.yml
-composer.json
-composer.lock
-dependencies.yml
-Gruntfile.js
+# Submodules keep a `.git` FILE (not a directory), which the `.git` rule above
+# cannot catch because that rule expands to `.git/*`.
+controls/.git
+lib/style-handler/.git
+
+# Build tooling and dependency manifests
 package.json
 package-lock.json
+yarn.lock
+composer.json
+composer.lock
+webpack.config.js
+Gruntfile.js
+gulpfile.js
+node_modules
+vendor
+dependencies.yml
+
+# Babel
+.babelrc
+.babelrc.js
+.babelrc.json
+babel.config.js
+babel.config.json
+
+# Linting, formatting and editor config
+.editorconfig
+.eslintrc
+.eslintignore
+.eslintcache
+.prettierrc
+.prettierignore
+.stylelintrc
+.phpcs.xml
+.phpcs.xml.dist
+phpcs.xml
+phpcs.xml.dist
+.idea
+.vscode
+
+# Tests and CI
+tests
 phpunit.xml
 phpunit.xml.dist
 multisite.xml
 multisite.xml.dist
-.phpcs.xml
-phpcs.xml
-.phpcs.xml.dist
-phpcs.xml.dist
-README.md
-webpack.config.js
+behat.yml
+bitbucket-pipelines.yml
+.circleci
+.travis.yml
 wp-cli.local.yml
-yarn.lock
-tests
-vendor
-node_modules
-*.sql
-*.tar.gz
-*.zip
-gulpfile.js
-.git
-node_modules/**/*.*
-**/*.zip
+
+# Source — the plugin ships only the compiled output in dist/
 src
-util
-.wordpress-org
-.idea
-/controls/
 config
+util
+controls
+
+# Documentation and repo metadata (readme.txt ships; markdown does not)
+*.md
+.wordpress-org
+.deployignore
+.distignore
+
+# Source maps
+*.map
+
+# Build artefacts and local cruft
+bin
+*.zip
+*.tar.gz
+*.sql
+*.log
+.env
+.DS_Store
+Thumbs.db
+
+# style-handler submodule — only its PHP entry point is required at runtime
 lib/style-handler/helpers.js
 lib/style-handler/style-handler.js
 lib/style-handler/gitignore
-lib/style-handler/dist/index.js.map
-lib/style-handler/README.md
-dist/*.*.map
-

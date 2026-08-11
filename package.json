@@ -1,6 +1,6 @@
 {
 	"name": "progress-bars",
-	"version": "1.2.7",
+	"version": "1.5.0",
 	"description": "Make your website interactive with stunning progress bar",
 	"author": "The WordPress Contributors",
 	"license": "GPL-2.0-or-later",
@@ -15,6 +15,8 @@
 	},
 	"devDependencies": {
 		"@babel/plugin-proposal-class-properties": "^7.10.4",
+		"@babel/preset-env": "^7.23.3",
+		"@babel/preset-react": "^7.23.3",
 		"@wordpress/scripts": "^20.0.2"
 	},
 	"dependencies": {
