@@ -104,42 +104,58 @@ onReady(function () {
 							return timeFraction;
 						},
 						draw: function (progress) {
-							var counter = Math.floor(progress * 100);
-							if (counter <= count) {
-								if (layout === "line" || layout === "line_rainbow") {
+							/**
+							 * Clamp rather than gate.
+							 *
+							 * `counter` is sampled from the clock, so no frame is
+							 * guaranteed to land in the 1%-of-duration window where
+							 * floor(progress * 100) equals the target. Whenever that
+							 * window was skipped the old `counter <= count` guard blocked
+							 * every write after it — including the final frame, which runs
+							 * with timeFraction === 1 and so produces 100 — and the bar was
+							 * left one short of its stored value, overwriting the correct
+							 * number that save.js had already rendered into the markup.
+							 *
+							 * Clamping keeps every frame before the target identical to
+							 * before, and makes the last frame write exactly the target
+							 * regardless of frame pacing or animationDuration.
+							 */
+							var target = parseFloat(count);
+							if (!isFinite(target)) target = 0;
+							var counter = Math.min(Math.floor(progress * 100), target);
+							if (layout === "line" || layout === "line_rainbow") {
+								progressbar.querySelector(
+									".eb-progressbar-line-fill"
+								).style.width = counter + "%";
+							} else if (layout === "circle" || layout === "circle_fill") {
+								var rotate = counter * 3.6;
+								progressbar.querySelector(
+									".eb-progressbar-circle-half-left"
+								).style.transform = "rotate(" + rotate + "deg)";
+								if (rotate > 180) {
 									progressbar.querySelector(
-										".eb-progressbar-line-fill"
-									).style.width = counter + "%";
-								} else if (layout === "circle" || layout === "circle_fill") {
-									var rotate = counter * 3.6;
+										".eb-progressbar-circle-pie"
+									).style.clipPath = "inset(0)";
 									progressbar.querySelector(
-										".eb-progressbar-circle-half-left"
-									).style.transform = "rotate(" + rotate + "deg)";
-									if (rotate > 180) {
-										progressbar.querySelector(
-											".eb-progressbar-circle-pie"
-										).style.clipPath = "inset(0)";
-										progressbar.querySelector(
-											".eb-progressbar-circle-half-right"
-										).style.visibility = "visible";
-									}
-								} else if (
-									layout === "half_circle" ||
-									layout === "half_circle_fill"
-								) {
-									var rotate = counter * 1.8;
-									progressbar.querySelector(
-										".eb-progressbar-circle-half"
-									).style.transform = "rotate(" + rotate + "deg)";
-								} else if (layout === "box") {
-									progressbar.querySelector(
-										".eb-progressbar-box-fill"
-									).style.height = counter + "%";
+										".eb-progressbar-circle-half-right"
+									).style.visibility = "visible";
 								}
-								if (progressbar.querySelector(".eb-progressbar-count")) {
-									progressbar.querySelector(".eb-progressbar-count").innerText =
-										counter;
-								}
+							} else if (
+								layout === "half_circle" ||
+								layout === "half_circle_fill"
+							) {
+								var rotate = counter * 1.8;
+								progressbar.querySelector(
+									".eb-progressbar-circle-half"
+								).style.transform = "rotate(" + rotate + "deg)";
+							} else if (layout === "box") {
+								progressbar.querySelector(
+									".eb-progressbar-box-fill"
+								).style.height = counter + "%";
+							}
+							if (progressbar.querySelector(".eb-progressbar-count")) {
+								progressbar.querySelector(".eb-progressbar-count").innerText =
+									counter;
 							}
 						},
 					});
