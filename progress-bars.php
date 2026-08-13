@@ -51,13 +51,30 @@ if ( file_exists( __DIR__ . '/lib/style-handler/style-handler.php' ) ) {
 }
 
 if ( ! function_exists( 'progress_bars_missing_style_handler_notice' ) ) :
+/**
+ * Admin notice shown when the style-handler runtime file is absent.
+ *
+ * The cause differs by context and so does the remedy, so name both rather than
+ * guessing. A git checkout is missing an uninitialised submodule and is repaired
+ * with git; an installed copy was packaged incomplete and can only be replaced.
+ * Neither is fixed by rebuilding assets, so the notice must not suggest it.
+ */
 function progress_bars_missing_style_handler_notice() {
     if ( ! current_user_can( 'activate_plugins' ) ) {
         return;
     }
+
     echo '<div class="notice notice-error"><p><strong>' .
         esc_html__( 'Progress Bar', 'progress-bars' ) . ':</strong> ' .
-        esc_html__( 'the bundled style-handler library is missing, so block styles will not be applied on the frontend. This build is incomplete — rebuild the plugin with its git submodules initialised.', 'progress-bars' ) .
+        sprintf(
+            /* translators: %s: path of the missing file, relative to the plugin directory. */
+            esc_html__( 'the required file %s is missing, so block styles will not be applied on the frontend.', 'progress-bars' ),
+            '<code>lib/style-handler/style-handler.php</code>'
+        ) .
+        '</p><p>' .
+        esc_html__( 'It ships from a git submodule. In a development checkout, run this in the plugin directory:', 'progress-bars' ) .
+        ' <code>git submodule update --init --recursive</code></p><p>' .
+        esc_html__( 'If this is an installed copy of the plugin rather than a checkout, the package itself is incomplete — reinstall the official complete package.', 'progress-bars' ) .
         '</p></div>';
 }
 endif;
