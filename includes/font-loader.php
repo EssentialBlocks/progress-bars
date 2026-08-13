@@ -13,13 +13,13 @@ class Progressbar_Font_Loader {
     protected static $instances = null;
 
     public static $gfonts      = [];
-    private static $block_name = [];
+    private static $block_name = '';
 
     /**
      * Registers the plugin.
      */
     public static function get_instance( ...$args ) {
-        if ( self::$instances == null ) {
+        if ( null === self::$instances ) {
             self::$instances = new static( ...$args );
         }
         return self::$instances;

@@ -24,17 +24,22 @@ const save = ({ attributes }) => {
 
 	const stripeClass = showStripe ? " " + STRIPE_CLASS[stripeAnimation] : "";
 
+	// Resolve the tag once. Previously each of these was written as
+	// `<attributes.titleTag>`, which only worked because `attributes` happened to
+	// be in scope — it silently rendered nothing if that ever stopped being true.
+	const TitleTag = titleTag || "div";
+
 	return (
 		<div {...useBlockProps.save()}>
-			<div className={`eb-parent-wrapper eb-parent-${blockId} ${classHook}`}>
+			<div
+				className={`eb-parent-wrapper eb-parent-${blockId} ${classHook || ""}`}
+			>
 				<div className={`eb-progressbar-wrapper ${blockId}`}>
 					<div
 						className={`eb-progressbar-${CONTAINER_CLASS[layout]}-container ${wrapperAlign}`}
 					>
 						{(layout === "line" || layout === "line_rainbow") && title && (
-							<attributes.titleTag className="eb-progressbar-title">
-								{title}
-							</attributes.titleTag>
+							<TitleTag className="eb-progressbar-title">{title}</TitleTag>
 						)}
 
 						<div
@@ -52,9 +57,9 @@ const save = ({ attributes }) => {
 									<div className="eb-progressbar-circle-inner"></div>
 									<div className="eb-progressbar-circle-inner-content">
 										{title && (
-											<attributes.titleTag className="eb-progressbar-title">
+											<TitleTag className="eb-progressbar-title">
 												{title}
-											</attributes.titleTag>
+											</TitleTag>
 										)}
 										{displayProgress && (
 											<span className="eb-progressbar-count-wrap">
@@ -75,9 +80,11 @@ const save = ({ attributes }) => {
 										<div className="eb-progressbar-circle-inner"></div>
 									</div>
 									<div className="eb-progressbar-circle-inner-content">
-										<attributes.titleTag className="eb-progressbar-title">
-											{title}
-										</attributes.titleTag>
+										{title && (
+											<TitleTag className="eb-progressbar-title">
+												{title}
+											</TitleTag>
+										)}
 										{displayProgress && (
 											<span className="eb-progressbar-count-wrap">
 												<span className="eb-progressbar-count">{progress}</span>
@@ -103,9 +110,11 @@ const save = ({ attributes }) => {
 							{layout === "box" && (
 								<>
 									<div className="eb-progressbar-box-inner-content">
-										<attributes.titleTag className="eb-progressbar-title">
-											{title}
-										</attributes.titleTag>
+										{title && (
+											<TitleTag className="eb-progressbar-title">
+												{title}
+											</TitleTag>
+										)}
 										{displayProgress && (
 											<span className="eb-progressbar-count-wrap">
 												<span className="eb-progressbar-count">{progress}</span>

@@ -1,20 +1,39 @@
+/**
+ * True as soon as ANY part of the element is inside the viewport.
+ *
+ * The previous implementation required the element to be *entirely* within the
+ * viewport (top >= 0 && bottom <= innerHeight). Any progress bar taller than the
+ * viewport, or one the visitor scrolled partially past, never satisfied that and
+ * so never animated — the bar stayed frozen at 0% on the frontend while the
+ * editor (which animates unconditionally) looked correct.
+ */
 const isInViewport = function (elem) {
 	var distance = elem.getBoundingClientRect();
+	var viewportHeight =
+		window.innerHeight || document.documentElement.clientHeight;
+	var viewportWidth = window.innerWidth || document.documentElement.clientWidth;
+
 	return (
-		distance.top >= 0 &&
-		distance.left >= 0 &&
-		distance.bottom <=
-			(window.innerHeight || document.documentElement.clientHeight) &&
-		distance.right <=
-			(window.innerWidth || document.documentElement.clientWidth)
+		distance.bottom > 0 &&
+		distance.right > 0 &&
+		distance.top < viewportHeight &&
+		distance.left < viewportWidth
 	);
 };
 
 const animate = function ({ duration, draw, timing }) {
+	// A missing/invalid data-duration used to yield NaN here, which made
+	// `timeFraction < 1` permanently true and left a requestAnimationFrame loop
+	// spinning forever without ever completing the bar.
+	let total = parseFloat(duration);
+	if (!isFinite(total) || total <= 0) {
+		total = 1500;
+	}
+
 	let start = performance.now();
 
 	requestAnimationFrame(function animate(time) {
-		let timeFraction = (time - start) / duration;
+		let timeFraction = (time - start) / total;
 		if (timeFraction > 1) timeFraction = 1;
 
 		let progress = timing(timeFraction);
@@ -27,9 +46,25 @@ const animate = function ({ duration, draw, timing }) {
 	});
 };
 
-window.addEventListener("DOMContentLoaded", function (event) {
+/**
+ * Run `fn` once the DOM is parsed.
+ *
+ * Binding straight to DOMContentLoaded meant that if this script ever executed
+ * after that event had already fired — a deferred/async loading strategy, an
+ * optimisation plugin, or a block injected after initial paint — the callback
+ * never ran and no progress bar on the page animated.
+ */
+const onReady = function (fn) {
+	if (document.readyState === "loading") {
+		document.addEventListener("DOMContentLoaded", fn);
+	} else {
+		fn();
+	}
+};
+
+onReady(function () {
 	var progressbars = document.querySelectorAll(".eb-progressbar");
-	if (!progressbars) return;
+	if (!progressbars || progressbars.length === 0) return;
 
 	// function 'debounce' is used here for better performance when scroll event fires
 	function debounce(func) {
@@ -117,6 +152,10 @@ window.addEventListener("DOMContentLoaded", function (event) {
 			handleAnimationOnScroll();
 		}
 
-		window.addEventListener("scroll", debounce(handleAnimationOnScroll));
+		var debounced = debounce(handleAnimationOnScroll);
+		// `resize` matters too: a bar can enter the viewport without any scroll
+		// when the window grows or a device is rotated.
+		window.addEventListener("scroll", debounced);
+		window.addEventListener("resize", debounced);
 	});
 });
