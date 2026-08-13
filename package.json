@@ -1,12 +1,19 @@
 {
 	"name": "progress-bars",
-	"version": "1.2.6",
+	"version": "1.3.0",
 	"description": "Make your website interactive with stunning progress bar",
 	"author": "The WordPress Contributors",
 	"license": "GPL-2.0-or-later",
 	"main": "Gruntfile.js",
 	"scripts": {
+		"ensure-submodules": "node bin/ensure-submodules.js",
+		"prepare": "node bin/ensure-submodules.js --soft",
+		"prebuild": "npm run ensure-submodules",
 		"build": "wp-scripts build",
+		"prestart": "npm run ensure-submodules",
+		"predist": "npm run ensure-submodules",
+		"dist": "wp dist-archive . ./progress-bars.zip --format=zip",
+		"postdist": "node bin/verify-package.js ./progress-bars.zip",
 		"format:js": "wp-scripts format-js",
 		"lint:css": "wp-scripts lint-style",
 		"lint:js": "wp-scripts lint-js",
@@ -15,6 +22,8 @@
 	},
 	"devDependencies": {
 		"@babel/plugin-proposal-class-properties": "^7.10.4",
+		"@babel/preset-env": "^7.23.3",
+		"@babel/preset-react": "^7.23.3",
 		"@wordpress/scripts": "^20.0.2"
 	},
 	"dependencies": {

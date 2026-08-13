@@ -8,6 +8,159 @@ import attributes from "./attributes";
 import { CONTAINER_CLASS, WRAPPER_CLASS, STRIPE_CLASS } from "./constants";
 
 const deprecated = [
+	/**
+	 * v1.2.7 markup.
+	 *
+	 * Identical to the current save() except that the `half_circle`,
+	 * `half_circle_fill` and `box` layouts emitted `.eb-progressbar-title`
+	 * unconditionally — so a block saved with an empty title kept an empty title
+	 * element (and its spacing) on the frontend while the editor rendered none.
+	 * Kept here so existing content still validates instead of tripping
+	 * "This block contains unexpected or invalid content".
+	 */
+	{
+		attributes: { ...attributes },
+		supports: {
+			align: ["wide", "full"],
+		},
+		save: ({ attributes }) => {
+			const {
+				blockId,
+				layout,
+				wrapperAlign,
+				progress,
+				displayProgress,
+				animationDuration,
+				title,
+				showStripe,
+				stripeAnimation,
+				prefix,
+				suffix,
+				classHook,
+			} = attributes;
+
+			const stripeClass = showStripe ? " " + STRIPE_CLASS[stripeAnimation] : "";
+
+			return (
+				<div {...useBlockProps.save()}>
+					<div className={`eb-parent-wrapper eb-parent-${blockId} ${classHook}`}>
+						<div className={`eb-progressbar-wrapper ${blockId}`}>
+							<div
+								className={`eb-progressbar-${CONTAINER_CLASS[layout]}-container ${wrapperAlign}`}
+							>
+								{(layout === "line" || layout === "line_rainbow") && title && (
+									<attributes.titleTag className="eb-progressbar-title">
+										{title}
+									</attributes.titleTag>
+								)}
+
+								<div
+									className={`eb-progressbar ${WRAPPER_CLASS[layout]}${stripeClass}`}
+									data-layout={layout}
+									data-count={progress}
+									data-duration={animationDuration}
+								>
+									{(layout === "circle" || layout === "circle_fill") && (
+										<>
+											<div className="eb-progressbar-circle-pie">
+												<div className="eb-progressbar-circle-half-left eb-progressbar-circle-half"></div>
+												<div className="eb-progressbar-circle-half-right eb-progressbar-circle-half"></div>
+											</div>
+											<div className="eb-progressbar-circle-inner"></div>
+											<div className="eb-progressbar-circle-inner-content">
+												{title && (
+													<attributes.titleTag className="eb-progressbar-title">
+														{title}
+													</attributes.titleTag>
+												)}
+												{displayProgress && (
+													<span className="eb-progressbar-count-wrap">
+														<span className="eb-progressbar-count">
+															{progress}
+														</span>
+														<span className="postfix">%</span>
+													</span>
+												)}
+											</div>
+										</>
+									)}
+
+									{(layout === "half_circle" ||
+										layout === "half_circle_fill") && (
+										<>
+											<div className="eb-progressbar-circle">
+												<div className="eb-progressbar-circle-pie">
+													<div className="eb-progressbar-circle-half"></div>
+												</div>
+												<div className="eb-progressbar-circle-inner"></div>
+											</div>
+											<div className="eb-progressbar-circle-inner-content">
+												<attributes.titleTag className="eb-progressbar-title">
+													{title}
+												</attributes.titleTag>
+												{displayProgress && (
+													<span className="eb-progressbar-count-wrap">
+														<span className="eb-progressbar-count">
+															{progress}
+														</span>
+														<span className="postfix">%</span>
+													</span>
+												)}
+											</div>
+										</>
+									)}
+
+									{(layout === "line" || layout === "line_rainbow") && (
+										<>
+											{displayProgress && (
+												<span className="eb-progressbar-count-wrap">
+													<span className="eb-progressbar-count">{progress}</span>
+													<span className="postfix">%</span>
+												</span>
+											)}
+											<span className="eb-progressbar-line-fill"></span>
+										</>
+									)}
+
+									{layout === "box" && (
+										<>
+											<div className="eb-progressbar-box-inner-content">
+												<attributes.titleTag className="eb-progressbar-title">
+													{title}
+												</attributes.titleTag>
+												{displayProgress && (
+													<span className="eb-progressbar-count-wrap">
+														<span className="eb-progressbar-count">
+															{progress}
+														</span>
+														<span className="postfix">%</span>
+													</span>
+												)}
+											</div>
+											<div className="eb-progressbar-box-fill"></div>
+										</>
+									)}
+								</div>
+								{(layout === "half_circle" ||
+									layout === "half_circle_fill") && (
+									<>
+										<div className="eb-progressbar-half-circle-after">
+											<span className="eb-progressbar-prefix-label">
+												{prefix}
+											</span>
+											<span className="eb-progressbar-postfix-label">
+												{suffix}
+											</span>
+										</div>
+									</>
+								)}
+							</div>
+						</div>
+					</div>
+				</div>
+			);
+		},
+	},
 	{
 		attributes: { ...attributes },
 		supports: {
@@ -38,7 +191,7 @@ const deprecated = [
 							className={`eb-progressbar-${CONTAINER_CLASS[layout]}-container ${wrapperAlign}`}
 						>
 							{(layout === "line" || layout === "line_rainbow") && title && (
-								<attributes.titleTag class="eb-progressbar-title">
+								<attributes.titleTag className="eb-progressbar-title">
 									{title}
 								</attributes.titleTag>
 							)}
@@ -51,21 +204,21 @@ const deprecated = [
 							>
 								{(layout === "circle" || layout === "circle_fill") && (
 									<>
-										<div class="eb-progressbar-circle-pie">
-											<div class="eb-progressbar-circle-half-left eb-progressbar-circle-half"></div>
-											<div class="eb-progressbar-circle-half-right eb-progressbar-circle-half"></div>
+										<div className="eb-progressbar-circle-pie">
+											<div className="eb-progressbar-circle-half-left eb-progressbar-circle-half"></div>
+											<div className="eb-progressbar-circle-half-right eb-progressbar-circle-half"></div>
 										</div>
-										<div class="eb-progressbar-circle-inner"></div>
-										<div class="eb-progressbar-circle-inner-content">
+										<div className="eb-progressbar-circle-inner"></div>
+										<div className="eb-progressbar-circle-inner-content">
 											{title && (
-												<attributes.titleTag class="eb-progressbar-title">
+												<attributes.titleTag className="eb-progressbar-title">
 													{title}
 												</attributes.titleTag>
 											)}
 											{displayProgress && (
-												<span class="eb-progressbar-count-wrap">
-													<span class="eb-progressbar-count">{progress}</span>
-													<span class="postfix">%</span>
+												<span className="eb-progressbar-count-wrap">
+													<span className="eb-progressbar-count">{progress}</span>
+													<span className="postfix">%</span>
 												</span>
 											)}
 										</div>
@@ -74,20 +227,20 @@ const deprecated = [
 
 								{(layout === "half_circle" || layout === "half_circle_fill") && (
 									<>
-										<div class="eb-progressbar-circle">
-											<div class="eb-progressbar-circle-pie">
-												<div class="eb-progressbar-circle-half"></div>
+										<div className="eb-progressbar-circle">
+											<div className="eb-progressbar-circle-pie">
+												<div className="eb-progressbar-circle-half"></div>
 											</div>
-											<div class="eb-progressbar-circle-inner"></div>
+											<div className="eb-progressbar-circle-inner"></div>
 										</div>
-										<div class="eb-progressbar-circle-inner-content">
-											<attributes.titleTag class="eb-progressbar-title">
+										<div className="eb-progressbar-circle-inner-content">
+											<attributes.titleTag className="eb-progressbar-title">
 												{title}
 											</attributes.titleTag>
 											{displayProgress && (
-												<span class="eb-progressbar-count-wrap">
-													<span class="eb-progressbar-count">{progress}</span>
-													<span class="postfix">%</span>
+												<span className="eb-progressbar-count-wrap">
+													<span className="eb-progressbar-count">{progress}</span>
+													<span className="postfix">%</span>
 												</span>
 											)}
 										</div>
@@ -97,37 +250,37 @@ const deprecated = [
 								{(layout === "line" || layout === "line_rainbow") && (
 									<>
 										{displayProgress && (
-											<span class="eb-progressbar-count-wrap">
-												<span class="eb-progressbar-count">{progress}</span>
-												<span class="postfix">%</span>
+											<span className="eb-progressbar-count-wrap">
+												<span className="eb-progressbar-count">{progress}</span>
+												<span className="postfix">%</span>
 											</span>
 										)}
-										<span class="eb-progressbar-line-fill"></span>
+										<span className="eb-progressbar-line-fill"></span>
 									</>
 								)}
 
 								{layout === "box" && (
 									<>
-										<div class="eb-progressbar-box-inner-content">
-											<attributes.titleTag class="eb-progressbar-title">
+										<div className="eb-progressbar-box-inner-content">
+											<attributes.titleTag className="eb-progressbar-title">
 												{title}
 											</attributes.titleTag>
 											{displayProgress && (
-												<span class="eb-progressbar-count-wrap">
-													<span class="eb-progressbar-count">{progress}</span>
-													<span class="postfix">%</span>
+												<span className="eb-progressbar-count-wrap">
+													<span className="eb-progressbar-count">{progress}</span>
+													<span className="postfix">%</span>
 												</span>
 											)}
 										</div>
-										<div class="eb-progressbar-box-fill"></div>
+										<div className="eb-progressbar-box-fill"></div>
 									</>
 								)}
 							</div>
 							{(layout === "half_circle" || layout === "half_circle_fill") && (
 								<>
-									<div class="eb-progressbar-half-circle-after">
-										<span class="eb-progressbar-prefix-label">{prefix}</span>
-										<span class="eb-progressbar-postfix-label">{suffix}</span>
+									<div className="eb-progressbar-half-circle-after">
+										<span className="eb-progressbar-prefix-label">{prefix}</span>
+										<span className="eb-progressbar-postfix-label">{suffix}</span>
 									</div>
 								</>
 							)}

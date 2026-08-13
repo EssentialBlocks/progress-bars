@@ -72,15 +72,15 @@ const attributes = {
 	},
 	titleColor: {
 		type: "string",
-		default: "#4d4d4d",
+		default: "#1D2939",
 	},
 	counterColor: {
 		type: "string",
-		default: "#4d4d4d",
+		default: "#1D2939",
 	},
 	progressColor: {
 		type: "string",
-		default: "#7967ff",
+		default: "#101828",
 	},
 	isProgressGradient: {
 		type: "boolean",
@@ -118,7 +118,7 @@ const attributes = {
 	},
 	prefixColor: {
 		type: "string",
-		default: "#4d4d4d",
+		default: "var(--eb-global-text-color)",
 	},
 	// typography attributes
 	...generateTypographyAttributes(Object.values(typoPrefixs)),
