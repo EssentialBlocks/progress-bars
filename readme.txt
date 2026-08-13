@@ -4,7 +4,7 @@ Tags: gutenberg, block, blocks, editor, progress, progress bar, skill bar, respo
 Requires at least: 6.0
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 1.5.0
+Stable tag: 1.3.0
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -87,11 +87,13 @@ Yes, it will work with any standard WordPress theme.
 
 == Changelog ==
 
-= 1.5.0 - 10/08/2026 =
-* Fixed: Fatal error when the bundled style-handler library was missing
-* Fixed: WordPress version detection broke on version numbers such as 6.10
-* Fixed: PHP 8.x warnings from build asset files being read incorrectly
-* Improved: Compatibility with PHP 7.4 - 8.5 and WordPress 6.0 - 7.0
+= 1.3.0 - 13/08/2026 =
+* Fixed: PHP 8.0 - 8.5 compatibility issues
+* Fixed: WordPress version detection
+* Fixed: PHP 7.x compatibility
+* Fixed: Asset loading issues on newer WordPress versions
+* Improved: Asset loading and overall stability
+* Tested up to WordPress 7.0.3
 
 = 1.2.7 - 16/04/2024 =
 * Fixed: compatibility support with wordpress 6.5 version
