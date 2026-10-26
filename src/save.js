@@ -5,6 +5,9 @@ import { useBlockProps } from "@wordpress/block-editor";
 
 import { CONTAINER_CLASS, WRAPPER_CLASS, STRIPE_CLASS } from "./constants";
 
+const TITLE_TAGS = ["h1", "h2", "h3", "h4", "h5", "h6", "p", "div", "span"];
+const safeTitleTag = (tag) => (TITLE_TAGS.includes(tag) ? tag : "div");
+
 const save = ({ attributes }) => {
 	const {
 		blockId,
@@ -27,7 +30,7 @@ const save = ({ attributes }) => {
 	// Resolve the tag once. Previously each of these was written as
 	// `<attributes.titleTag>`, which only worked because `attributes` happened to
 	// be in scope — it silently rendered nothing if that ever stopped being true.
-	const TitleTag = titleTag || "div";
+	const TitleTag = safeTitleTag(titleTag);
 
 	return (
 		<div {...useBlockProps.save()}>

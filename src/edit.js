@@ -30,6 +30,9 @@ const {
     DynamicInputValueHandler,
 } = window.EBProgressBarsControls;
 
+const TITLE_TAGS = ["h1", "h2", "h3", "h4", "h5", "h6", "p", "div", "span"];
+const safeTitleTag = (tag) => (TITLE_TAGS.includes(tag) ? tag : "div");
+
 export default function Edit(props) {
     const {
         isSelected,
@@ -169,6 +172,8 @@ export default function Edit(props) {
 
     const stripeClass = showStripe ? " " + STRIPE_CLASS[stripeAnimation] : "";
 
+    const TitleTag = safeTitleTag(titleTag);
+
     return (
         <>
             {isSelected && <Inspector {...props} />}
@@ -191,7 +196,7 @@ export default function Edit(props) {
                                 title && (
                                     <DynamicInputValueHandler
                                         value={title}
-                                        tagName={titleTag}
+                                        tagName={TitleTag}
                                         className="eb-progressbar-title"
                                         onChange={(title) =>
                                             setAttributes({
@@ -230,7 +235,7 @@ export default function Edit(props) {
                                                 {title && (
                                                     <DynamicInputValueHandler
                                                         value={title}
-                                                        tagName={titleTag}
+                                                        tagName={TitleTag}
                                                         className="eb-progressbar-title"
                                                         onChange={(title) =>
                                                             setAttributes({
@@ -273,7 +278,7 @@ export default function Edit(props) {
                                                 {title && (
                                                     <DynamicInputValueHandler
                                                         value={title}
-                                                        tagName={titleTag}
+                                                        tagName={TitleTag}
                                                         className="eb-progressbar-title"
                                                         onChange={(title) =>
                                                             setAttributes({
@@ -324,7 +329,7 @@ export default function Edit(props) {
                                             {title && (
                                                 <DynamicInputValueHandler
                                                     value={title}
-                                                    tagName={titleTag}
+                                                    tagName={TitleTag}
                                                     className="eb-progressbar-title"
                                                     onChange={(title) =>
                                                         setAttributes({
