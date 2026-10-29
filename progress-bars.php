@@ -183,3 +183,19 @@ function create_block_progress_bar_block_init() {
 endif;
 
 add_action( 'init', 'create_block_progress_bar_block_init', 99 );
+
+/**
+ * Block icons are filled #6C3BFF, which almost disappears on the highlighted row of
+ * the "/" inserter, a selected List View row and the drag chip. Recolour them there,
+ * as Essential Blocks does. The handle is shared, so the stylesheet prints once when
+ * several of these plugins are active.
+ */
+function progress_bars_block_icon_selected_style() {
+    wp_enqueue_style(
+        'eb-block-icon-selected',
+        plugins_url( 'assets/css/block-icon-selected.css', __FILE__ ),
+        [],
+        '1.0.0'
+    );
+}
+add_action( 'enqueue_block_editor_assets', 'progress_bars_block_icon_selected_style' );
