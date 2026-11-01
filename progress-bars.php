@@ -162,23 +162,31 @@ function create_block_progress_bar_block_init() {
         );
     }
 
-    if ( ! WP_Block_Type_Registry::get_instance()->is_registered( 'essential-blocks/progress-bar' ) ) {
-        register_block_type(
-            Progress_Bar_Helper::get_block_register_path( 'progress-bars/progress-bar-block', PROGRESS_BARS_BLOCKS_ADMIN_PATH ),
-            [
-                'editor_script'   => 'progress-bars-block-editor-js',
-                'editor_style'    => 'progress-bars-block-frontend-style',
-                'style'           => 'progress-bars-block-frontend-style',
-                'render_callback' => function ( $attribs, $content ) {
-                    if ( ! is_admin() ) {
-                        wp_enqueue_script( 'eb-progress-bar-frontend' );
-                        wp_enqueue_script( 'essential-blocks-eb-animation' );
-                    }
-                    return $content;
-                }
-            ]
-        );
+    $eb_has_block = WP_Block_Type_Registry::get_instance()->is_registered( 'essential-blocks/progress-bar' );
+    $block_args   = [
+        'editor_script'   => 'progress-bars-block-editor-js',
+        'editor_style'    => 'progress-bars-block-frontend-style',
+        'style'           => 'progress-bars-block-frontend-style',
+        'render_callback' => function ( $attribs, $content ) {
+            if ( ! is_admin() ) {
+                wp_enqueue_script( 'eb-progress-bar-frontend' );
+                wp_enqueue_script( 'essential-blocks-eb-animation' );
+            }
+            return $content;
+        }
+    ];
+
+    // Essential Blocks has its own version of this block under another name. Posts saved
+    // with this one still need its render callback and front-end assets, so keep it
+    // registered, but leave out the editor bundle, which can't run beside Essential Blocks.
+    if ( $eb_has_block ) {
+        unset( $block_args['editor_script'], $block_args['editor_style'] );
     }
+
+    register_block_type(
+        Progress_Bar_Helper::get_block_register_path( 'progress-bars/progress-bar-block', PROGRESS_BARS_BLOCKS_ADMIN_PATH ),
+        $block_args
+    );
 }
 endif;
 
