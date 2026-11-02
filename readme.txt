@@ -97,6 +97,12 @@ Yes, it will work with any standard WordPress theme.
 
 == Changelog ==
 
+= 1.3.2 - 02/11/2026 =
+* Improved: Security enhancements
+* Fixed: Existing Progress Bars blocks stopped working on the front end when Essential Blocks is active
+* Fixed: Animated blocks appeared without playing their animation when Essential Blocks is active
+* Fixed: Editor sidebar controls conflicting with other plugins' styles
+
 = 1.3.1 - 26/10/2026 =
 * Improved: Security enhancements
 * Few minor bug fixes & improvements
