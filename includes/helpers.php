@@ -134,7 +134,7 @@ class Progress_Bar_Helper
             }
 
             wp_enqueue_style(
-                'essential-blocks-editor-css',
+                'progress-bars-controls-css',
                 PROGRESS_BARS_BLOCKS_ADMIN_URL . '/dist/modules.css',
                 array(),
                 $controls_version,
