@@ -4,7 +4,7 @@ Tags: gutenberg, block, blocks, editor, progress, progress bar, skill bar, respo
 Requires at least: 6.0
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 1.3.1
+Stable tag: 1.3.2
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -97,11 +97,11 @@ Yes, it will work with any standard WordPress theme.
 
 == Changelog ==
 
-= 1.3.2 - 02/11/2026 =
+= 1.3.2 - 12/11/2026 =
+* Fixed: Frontend conflict with Essential Blocks
+* Fixed: Animation preview in editor
 * Improved: Security enhancements
-* Fixed: Existing Progress Bars blocks stopped working on the front end when Essential Blocks is active
-* Fixed: Animated blocks appeared without playing their animation when Essential Blocks is active
-* Fixed: Editor sidebar controls conflicting with other plugins' styles
+* Few minor bug fixes & improvements
 
 = 1.3.1 - 26/10/2026 =
 * Improved: Security enhancements
